@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/shared/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String       @id @default(uuid())
+  firstname    String
+  lastname     String?
+  imageUrl     String?
+  email        String
+  password     String
+  role         Role
+  tasks        Assignment[]
+  createdTasks Task[]       @relation("AuthoredTasks")
+  createdAt    DateTime     @default(now())
+}
+
+model Task {
+  id          String       @id @default(cuid())
+  title       String
+  description String?
+  priority    Priority?
+  difficulty  Difficulty?
+  completed   Boolean?
+  author      User         @relation("AuthoredTasks", fields: [authorId], references: [id])
+  authorId    String
+  assignments Assignment[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  deadline    DateTime
+}
+
+model Assignment {
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  task   Task   @relation(fields: [taskId], references: [id])
+  taskId String
+
+  @@id([userId, taskId])
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  WORKER
+}
+
+enum Priority {
+  LOW
+  AVERAGE
+  HIGH
+}
+
+enum Difficulty {
+  EASY
+  MIDDLE
+  HARD
+}
