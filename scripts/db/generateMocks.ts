@@ -3,7 +3,7 @@ import {
   Role,
   Priority,
   Difficulty,
-} from "../../src/shared/generated/prisma/client";
+} from "../../src/shared/lib/db/generated";
 import { hash } from "bcryptjs";
 
 const prisma = new PrismaClient();

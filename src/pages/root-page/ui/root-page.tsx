@@ -1,7 +1,7 @@
 import { prisma } from "@/shared/lib/db/prisma";
-import {Button, Card} from "@/shared/ui";
+import { Button } from "@/shared/ui";
 import { ChevronDown } from "lucide-react";
-import {UserCard} from "@/entities/user/ui/usercard";
+import { UserCard } from "@/entities/user/ui/usercard";
 
 export default async function RootPage() {
   const data = await prisma.user.findMany();
@@ -14,19 +14,19 @@ export default async function RootPage() {
       <div>
         {data.length > 0
           ? data.map((user) => (
-                <UserCard key={user.id} userdata={user}/>
-      //         <div key={user.id}>
-      //           <h1>
-      //             {user.firstname} {user.lastname}
-      //           </h1>
-      //           <p>
-      //             {user.email} {user.role}
-      //           </p>
-      //         </div>
+              <UserCard key={user.id} userdata={user} />
+              //         <div key={user.id}>
+              //           <h1>
+              //             {user.firstname} {user.lastname}
+              //           </h1>
+              //           <p>
+              //             {user.email} {user.role}
+              //           </p>
+              //         </div>
             ))
           : null}
       </div>
-        {/*<UserCard userdata={user}/>*/}
+      {/*<UserCard userdata={user}/>*/}
     </>
   );
 }
