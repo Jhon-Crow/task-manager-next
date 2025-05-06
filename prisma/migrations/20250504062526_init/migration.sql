@@ -15,7 +15,7 @@ CREATE TABLE "Task" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "title" TEXT NOT NULL,
     "description" TEXT,
-    "priority" TEXT,
+    "role" TEXT,
     "difficulty" TEXT,
     "completed" BOOLEAN,
     "authorId" TEXT NOT NULL,
