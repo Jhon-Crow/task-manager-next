@@ -8,12 +8,13 @@ export default async function TaskPage({
   params: Promise<{ id: Task["id"] }>;
 }) {
   const id = (await params).id;
-  const task = await getTaskById(id);
-  if (!task) {
+  const data = await getTaskById(id);
+  if (!data.success) {
+    //TODO
+    return <div>Popa</div>;
+  }
+  if (!data.data) {
     redirect("./not-found");
   }
-  if (!(task instanceof Object)) {
-    return <div>{task}</div>;
-  }
-  return <TaskPageCard task={task} />;
+  return <TaskPageCard task={data.data} />;
 }
