@@ -1,17 +1,21 @@
 "use client";
 
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from "@/shared/ui";
-import {TypeUserForm} from "../../model/types/user";
-import {userFormSchema} from "../../model/validation/schema";
-import {UserTextField} from "./fields/user-text-field";
-import {UserRoleField} from "./fields/user-role-field";
-import {UserFormBtn} from "./user-form-btn";
-import {ApiResult} from "@/shared/types";
-import {toast} from "sonner";
-import {redirect} from "next/navigation";
-import {Routes} from "@/shared/consts/paths";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from "@/shared/ui";
+import {TypeUser, TypeUserForm} from "../../model/types/user";
+import { userFormSchema } from "../../model/validation/schema";
+import { UserFirstnameField } from "./fields/user-firstname-field";
+// import { TaskDescriptionField } from "./fields/task-desciption-field";
+// import { TaskDeadlineField } from "./fields/task-deadline-field";
+// import { TaskPriorityField } from "./fields/task-priority-field";
+import { UserRoleField } from "./fields/user-role-field";
+import { UserFormBtn } from "./user-form-btn";
+import { ApiResult } from "@/shared/types";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
+import { Routes } from "@/shared/consts/paths";
+import {role} from "@/entities/user/model/consts/consts";
 
 export function UserForm({
   defaultValues,
@@ -27,7 +31,9 @@ export function UserForm({
     defaultValues: defaultValues
       ? defaultValues
       : {
-          role: "WORKER",
+          firstname: "",
+          // deadline: 1,
+          role: "",
         },
   });
 
@@ -46,36 +52,55 @@ export function UserForm({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
 
-          <div className="flex gap-x-16">
-              <UserTextField
-                  title='Имя'
-                  name='firstname'
-                  control={form.control}
-              />
-              <UserTextField
-                  title='Фамилия (опц.)'
-                  name='lastname'
-                  control={form.control}
-              />
-          </div>
 
-
-
-          <div className="flex gap-x-16">
-          <UserTextField
-              title='Email'
-              name='email'
+          <FormField
               control={form.control}
+              name="firstname"
+              render={({ field }) => (
+                  <FormItem>
+                      <FormLabel>Имя</FormLabel>
+                      <div className="flex gap-4">
+                          {/*{Object.values(role).map((r) => (*/}
+                              <FormItem className="flex items-center space-x-2">
+                                  <FormControl>
+                                      <Input
+                                          type="text"
+                                          onChange={(e) => field.onChange(e.target.value)}
+                                      />
+                                  </FormControl>
+                                  {/*<FormLabel className="font-normal">{r}</FormLabel>*/}
+                              </FormItem>
+                          {/*))}*/}
+                      </div>
+                      <FormMessage />
+                  </FormItem>
+              )}
           />
 
-          <UserTextField
-              title='Аватарка (опц.)'
-              name='imageUrl'
+          <FormField
               control={form.control}
+              name="email"
+              render={({ field }) => (
+                  <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <div className="flex gap-4">
+                          {/*{Object.values(role).map((r) => (*/}
+                              <FormItem className="flex items-center space-x-2">
+                                  <FormControl>
+                                      <Input
+                                          type="text"
+                                          onChange={(e) => field.onChange(e.target.value)}
+                                      />
+                                  </FormControl>
+                                  {/*<FormLabel className="font-normal">{r}</FormLabel>*/}
+                              </FormItem>
+                          {/*))}*/}
+                      </div>
+                      <FormMessage />
+                  </FormItem>
+              )}
           />
-          </div>
 
-          <div className="flex gap-x-16">
 
           <FormField
               control={form.control}
@@ -84,51 +109,70 @@ export function UserForm({
                   <FormItem>
                       <FormLabel>Пароль</FormLabel>
                       <div className="flex gap-4">
+                          {/*{Object.values(role).map((r) => (*/}
                               <FormItem className="flex items-center space-x-2">
                                   <FormControl>
                                       <Input
-                                          type="password"
+                                          type="password" //todo нужно сделать систему с повторным вводом либо type text
                                           onChange={(e) => field.onChange(e.target.value)}
                                       />
                                   </FormControl>
+                                  {/*<FormLabel className="font-normal">{r}</FormLabel>*/}
                               </FormItem>
+                          {/*))}*/}
                       </div>
                       <FormMessage />
                   </FormItem>
               )}
           />
+
+
+
 
 
           <FormField
               control={form.control}
-              name="confirmPassword"
+              name="role"
               render={({ field }) => (
+                  // todo default 3 role
                   <FormItem>
-                      <FormLabel>Повтори пароль</FormLabel>
+                      <FormLabel>Роль</FormLabel>
                       <div className="flex gap-4">
-                              <FormItem className="flex items-center space-x-2">
+                          {Object.keys(role).map((r) => (
+                              <FormItem key={r} className="flex items-center space-x-2">
                                   <FormControl>
                                       <Input
-                                          type="password"
-                                          onChange={(e) => field.onChange(e.target.value)}
+                                          type="radio"
+                                          checked={field.value === r}
+                                          onChange={() => field.onChange(r)}
                                       />
                                   </FormControl>
+                                  <FormLabel className="font-normal">{r}</FormLabel>
                               </FormItem>
+                          ))}
                       </div>
                       <FormMessage />
                   </FormItem>
               )}
           />
 
-          </div>
-          <UserRoleField control={form.control}/>
 
-          <div
-              className='flex'
-          >
-              <Button variant="destructive" onClick={() => redirect(Routes.USERS_LIST)}>Отменить</Button>
-              <UserFormBtn isCreate={isCreate} className="block ml-auto" />
-          </div>
+
+
+
+
+
+
+
+
+        {/*<UserFirstnameField control={form.control} name="title" />*/}
+        {/*<TaskDescriptionField control={form.control} name="description" />*/}
+        {/*<TaskDeadlineField control={form.control} name="deadline" />*/}
+        <div className="flex gap-x-16">
+          {/*<TaskPriorityField control={form.control} name="priority" />*/}
+          {/*<UserRoleField control={form.control} name="difficulty" />*/}
+        </div>
+        <UserFormBtn isCreate={isCreate} className="block ml-auto" />
       </form>
     </Form>
   );
