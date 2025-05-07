@@ -30,7 +30,7 @@ export function Navbar() {
         {breadcrumbs.map(({ name, path }, index) => {
           const isLast = index === breadcrumbs.length - 1;
           return (
-            <div key={name} className="flex items-center gap-2">
+            <div key={path} className="flex items-center gap-2">
               {
                 <BreadcrumbItem>
                   {!isLast ? (
@@ -56,7 +56,7 @@ export function Navbar() {
                   {actions.map(({ name, path }) => (
                     <Link
                       href={pathname + path}
-                      key={name}
+                      key={path}
                       className="cursor-pointer"
                     >
                       <DropdownMenuItem>{name}</DropdownMenuItem>

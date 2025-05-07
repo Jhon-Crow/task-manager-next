@@ -26,6 +26,12 @@ export const staticPaths = {
     type: "static",
     name: createElement(Home, { className: "size-5" }),
   } as const,
+  users: {
+    key: "USERS_LIST",
+    name: "Пользователи",
+    path: "/users",
+    type: "static",
+  } as const,
 } as const satisfies Record<TypeStaticPaths[number], TypeStaticPathObject>;
 
 export const dynamicPaths = {
@@ -40,6 +46,12 @@ export const dynamicPaths = {
     path: (id: string) => `/tasks/${id}/update`,
     type: "dynamic",
     actionName: "Обновить",
+  } as const,
+  "users/[id]": {
+    key: "USER",
+    path: (id: string) => `/users/${id}`,
+    type: "dynamic",
+    actionName: null,
   } as const,
 } as const satisfies Record<TypeDynamicPaths[number], TypeDynamicPathObject>;
 

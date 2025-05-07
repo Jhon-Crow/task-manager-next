@@ -5,8 +5,15 @@ type RootStaticPaths = readonly ["home"];
 type TaskStaticPaths = readonly ["tasks", "tasks/create"];
 type TaskDynamicPaths = readonly ["tasks/[id]", "tasks/[id]/update"];
 
-export type TypeStaticPaths = [...TaskStaticPaths, ...RootStaticPaths];
-export type TypeDynamicPaths = [...TaskDynamicPaths];
+type UserStaticPaths = readonly ["users"];
+type UserDynamicPaths = readonly ["users/[id]"];
+
+export type TypeStaticPaths = [
+  ...TaskStaticPaths,
+  ...RootStaticPaths,
+  ...UserStaticPaths
+];
+export type TypeDynamicPaths = [...TaskDynamicPaths, ...UserDynamicPaths];
 
 export type TypeNameOfRoute =
   | Capitalize<string>

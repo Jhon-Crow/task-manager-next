@@ -39,7 +39,7 @@ export function TaskForm({
   const submitHandler = async (values: TypeTaskForm) => {
     const data = await submit(values);
     if (!data.success) {
-      toast.info(data.error.message);
+      toast.error(data.error.message);
       return;
     }
     toast.info("Успешно");

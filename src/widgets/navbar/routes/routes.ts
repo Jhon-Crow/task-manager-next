@@ -5,6 +5,10 @@ type TypeBreadcrumps = {
   path: string;
   name: TypeNameOfRoute;
 };
+type TypeActionBreadcrumps = {
+  path: string;
+  name: string;
+};
 
 const mappingKeys = [
   ...Object.keys(staticPaths),
@@ -16,16 +20,20 @@ const rootBreadctump: TypeBreadcrumps = {
   path: staticPaths.home.path,
 };
 
-const rootActions: TypeBreadcrumps[] = [
+const rootActions: TypeActionBreadcrumps[] = [
   {
     name: "Задачи",
     path: `.${Routes.TASKS_LIST}`,
+  },
+  {
+    name: "Пользователь",
+    path: `.${Routes.USERS_LIST}`,
   },
 ];
 
 export function getBreadcrumbs(
   segments?: string[]
-): [TypeBreadcrumps[], TypeBreadcrumps[]] {
+): [TypeBreadcrumps[], TypeActionBreadcrumps[]] {
   const breadcrumps: TypeBreadcrumps[] = [];
 
   breadcrumps.push(rootBreadctump);
@@ -34,7 +42,7 @@ export function getBreadcrumbs(
   }
   let mappingPath = "";
   const lastSegmentIndex = segments.length - 1;
-  const actions: TypeBreadcrumps[] = [];
+  const actions: TypeActionBreadcrumps[] = [];
   segments.forEach((segment, i) => {
     mappingPath += `${mappingPath ? "/" : ""}${segment}`;
     let isDinamic = false;
@@ -87,7 +95,7 @@ export function getBreadcrumbs(
       }
       if (isLast) {
         for (const key of mappingKeys) {
-          if (key !== mappingPath && key.startsWith(mappingPath)) {
+          if (key.startsWith(mappingPath)) {
             const action = key.slice(mappingPath.length);
 
             if (action.includes("[") || action.split("/").length !== 2) {
@@ -100,9 +108,9 @@ export function getBreadcrumbs(
                 ? (dynamicPaths[
                     (mappingPath + action) as keyof typeof dynamicPaths
                   ].actionName as string)
-                : staticPaths[
+                : (staticPaths[
                     (mappingPath + action) as keyof typeof staticPaths
-                  ].name,
+                  ].name as string),
             });
           }
         }
