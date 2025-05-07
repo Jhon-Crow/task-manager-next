@@ -3,7 +3,7 @@ import {TypeUser} from "../../types";
 import Link from "next/link";
 import {Routes} from "@/shared/consts/paths";
 import {UserRoleIcon} from "@/entities/user/ui/users-icons/role-icon";
-import {Avatar, AvatarFallback, AvatarImage} from "@/shared/ui/avatar";
+import {Avatar, AvatarFallback, AvatarImage} from "@/shared/ui";
 
 export const UserListCard = ({ user }: { user: TypeUser }) => {
   //   todo идея: отображать самый близкий к завершению дэдлайн

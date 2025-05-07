@@ -2,7 +2,7 @@ import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} 
 import {TypeUser} from "../../model/types/user";
 import {formatDateToRuShort} from "@/shared/lib/format/formatDayToRuShort";
 import {UserRoleIcon} from "@/entities/user/ui/users-icons/role-icon";
-import {Avatar, AvatarFallback, AvatarImage} from "@/shared/ui/avatar";
+import {Avatar, AvatarFallback, AvatarImage} from "@/shared/ui/Avatar/avatar";
 
 export function UserPageCard({ user }: { user: TypeUser }) {
   return (
