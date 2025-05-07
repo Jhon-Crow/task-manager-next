@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/shared/ui";
 import "../styles/globals.css";
+import { Navbar } from "@/widgets/navbar";
+import { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "ТАСК МАНАГЕР",
@@ -11,11 +13,12 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`antialiased`}>
+        <Navbar />
         {children}
         <Toaster />
       </body>

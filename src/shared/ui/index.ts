@@ -7,3 +7,5 @@ export * from "./Input/input";
 export * from "./Textarea/textarea";
 export * from "./RadioGroup/radio-group";
 export * from "./Sonner/sonner";
+export * from "./Breadcrumb/breadcrumb";
+export * from "./DropdownMenu/dropdown-menu";
