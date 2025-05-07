@@ -1,5 +1,5 @@
 import { TaskList } from "@/entities/task";
-import { TypeTask } from "@/entities/task/types";
+import { TypeTask } from "@/entities/task/public-types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 
 export function TaskListWidget({ tasks }: { tasks: TypeTask[] }) {

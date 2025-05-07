@@ -6,7 +6,7 @@ import {
   CardTitle,
   Timer,
 } from "@/shared/ui";
-import { TypeTask } from "../../types";
+import { TypeTask } from "../../public-types";
 import Link from "next/link";
 import { Routes } from "@/shared/consts/paths";
 import { TaskPriorityIcon } from "../tasks-icons/priority-icon";
@@ -16,11 +16,11 @@ export const TaskListCard = ({ task }: { task: TypeTask }) => {
   const now = new Date();
   const left = task.deadline.getTime() - now.getTime();
   const fullTime = task.deadline.getTime() - task.createdAt.getTime();
-  const percent = (((fullTime - left) / fullTime) * 100).toFixed(0);
+  const percent = ((fullTime - left) / fullTime) * 100;
 
   return (
     <Link href={Routes.TASK(task.id)} className="block">
-      <Card className="relative group flex-row justify-between items-center hover:scale-101 transition-transform shadow-lg delay-100 duration-200 ease-in">
+      <Card className="relative overflow-hidden group flex-row justify-between items-center hover:scale-101 transition-transform shadow-lg delay-100 duration-200 ease-in">
         <CardHeader className="w-[400px] relative">
           <CardTitle className="text-nowrap">{task.title}</CardTitle>
           {task.description && (
@@ -66,7 +66,7 @@ export const TaskListCard = ({ task }: { task: TypeTask }) => {
             </div>
           )}
         </CardContent>
-        <Progress percent={`${percent}%`} />
+        <Progress percent={`${percent >= 100 ? 100 : percent}%`} />
       </Card>
     </Link>
   );

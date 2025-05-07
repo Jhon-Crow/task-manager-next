@@ -2,16 +2,13 @@
 
 import { prisma } from "@/shared/lib/db/prisma";
 import { TypeTask } from "../../types/task";
+import { handleAction } from "@/shared/lib/actions";
 
-export const getTaskById = async (
+const getTaskByIdImplementation = async (
   id: TypeTask["id"]
-): Promise<TypeTask | string | null> => {
-  try {
-    const task = await prisma.task.findUnique({ where: { id } });
-    return task;
-  } catch (e) {
-    console.log(e);
-
-    return "Непредвиденная ошибка";
-  }
+): Promise<TypeTask | null> => {
+  const task = await prisma.task.findUnique({ where: { id } });
+  return task;
 };
+export const getTaskById = async (id: TypeTask["id"]) =>
+  handleAction<TypeTask | null, TypeTask["id"]>(getTaskByIdImplementation, id);
