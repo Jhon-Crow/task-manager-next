@@ -32,6 +32,12 @@ export const staticPaths = {
     path: "/users",
     type: "static",
   } as const,
+  "users/create": {
+    key: "USER_CREATE",
+    path: "/users/create",
+    type: "static",
+    name: "Создать Пользователя",
+  } as const,
 } as const satisfies Record<TypeStaticPaths[number], TypeStaticPathObject>;
 
 export const dynamicPaths = {

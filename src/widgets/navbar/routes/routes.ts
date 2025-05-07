@@ -26,7 +26,7 @@ const rootActions: TypeActionBreadcrumps[] = [
     path: `.${Routes.TASKS_LIST}`,
   },
   {
-    name: "Пользователь",
+    name: "Пользователи",
     path: `.${Routes.USERS_LIST}`,
   },
 ];

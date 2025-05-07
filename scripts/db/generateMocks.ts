@@ -3,7 +3,7 @@ import {
   Role,
   Priority,
   Difficulty,
-} from "../../src/shared/lib/db/generated";
+} from "@/shared/lib/db/generated";
 import { hash } from "bcryptjs";
 
 const prisma = new PrismaClient();
@@ -13,7 +13,7 @@ async function main() {
   await prisma.assignment.deleteMany();
   await prisma.task.deleteMany();
   await prisma.user.deleteMany();
-
+  //
   // Создаем тестовых пользователей
   await prisma.user.createMany({
     data: [
