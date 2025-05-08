@@ -161,31 +161,33 @@ export function UserForm({
 
 
 
+          <UserRoleField control={form.control}/>
 
-          <FormField
-              control={form.control}
-              name="role"
-              render={({ field }) => (
-                  <FormItem>
-                      <FormLabel>Роль</FormLabel>
-                      <div className="flex gap-4">
-                          {Object.keys(role).map((r) => (
-                              <FormItem key={r} className="flex items-center space-x-2">
-                                  <FormControl>
-                                      <Input
-                                          type="radio"
-                                          checked={field.value === r}
-                                          onChange={() => field.onChange(r)}
-                                      />
-                                  </FormControl>
-                                  <FormLabel className="font-normal">{r}</FormLabel>
-                              </FormItem>
-                          ))}
-                      </div>
-                      <FormMessage />
-                  </FormItem>
-              )}
-          />
+
+          {/*<FormField*/}
+          {/*    control={form.control}*/}
+          {/*    name="role"*/}
+          {/*    render={({ field }) => (*/}
+          {/*        <FormItem>*/}
+          {/*            <FormLabel>Роль</FormLabel>*/}
+          {/*            <div className="flex gap-4">*/}
+          {/*                {Object.keys(role).map((r) => (*/}
+          {/*                    <FormItem key={r} className="flex items-center space-x-2">*/}
+          {/*                        <FormControl>*/}
+          {/*                            <Input*/}
+          {/*                                type="radio"*/}
+          {/*                                checked={field.value === r}*/}
+          {/*                                onChange={() => field.onChange(r)}*/}
+          {/*                            />*/}
+          {/*                        </FormControl>*/}
+          {/*                        <FormLabel className="font-normal">{r}</FormLabel>*/}
+          {/*                    </FormItem>*/}
+          {/*                ))}*/}
+          {/*            </div>*/}
+          {/*            <FormMessage />*/}
+          {/*        </FormItem>*/}
+          {/*    )}*/}
+          {/*/>*/}
 
 
 
