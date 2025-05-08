@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from "@/shared/ui";
+import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from "@/shared/ui";
 import {TypeUser, TypeUserForm} from "../../model/types/user";
 import { userFormSchema } from "../../model/validation/schema";
 import { UserFirstnameField } from "./fields/user-firstname-field";
@@ -203,7 +203,12 @@ export function UserForm({
           {/*<TaskPriorityField control={form.control} name="priority" />*/}
           {/*<UserRoleField control={form.control} name="difficulty" />*/}
         </div>
-        <UserFormBtn isCreate={isCreate} className="block ml-auto" />
+          <div
+              className='flex'
+          >
+              <Button variant="destructive" onClick={() => redirect(Routes.USERS_LIST)}>Отменить</Button>
+              <UserFormBtn isCreate={isCreate} className="block ml-auto" />
+          </div>
       </form>
     </Form>
   );
