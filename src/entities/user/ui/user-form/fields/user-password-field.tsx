@@ -11,7 +11,7 @@ import {
 } from "@/shared/ui";
 import {TypeUserForm} from "@/entities/user/model/types/user";
 
-export const UserFirstnameField: TypeField<TypeUserForm, "firstname"> = ({
+export const UserPasswordField: TypeField<TypeUserForm, "firstname"> = ({
   ...props
 }) => {
   const { setNewTask } = useNewTaskContext();

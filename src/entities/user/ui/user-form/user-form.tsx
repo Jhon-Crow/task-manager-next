@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from "@/shared/ui";
 import {TypeUser, TypeUserForm} from "../../model/types/user";
 import { userFormSchema } from "../../model/validation/schema";
-import { UserFirstnameField } from "./fields/user-firstname-field";
+import { UserTextField } from "./fields/user-text-field";
 // import { TaskDescriptionField } from "./fields/task-desciption-field";
 // import { TaskDeadlineField } from "./fields/task-deadline-field";
 // import { TaskPriorityField } from "./fields/task-priority-field";
@@ -50,27 +50,31 @@ export function UserForm({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
 
-
-          <FormField
+          <UserTextField
+              title='Имя'
+              name='firstname'
               control={form.control}
-              name="firstname"
-              render={({ field }) => (
-                  <FormItem>
-                      <FormLabel>Имя</FormLabel>
-                      <div className="flex gap-4">
-                              <FormItem className="flex items-center space-x-2">
-                                  <FormControl>
-                                      <Input
-                                          type="text"
-                                          onChange={(e) => field.onChange(e.target.value)}
-                                      />
-                                  </FormControl>
-                              </FormItem>
-                      </div>
-                      <FormMessage />
-                  </FormItem>
-              )}
           />
+          {/*<FormField*/}
+          {/*    control={form.control}*/}
+          {/*    name="firstname"*/}
+          {/*    render={({ field }) => (*/}
+          {/*        <FormItem>*/}
+          {/*            <FormLabel>Имя</FormLabel>*/}
+          {/*            <div className="flex gap-4">*/}
+          {/*                    <FormItem className="flex items-center space-x-2">*/}
+          {/*                        <FormControl>*/}
+          {/*                            <Input*/}
+          {/*                                type="text"*/}
+          {/*                                onChange={(e) => field.onChange(e.target.value)}*/}
+          {/*                            />*/}
+          {/*                        </FormControl>*/}
+          {/*                    </FormItem>*/}
+          {/*            </div>*/}
+          {/*            <FormMessage />*/}
+          {/*        </FormItem>*/}
+          {/*    )}*/}
+          {/*/>*/}
 
           <FormField
               control={form.control}
@@ -163,31 +167,6 @@ export function UserForm({
 
           <UserRoleField control={form.control}/>
 
-
-          {/*<FormField*/}
-          {/*    control={form.control}*/}
-          {/*    name="role"*/}
-          {/*    render={({ field }) => (*/}
-          {/*        <FormItem>*/}
-          {/*            <FormLabel>Роль</FormLabel>*/}
-          {/*            <div className="flex gap-4">*/}
-          {/*                {Object.keys(role).map((r) => (*/}
-          {/*                    <FormItem key={r} className="flex items-center space-x-2">*/}
-          {/*                        <FormControl>*/}
-          {/*                            <Input*/}
-          {/*                                type="radio"*/}
-          {/*                                checked={field.value === r}*/}
-          {/*                                onChange={() => field.onChange(r)}*/}
-          {/*                            />*/}
-          {/*                        </FormControl>*/}
-          {/*                        <FormLabel className="font-normal">{r}</FormLabel>*/}
-          {/*                    </FormItem>*/}
-          {/*                ))}*/}
-          {/*            </div>*/}
-          {/*            <FormMessage />*/}
-          {/*        </FormItem>*/}
-          {/*    )}*/}
-          {/*/>*/}
 
 
 
