@@ -3,11 +3,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/shared/ui";
-import { TypeTaskForm } from "../../model/types/task";
+import { TypeTask, TypeTaskForm } from "../../model/types/task";
 import { taskFormSchema } from "../../model/validation/schema";
 import { TaskTitleField } from "./fields/task-title-field";
 import { TaskDescriptionField } from "./fields/task-desciption-field";
-import { TaskDeadlineField } from "./fields/task-deadline-field";
 import { TaskPriorityField } from "./fields/task-priority-field";
 import { TaskDifficlyField } from "./fields/task-difficulty-field";
 import { TaskFormBtn } from "./task-form-btn";
@@ -15,12 +14,15 @@ import { ApiResult } from "@/shared/types";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Routes } from "@/shared/consts/paths";
+import { TaskCalendarDeadlineField } from "./fields/task-calendar-deadline-field";
 
 export function TaskForm({
   defaultValues,
+  id,
   submit,
 }: {
   defaultValues?: TypeTaskForm;
+  id?: TypeTask["id"];
   submit: (values: TypeTaskForm) => Promise<ApiResult<void>>;
   sideEffect?: (values: Partial<TypeTaskForm>) => void;
 }) {
@@ -31,7 +33,7 @@ export function TaskForm({
       ? defaultValues
       : {
           title: "",
-          deadline: 1,
+          deadline: new Date(),
           description: "",
         },
   });
@@ -43,16 +45,23 @@ export function TaskForm({
       return;
     }
     toast.info("Успешно");
-    if (isCreate) redirect(Routes.TASKS_LIST);
-
-    redirect("../");
+    toast.info("tit");
+    redirect(id ? Routes.TASK(id) : Routes.TASKS_LIST);
   };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
-        <TaskTitleField control={form.control} name="title" />
-        <TaskDescriptionField control={form.control} name="description" />
-        <TaskDeadlineField control={form.control} name="deadline" />
+        <div className="flex w-full gap-x-2">
+          <div className="flex-1 space-y-5">
+            <TaskTitleField control={form.control} name="title" />
+            <TaskDescriptionField
+              className="h-full"
+              control={form.control}
+              name="description"
+            />
+          </div>
+          <TaskCalendarDeadlineField control={form.control} name="deadline" />
+        </div>
         <div className="flex gap-x-16">
           <TaskPriorityField control={form.control} name="priority" />
           <TaskDifficlyField control={form.control} name="difficulty" />
