@@ -1,4 +1,5 @@
 import { getTaskById, TaskPageCard } from "@/entities/task";
+import { getUserById, getUsersAssignedToTask } from "@/entities/user";
 import { Task } from "@/shared/lib/db/generated";
 import { redirect } from "next/navigation";
 
@@ -16,5 +17,15 @@ export default async function TaskPage({
   if (!data.data) {
     redirect("./not-found");
   }
-  return <TaskPageCard task={data.data} />;
+  const users = await getUsersAssignedToTask(id);
+  const author = await getUserById(data.data.authorId);
+  return (
+    <TaskPageCard
+      task={data.data}
+      author={
+        author.success ? (author.data ? author.data : undefined) : undefined
+      }
+      users={users.success ? users.data : undefined}
+    />
+  );
 }

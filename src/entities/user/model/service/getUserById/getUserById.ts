@@ -1,16 +1,14 @@
 "server only";
-import {TypeUser} from "../../types/user";
+import { handleAction } from "@/shared/lib/actions";
+import { TypeUser } from "../../types/user";
 import { prisma } from "@/shared/lib/db/prisma";
 
-export const getUserById = async (
+const getUserByIdImplementation = async (
   id: TypeUser["id"]
-): Promise<TypeUser | string | null> => {
-  try {
-    const user = await prisma.user.findUnique({ where: { id } });
-    return user;
-  } catch (e) {
-    console.log(e);
-
-    return "Непредвиденная ошибка";
-  }
+): Promise<TypeUser | null> => {
+  const user = await prisma.user.findUnique({ where: { id } });
+  return user;
 };
+
+export const getUserById = async (id: TypeUser["id"]) =>
+  handleAction(getUserByIdImplementation, id);

@@ -5,5 +5,7 @@ export type TypeField<
   TFieldValues extends FieldValues,
   TName extends FieldPath<TFieldValues>
 > = (
-  props: Omit<ControllerProps<TFieldValues, TName>, "render">
+  props: Omit<ControllerProps<TFieldValues, TName>, "render"> & {
+    className?: string;
+  }
 ) => ReactElement;
