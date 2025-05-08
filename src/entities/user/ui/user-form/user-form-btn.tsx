@@ -10,9 +10,11 @@ export const UserFormBtn = ({
 }) => {
   const { isSubmitting, isSubmitted } = useFormState();
 
+  console.log(isSubmitting)
+
   return (
     <Button
-      disabled={isSubmitting || isSubmitted}
+      disabled={isSubmitting}
       type="submit"
       className={className}
     >

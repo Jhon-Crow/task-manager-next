@@ -1,12 +1,28 @@
-import { z } from "zod";
-import {Difficulty, Priority, Role} from "@/shared/lib/db/generated";
+import {z} from "zod";
+import {Role} from "@/shared/lib/db/generated";
 
 export const userFormSchema = z.object({
   firstname: z.string().max(25).min(4),
+  // lastname: z.string().max(25).min(4).optional(),
+  // imageUrl: z.string().max(100).optional(),
   password: z.string().max(40).min(8),
+  // confirmPassword: z.string(),
   email: z.string().max(25).min(4), //todo need better detalization
-  // deadline: z.coerce.number().min(1).int(),
-  // description: z.string().max(300).optional(),
   role: z.nativeEnum(Role)
-  // priority: z.nativeEnum(Priority).optional(),
-});
+})
+//         .superRefine(({ confirmPassword, password }, ctx) => {
+//   if (confirmPassword !== password) {
+//     ctx.addIssue({
+//       code: z.ZodIssueCode.custom,
+//       message: "Пароль не совпал",
+//       path: ['confirmPassword'],
+//       fatal: true
+//     });
+//     return z.NEVER;
+//   }
+// })
+    // .transform(data => {
+    //   const {confirmPassword, ...rest} = data;
+    //   return rest;
+    // })
+;

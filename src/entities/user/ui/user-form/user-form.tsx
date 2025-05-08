@@ -31,9 +31,7 @@ export function UserForm({
     defaultValues: defaultValues
       ? defaultValues
       : {
-          firstname: "",
-          // deadline: 1,
-          role: "",
+          role: "WORKER",
         },
   });
 
@@ -60,7 +58,6 @@ export function UserForm({
                   <FormItem>
                       <FormLabel>Имя</FormLabel>
                       <div className="flex gap-4">
-                          {/*{Object.values(role).map((r) => (*/}
                               <FormItem className="flex items-center space-x-2">
                                   <FormControl>
                                       <Input
@@ -68,9 +65,28 @@ export function UserForm({
                                           onChange={(e) => field.onChange(e.target.value)}
                                       />
                                   </FormControl>
-                                  {/*<FormLabel className="font-normal">{r}</FormLabel>*/}
                               </FormItem>
-                          {/*))}*/}
+                      </div>
+                      <FormMessage />
+                  </FormItem>
+              )}
+          />
+
+          <FormField
+              control={form.control}
+              name="lastname"
+              render={({ field }) => (
+                  <FormItem>
+                      <FormLabel>lastname</FormLabel>
+                      <div className="flex gap-4">
+                              <FormItem className="flex items-center space-x-2">
+                                  <FormControl>
+                                      <Input
+                                          type="text"
+                                          onChange={(e) => field.onChange(e.target.value)}
+                                      />
+                                  </FormControl>
+                              </FormItem>
                       </div>
                       <FormMessage />
                   </FormItem>
@@ -84,7 +100,6 @@ export function UserForm({
                   <FormItem>
                       <FormLabel>Email</FormLabel>
                       <div className="flex gap-4">
-                          {/*{Object.values(role).map((r) => (*/}
                               <FormItem className="flex items-center space-x-2">
                                   <FormControl>
                                       <Input
@@ -92,9 +107,7 @@ export function UserForm({
                                           onChange={(e) => field.onChange(e.target.value)}
                                       />
                                   </FormControl>
-                                  {/*<FormLabel className="font-normal">{r}</FormLabel>*/}
                               </FormItem>
-                          {/*))}*/}
                       </div>
                       <FormMessage />
                   </FormItem>
@@ -109,17 +122,36 @@ export function UserForm({
                   <FormItem>
                       <FormLabel>Пароль</FormLabel>
                       <div className="flex gap-4">
-                          {/*{Object.values(role).map((r) => (*/}
                               <FormItem className="flex items-center space-x-2">
                                   <FormControl>
                                       <Input
-                                          type="password" //todo нужно сделать систему с повторным вводом либо type text
+                                          type="password"
                                           onChange={(e) => field.onChange(e.target.value)}
                                       />
                                   </FormControl>
-                                  {/*<FormLabel className="font-normal">{r}</FormLabel>*/}
                               </FormItem>
-                          {/*))}*/}
+                      </div>
+                      <FormMessage />
+                  </FormItem>
+              )}
+          />
+
+
+          <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                  <FormItem>
+                      <FormLabel>Повтори пароль</FormLabel>
+                      <div className="flex gap-4">
+                              <FormItem className="flex items-center space-x-2">
+                                  <FormControl>
+                                      <Input
+                                          type="password"
+                                          onChange={(e) => field.onChange(e.target.value)}
+                                      />
+                                  </FormControl>
+                              </FormItem>
                       </div>
                       <FormMessage />
                   </FormItem>
@@ -134,7 +166,6 @@ export function UserForm({
               control={form.control}
               name="role"
               render={({ field }) => (
-                  // todo default 3 role
                   <FormItem>
                       <FormLabel>Роль</FormLabel>
                       <div className="flex gap-4">
