@@ -1,21 +1,17 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from "@/shared/ui";
-import {TypeUser, TypeUserForm} from "../../model/types/user";
-import { userFormSchema } from "../../model/validation/schema";
-import { UserTextField } from "./fields/user-text-field";
-// import { TaskDescriptionField } from "./fields/task-desciption-field";
-// import { TaskDeadlineField } from "./fields/task-deadline-field";
-// import { TaskPriorityField } from "./fields/task-priority-field";
-import { UserRoleField } from "./fields/user-role-field";
-import { UserFormBtn } from "./user-form-btn";
-import { ApiResult } from "@/shared/types";
-import { toast } from "sonner";
-import { redirect } from "next/navigation";
-import { Routes } from "@/shared/consts/paths";
-import {role} from "@/entities/user/model/consts/consts";
+import {TypeUserForm} from "../../model/types/user";
+import {userFormSchema} from "../../model/validation/schema";
+import {UserTextField} from "./fields/user-text-field";
+import {UserRoleField} from "./fields/user-role-field";
+import {UserFormBtn} from "./user-form-btn";
+import {ApiResult} from "@/shared/types";
+import {toast} from "sonner";
+import {redirect} from "next/navigation";
+import {Routes} from "@/shared/consts/paths";
 
 export function UserForm({
   defaultValues,
@@ -50,74 +46,36 @@ export function UserForm({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
 
+          <div className="flex gap-x-16">
+              <UserTextField
+                  title='Имя'
+                  name='firstname'
+                  control={form.control}
+              />
+              <UserTextField
+                  title='Фамилия (опц.)'
+                  name='lastname'
+                  control={form.control}
+              />
+          </div>
+
+
+
+          <div className="flex gap-x-16">
           <UserTextField
-              title='Имя'
-              name='firstname'
+              title='Email'
+              name='email'
               control={form.control}
           />
-          {/*<FormField*/}
-          {/*    control={form.control}*/}
-          {/*    name="firstname"*/}
-          {/*    render={({ field }) => (*/}
-          {/*        <FormItem>*/}
-          {/*            <FormLabel>Имя</FormLabel>*/}
-          {/*            <div className="flex gap-4">*/}
-          {/*                    <FormItem className="flex items-center space-x-2">*/}
-          {/*                        <FormControl>*/}
-          {/*                            <Input*/}
-          {/*                                type="text"*/}
-          {/*                                onChange={(e) => field.onChange(e.target.value)}*/}
-          {/*                            />*/}
-          {/*                        </FormControl>*/}
-          {/*                    </FormItem>*/}
-          {/*            </div>*/}
-          {/*            <FormMessage />*/}
-          {/*        </FormItem>*/}
-          {/*    )}*/}
-          {/*/>*/}
 
-          <FormField
+          <UserTextField
+              title='Аватарка (опц.)'
+              name='imageUrl'
               control={form.control}
-              name="lastname"
-              render={({ field }) => (
-                  <FormItem>
-                      <FormLabel>lastname</FormLabel>
-                      <div className="flex gap-4">
-                              <FormItem className="flex items-center space-x-2">
-                                  <FormControl>
-                                      <Input
-                                          type="text"
-                                          onChange={(e) => field.onChange(e.target.value)}
-                                      />
-                                  </FormControl>
-                              </FormItem>
-                      </div>
-                      <FormMessage />
-                  </FormItem>
-              )}
           />
+          </div>
 
-          <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                  <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <div className="flex gap-4">
-                              <FormItem className="flex items-center space-x-2">
-                                  <FormControl>
-                                      <Input
-                                          type="text"
-                                          onChange={(e) => field.onChange(e.target.value)}
-                                      />
-                                  </FormControl>
-                              </FormItem>
-                      </div>
-                      <FormMessage />
-                  </FormItem>
-              )}
-          />
-
+          <div className="flex gap-x-16">
 
           <FormField
               control={form.control}
@@ -162,28 +120,9 @@ export function UserForm({
               )}
           />
 
-
-
-
+          </div>
           <UserRoleField control={form.control}/>
 
-
-
-
-
-
-
-
-
-
-
-        {/*<UserFirstnameField control={form.control} name="title" />*/}
-        {/*<TaskDescriptionField control={form.control} name="description" />*/}
-        {/*<TaskDeadlineField control={form.control} name="deadline" />*/}
-        <div className="flex gap-x-16">
-          {/*<TaskPriorityField control={form.control} name="priority" />*/}
-          {/*<UserRoleField control={form.control} name="difficulty" />*/}
-        </div>
           <div
               className='flex'
           >
