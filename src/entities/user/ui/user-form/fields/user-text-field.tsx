@@ -1,17 +1,8 @@
-import { TypeTaskForm } from "@/entities/task/model/types/task";
-import { useNewTaskContext } from "@/shared/hooks/useNewTaskContext";
-import { TypeField } from "@/shared/types";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Input,
-} from "@/shared/ui";
+import {TypeField} from "@/shared/types";
+import {FormControl, FormField, FormItem, FormLabel, FormMessage, Input,} from "@/shared/ui";
 import {TypeUserForm} from "@/entities/user/model/types/user";
 
-export const UserTextField: TypeField<TypeUserForm> = ({
+export const UserTextField: TypeField<TypeUserForm, 'firstname' | 'lastname' | 'email' | 'imageUrl'> = ({
     title,
     name,
     control,
