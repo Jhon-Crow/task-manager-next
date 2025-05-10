@@ -8,12 +8,9 @@ const getUserByIdImplementation = async (
 ): Promise<TypeUser | null> => {
   const user = await prisma.user.findUnique({
     where: { id },
-    include: {
-      tasks: { include: { task: true } },
-    },
   });
   return user;
 };
 
 export const getUserById = async (id: TypeUser["id"]) =>
-  handleAction(getUserByIdImplementation, id);
+  handleAction<TypeUser | null, TypeUser["id"]>(getUserByIdImplementation, id);

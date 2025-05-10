@@ -8,11 +8,9 @@ export default async function UserPage({
 }) {
   const id = (await params).id;
   const user = await getUserById(id);
-  if (!user) {
+  if (!user || !user.success || !user.data) {
     redirect("./not-found");
   }
-  if (!(user instanceof Object)) {
-    return <div>{user}</div>;
-  }
-  return <UserPageCard user={user} />;
+
+  return <UserPageCard user={user.data} />;
 }

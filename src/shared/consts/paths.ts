@@ -20,6 +20,12 @@ export const staticPaths = {
     type: "static",
     name: "Создать Задачу",
   } as const,
+  "tasks/[id]/update": {
+    key: "TASK_UPDATE",
+    path: (id: string) => `/tasks/${id}/update`,
+    type: "static",
+    name: "Обновить",
+  } as const,
   home: {
     key: "ROOT",
     path: "/",
@@ -41,12 +47,12 @@ export const dynamicPaths = {
     type: "dynamic",
     actionName: null,
   } as const,
-  "tasks/[id]/update": {
-    key: "TASK_UPDATE",
-    path: (id: string) => `/tasks/${id}/update`,
-    type: "dynamic",
-    actionName: "Обновить",
-  } as const,
+  // "tasks/[id]/update": {
+  //   key: "TASK_UPDATE",
+  //   path: (id: string) => `/tasks/${id}/update`,
+  //   type: "dynamic",
+  //   actionName: "Обновить",
+  // } as const,
   "users/[id]": {
     key: "USER",
     path: (id: string) => `/users/${id}`,

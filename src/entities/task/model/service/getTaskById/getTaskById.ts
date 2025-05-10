@@ -6,7 +6,7 @@ import { handleAction } from "@/shared/lib/actions";
 
 const getTaskByIdImplementation = async (
   id: TypeTask["id"]
-): Promise<TypeTask | null> => {
+): Promise<TypeTask | null>  => {
   const task = await prisma.task.findUnique({ where: { id } });
   return task;
 };
