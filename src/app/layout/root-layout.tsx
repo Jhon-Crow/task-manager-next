@@ -3,6 +3,7 @@ import { Toaster } from "@/shared/ui";
 import "../styles/globals.css";
 import { Navbar } from "@/widgets/navbar";
 import { ReactNode } from "react";
+import { StoreProvider } from "../providers/StoreProvider";
 
 export const metadata: Metadata = {
   title: "ТАСК МАНАГЕР",
@@ -17,11 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`antialiased`}>
-        <Navbar />
-        {children}
-        <Toaster />
-      </body>
+      <StoreProvider>
+        <body className={`antialiased`}>
+          <Navbar />
+          {children}
+          <Toaster />
+        </body>
+      </StoreProvider>
     </html>
   );
 }

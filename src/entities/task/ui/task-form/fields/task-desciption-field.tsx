@@ -8,14 +8,14 @@ import {
   Textarea,
 } from "@/shared/ui";
 import { TypeTaskForm } from "../../../model/types/task";
-import { useNewTaskContext } from "@/shared/hooks/useNewTaskContext";
 import { cn } from "@/shared/lib/utils";
+import { useTaskActions } from "@/entities/task";
 
 export const TaskDescriptionField: TypeField<TypeTaskForm, "description"> = ({
   className,
   ...props
 }) => {
-  const { setNewTask } = useNewTaskContext();
+  const { setNewTaskDesctiption } = useTaskActions();
   return (
     <FormField
       {...props}
@@ -30,7 +30,7 @@ export const TaskDescriptionField: TypeField<TypeTaskForm, "description"> = ({
               placeholder="Опишите задачу..."
               {...field}
               onChange={(e) => {
-                setNewTask({ description: e.target.value });
+                setNewTaskDesctiption(e.target.value);
                 field.onChange(e.target.value);
               }}
             />

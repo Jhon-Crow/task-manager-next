@@ -21,19 +21,21 @@ export function TaskForm({
   id,
   submit,
 }: {
-  defaultValues?: TypeTaskForm;
+  defaultValues?: Partial<TypeTaskForm>;
   id?: TypeTask["id"];
   submit: (values: TypeTaskForm) => Promise<ApiResult<void>>;
-  sideEffect?: (values: Partial<TypeTaskForm>) => void;
 }) {
   const isCreate = defaultValues ? false : true;
+  const now = new Date();
+  now.setHours(23, 59, 59);
+  const deadline = defaultValues?.deadline ? defaultValues.deadline : now;
   const form = useForm<TypeTaskForm>({
     resolver: zodResolver(taskFormSchema),
     defaultValues: defaultValues
       ? defaultValues
       : {
           title: "",
-          deadline: new Date(),
+          deadline: deadline,
           description: "",
         },
   });

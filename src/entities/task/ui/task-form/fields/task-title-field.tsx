@@ -1,5 +1,5 @@
+import { useActions } from "../../../model/slice/taskSlice";
 import { TypeTaskForm } from "@/entities/task/model/types/task";
-import { useNewTaskContext } from "@/shared/hooks/useNewTaskContext";
 import { TypeField } from "@/shared/types";
 import {
   FormControl,
@@ -13,7 +13,8 @@ import {
 export const TaskTitleField: TypeField<TypeTaskForm, "title"> = ({
   ...props
 }) => {
-  const { setNewTask } = useNewTaskContext();
+  const { setNewTaskTitle } = useActions();
+
   return (
     <FormField
       {...props}
@@ -25,7 +26,7 @@ export const TaskTitleField: TypeField<TypeTaskForm, "title"> = ({
               placeholder="Название..."
               {...field}
               onChange={(e) => {
-                setNewTask({ title: e.target.value });
+                setNewTaskTitle(e.target.value);
                 field.onChange(e);
               }}
             />
