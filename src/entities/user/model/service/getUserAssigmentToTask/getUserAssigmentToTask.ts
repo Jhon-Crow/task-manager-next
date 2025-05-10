@@ -1,8 +1,10 @@
-import { TypeTask } from "@/entities/task/public-types";
+import { TypeTask, TypeTaskWorker } from "@/entities/task/public-types";
 import { handleAction } from "@/shared/lib/actions";
 import { prisma } from "@/shared/lib/db/prisma";
 
-const getUsersAssignedToTaskImplementation = async (taskId: TypeTask["id"]) => {
+const getUsersAssignedToTaskImplementation = async (
+  taskId: TypeTask["id"]
+): Promise<TypeTaskWorker[]> => {
   const assignedUsers = await prisma.user.findMany({
     where: {
       tasks: {

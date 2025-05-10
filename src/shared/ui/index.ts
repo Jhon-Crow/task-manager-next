@@ -11,3 +11,4 @@ export * from "./Breadcrumb/breadcrumb";
 export * from "./DropdownMenu/dropdown-menu";
 export * from "./Avatar/avatar";
 export * from "./Calendar/calendar";
+export * from "./Skeleton/skeleton";

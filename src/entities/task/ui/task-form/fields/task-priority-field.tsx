@@ -12,10 +12,12 @@ import {
 import { priority } from "../../../model/consts/consts";
 import { TypePriorityTask, TypeTaskForm } from "../../../model/types/task";
 import { TaskPriorityIcon } from "../../tasks-icons/priority-icon";
+import { useActions } from "../../../model/slice/taskSlice";
 
 export const TaskPriorityField: TypeField<TypeTaskForm, "priority"> = ({
   ...props
 }) => {
+  const { setNewTaskPriority } = useActions();
   return (
     <FormField
       {...props}
@@ -27,7 +29,10 @@ export const TaskPriorityField: TypeField<TypeTaskForm, "priority"> = ({
           </div>
           <FormControl>
             <RadioGroup
-              onValueChange={field.onChange}
+              onValueChange={(value) => {
+                setNewTaskPriority(value as TypeTaskForm["priority"]);
+                field.onChange(value);
+              }}
               defaultValue={field.value}
               className="flex flex-col gap-y-8 ml-2"
             >

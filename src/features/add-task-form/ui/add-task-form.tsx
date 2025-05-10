@@ -1,5 +1,5 @@
 import { createTask, TaskForm } from "@/entities/task";
 
-export const AddTaskForm = () => {
+export const CreateTaskForm = () => {
   return <TaskForm submit={createTask} />;
 };

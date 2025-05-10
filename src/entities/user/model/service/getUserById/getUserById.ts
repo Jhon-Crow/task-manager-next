@@ -6,7 +6,12 @@ import { prisma } from "@/shared/lib/db/prisma";
 const getUserByIdImplementation = async (
   id: TypeUser["id"]
 ): Promise<TypeUser | null> => {
-  const user = await prisma.user.findUnique({ where: { id } });
+  const user = await prisma.user.findUnique({
+    where: { id },
+    include: {
+      tasks: { include: { task: true } },
+    },
+  });
   return user;
 };
 

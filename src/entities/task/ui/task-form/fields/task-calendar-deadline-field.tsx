@@ -1,3 +1,4 @@
+import { useActions } from "../../../model/slice/taskSlice";
 import { TypeTaskForm } from "@/entities/task/public-types";
 import { TypeField } from "@/shared/types";
 import {
@@ -13,6 +14,7 @@ export const TaskCalendarDeadlineField: TypeField<TypeTaskForm, "deadline"> = ({
 }) => {
   const currentDay = new Date();
   currentDay.setDate(currentDay.getDate() - 1);
+  const { setNewTaskDeadline } = useActions();
   return (
     <FormField
       {...props}
@@ -28,7 +30,8 @@ export const TaskCalendarDeadlineField: TypeField<TypeTaskForm, "deadline"> = ({
             selected={field.value}
             onSelect={(day) => {
               day?.setHours(23, 59, 59);
-
+              const time = day?.getTime();
+              setNewTaskDeadline(time);
               field.onChange(day);
             }}
             lang="ru-RU"
