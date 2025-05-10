@@ -1,21 +1,38 @@
 "use client";
 
 import { TypeTask } from "@/entities/task/public-types";
-import { TaskContext } from "@/shared/contexts";
-import { ReactNode, useMemo } from "react";
+import { DynamicModuleLoader } from "@/shared/lib/components";
+import { ReactNode, useEffect } from "react";
+import { reducer, name, useActions } from "../model/slice/taskSlice";
+import { useCurrentPageActions } from "@/shared/lib/slices/currentPage";
 
-export const TaskProvider = ({
-  children,
-  task,
-}: {
+interface TaskProviderProps {
   children: ReactNode;
-  task?: TypeTask;
-}) => {
-  const value = useMemo(
-    () => ({
-      task: task || ({} as TypeTask),
-    }),
-    [task]
+  task: TypeTask | null;
+}
+
+const reducers: ReducersList = {
+  [name]: reducer,
+};
+
+export const TaskProvider = ({ children, task }: TaskProviderProps) => {
+  const { changePage } = useCurrentPageActions();
+  const { setTask } = useActions();
+
+  useEffect(() => {
+    changePage("tasks/[id]");
+    setTask(
+      task
+        ? {
+            ...task,
+            deadline: task?.deadline.getTime(),
+            createdAt: task?.createdAt.getTime(),
+            updatedAt: task?.updatedAt.getTime(),
+          }
+        : null
+    );
+  }, [changePage, setTask, task]);
+  return (
+    <DynamicModuleLoader reducers={reducers}>{children}</DynamicModuleLoader>
   );
-  return <TaskContext value={value}>{children}</TaskContext>;
 };

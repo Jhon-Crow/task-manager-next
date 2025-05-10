@@ -3,7 +3,7 @@ import { Difficulty, Priority } from "@/shared/lib/db/generated";
 
 export const taskFormSchema = z.object({
   title: z.string().max(25).min(2),
-  deadline: z.coerce.number().min(1).int(),
+  deadline: z.date(),
   description: z.string().max(300).optional(),
   difficulty: z.nativeEnum(Difficulty).optional(),
   priority: z.nativeEnum(Priority).optional(),

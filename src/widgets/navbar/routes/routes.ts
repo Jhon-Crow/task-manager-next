@@ -1,14 +1,6 @@
 import { Routes, staticPaths, dynamicPaths } from "@/shared/consts/paths";
-import { TypeNameOfRoute } from "@/shared/types";
-
-type TypeBreadcrumps = {
-  path: string;
-  name: TypeNameOfRoute;
-};
-type TypeActionBreadcrumps = {
-  path: string;
-  name: string;
-};
+import { TypeActionBreadcrumps, TypeBreadcrumps } from "../model/types/navbar";
+import { PagesForNavbar } from "@/shared/lib/slices/currentPage/model/types/CurrentPageSchema";
 
 const mappingKeys = [
   ...Object.keys(staticPaths),
@@ -18,6 +10,7 @@ const mappingKeys = [
 const rootBreadctump: TypeBreadcrumps = {
   name: staticPaths.home.name,
   path: staticPaths.home.path,
+  type: "static",
 };
 
 const rootActions: TypeActionBreadcrumps[] = [
@@ -32,6 +25,7 @@ const rootActions: TypeActionBreadcrumps[] = [
 ];
 
 export function getBreadcrumbs(
+  currentPage: PagesForNavbar,
   segments?: string[]
 ): [TypeBreadcrumps[], TypeActionBreadcrumps[]] {
   const breadcrumps: TypeBreadcrumps[] = [];
@@ -41,10 +35,12 @@ export function getBreadcrumbs(
     return [breadcrumps, rootActions];
   }
   let mappingPath = "";
+  let currentPath = "";
   const lastSegmentIndex = segments.length - 1;
   const actions: TypeActionBreadcrumps[] = [];
   segments.forEach((segment, i) => {
     mappingPath += `${mappingPath ? "/" : ""}${segment}`;
+    currentPath += `${currentPage ? "/" : ""}${segment}`;
     let isDinamic = false;
     const isLast = lastSegmentIndex == i;
 
@@ -67,6 +63,7 @@ export function getBreadcrumbs(
           isDinamic = true;
           tempMappingPath += `${tempMappingPath ? "/" : ""}${keySeg}`;
         } else {
+          isDinamic = false;
           if (keySeg !== actualSeg) {
             isMatch = false;
             break;
@@ -82,15 +79,24 @@ export function getBreadcrumbs(
     }
     if (matchedKey) {
       if (!isDinamic) {
-        breadcrumps.push(staticPaths[mappingPath as keyof typeof staticPaths]);
+        breadcrumps.push({
+          ...staticPaths[mappingPath as keyof typeof staticPaths],
+          path: currentPath,
+        });
       } else {
         const pathObject =
           dynamicPaths[mappingPath as keyof typeof dynamicPaths];
         if (pathObject.type !== "dynamic") return;
         const { actionName, path } = pathObject;
+
         breadcrumps.push({
           name: actionName ? actionName : segment,
           path: path(segment),
+          type: isDinamic
+            ? mappingPath == currentPage
+              ? currentPage
+              : "dynamic"
+            : "static",
         });
       }
       if (isLast) {
@@ -101,16 +107,11 @@ export function getBreadcrumbs(
             if (action.includes("[") || action.split("/").length !== 2) {
               continue;
             }
-
             actions.push({
               path: `${key.slice(mappingPath.length)}`,
-              name: isDinamic
-                ? (dynamicPaths[
-                    (mappingPath + action) as keyof typeof dynamicPaths
-                  ].actionName as string)
-                : (staticPaths[
-                    (mappingPath + action) as keyof typeof staticPaths
-                  ].name as string),
+              name: staticPaths[
+                (mappingPath + action) as keyof typeof staticPaths
+              ].name as string,
             });
           }
         }

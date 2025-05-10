@@ -4,9 +4,7 @@ import {
   Breadcrumb,
   BreadcrumbEllipsis,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
   DropdownMenu,
   DropdownMenuContent,
@@ -16,32 +14,30 @@ import {
 import { getBreadcrumbs } from "../routes/routes";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useSelectCurrentPage } from "@/shared/lib/slices/currentPage";
+import { NavbarBreadcrump } from "./navbar-breadcrump";
 
 export function Navbar() {
   const pathname = usePathname();
-
+  const currentPage = useSelectCurrentPage();
   const [breadcrumbs, actions] = getBreadcrumbs(
+    currentPage,
     pathname?.slice(1) ? pathname.slice(1).split("/") : undefined
   );
 
   return (
     <Breadcrumb className="px-12 py-2">
       <BreadcrumbList>
-        {breadcrumbs.map(({ name, path }, index) => {
+        {breadcrumbs.map(({ path, name, type }, index) => {
           const isLast = index === breadcrumbs.length - 1;
           return (
-            <div key={path} className="flex items-center gap-2">
-              {
-                <BreadcrumbItem>
-                  {!isLast ? (
-                    <BreadcrumbLink href={path}>{name}</BreadcrumbLink>
-                  ) : (
-                    <BreadcrumbPage>{name}</BreadcrumbPage>
-                  )}
-                </BreadcrumbItem>
-              }
-              {!isLast && <BreadcrumbSeparator />}
-            </div>
+            <NavbarBreadcrump
+              key={path}
+              path={path}
+              name={name}
+              type={type}
+              isLast={isLast}
+            />
           );
         })}
         {actions.length > 0 && (

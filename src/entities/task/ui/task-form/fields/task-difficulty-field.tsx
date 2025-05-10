@@ -12,12 +12,12 @@ import {
 import { difficulty } from "../../../model/consts/consts";
 import { TypeDifficultTask, TypeTaskForm } from "../../../model/types/task";
 import { TaskDifficultyIcon } from "../../tasks-icons/difficulty-icon";
-import { useNewTaskContext } from "@/shared/hooks/useNewTaskContext";
+import { useActions } from "../../../model/slice/taskSlice";
 
 export const TaskDifficlyField: TypeField<TypeTaskForm, "difficulty"> = ({
   ...props
 }) => {
-  const { setNewTask } = useNewTaskContext();
+  const { setNewTaskDifficulty } = useActions();
   return (
     <FormField
       {...props}
@@ -31,9 +31,7 @@ export const TaskDifficlyField: TypeField<TypeTaskForm, "difficulty"> = ({
             <RadioGroup
               onValueChange={(value) => {
                 field.onChange(value);
-                setNewTask({
-                  difficulty: value as NonNullable<TypeDifficultTask>,
-                });
+                setNewTaskDifficulty(value as TypeTaskForm["difficulty"]);
               }}
               defaultValue={field.value}
               className="flex flex-col gap-y-8 ml-2"
