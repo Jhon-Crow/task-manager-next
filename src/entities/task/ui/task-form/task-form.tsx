@@ -11,10 +11,10 @@ import { TaskPriorityField } from "./fields/task-priority-field";
 import { TaskDifficlyField } from "./fields/task-difficulty-field";
 import { TaskFormBtn } from "./task-form-btn";
 import { ApiResult } from "@/shared/types";
-import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Routes } from "@/shared/consts/paths";
 import { TaskCalendarDeadlineField } from "./fields/task-calendar-deadline-field";
+import { useServerAction } from "@/shared/hooks/useServerAction";
 
 export function TaskForm({
   defaultValues,
@@ -28,6 +28,7 @@ export function TaskForm({
   const isCreate = defaultValues ? false : true;
   const now = new Date();
   now.setHours(23, 59, 59);
+  const handledSubmit = useServerAction(submit);
   const deadline = defaultValues?.deadline ? defaultValues.deadline : now;
   const form = useForm<TypeTaskForm>({
     resolver: zodResolver(taskFormSchema),
@@ -41,13 +42,8 @@ export function TaskForm({
   });
 
   const submitHandler = async (values: TypeTaskForm) => {
-    const data = await submit(values);
-    if (!data.success) {
-      toast.error(data.error.message);
-      return;
-    }
-    toast.info("Успешно");
-    toast.info("tit");
+    const success = await handledSubmit(values);
+    if (success === false) return;
     redirect(id ? Routes.TASK(id) : Routes.TASKS_LIST);
   };
   return (

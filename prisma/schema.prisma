@@ -28,7 +28,7 @@ model Task {
   priority    Priority?
   difficulty  Difficulty?
   completed   Boolean?
-  author      User         @relation("AuthoredTasks", fields: [authorId], references: [id])
+  author      User         @relation("AuthoredTasks", fields: [authorId], references: [id], onDelete: Cascade)
   authorId    String
   assignments Assignment[]
   createdAt   DateTime     @default(now())
@@ -37,9 +37,9 @@ model Task {
 }
 
 model Assignment {
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
-  task   Task   @relation(fields: [taskId], references: [id])
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
   taskId String
 
   @@id([userId, taskId])
