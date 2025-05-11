@@ -3,11 +3,14 @@ import type { CurrentPageSchema } from "@/shared/lib/slices/currentPage/public-t
 import { createReduxStore } from "../config/store";
 import { taskReducerName } from "@/entities/task";
 import { TaskSchema } from "@/entities/task/public-types";
+import { UserSchema } from "@/entities/user/types";
+import { userReducerName } from "@/entities/user";
 
 declare global {
   interface StateSchema {
     [currentPageReducerName]: CurrentPageSchema;
     [taskReducerName]?: TaskSchema;
+    [userReducerName]?: UserSchema;
   }
   type StateSchemaKey = keyof StateSchema;
 
