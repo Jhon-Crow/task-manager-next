@@ -1,3 +1,5 @@
+export {UserActionsMenu} from "./ui/user-actions-menu/user-actions-menu";
+
 export { useSelectUserFullName } from "./model/selectors/selectUser";
 
 export { UserProvider } from "./provider/UserProvider";
@@ -12,6 +14,7 @@ export { getUserById } from "./model/service/getUserById/getUserById";
 export { getAllUsers } from "./model/service/getAllUsers/getAllUsers";
 
 export { UserList } from "./ui/user-list/user-list";
+
 export {
   name as userReducerName,
   reducer as userSliceReducer,
