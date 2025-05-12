@@ -7,8 +7,9 @@ import {
   BreadcrumbSeparator,
   Skeleton,
 } from "@/shared/ui";
-import { useSelectTaskTitle } from "@/entities/task/model/selectors/selectTask";
-import { PagesForNavbar } from "@/shared/lib/slices/currentPage/public-types";
+import { useSelectTaskTitle } from "@/entities/task";
+import type { PagesForNavbar } from "@/shared/lib/slices/currentPage/public-types";
+import { useSelectUserFullName } from "@/entities/user";
 
 type TypeBreadcrumpContainer = TypeBreadcrumps & {
   isLast: boolean;
@@ -47,12 +48,28 @@ const TaskNameBreadcrump = memo(function TaskNameBreadcrumb({
   );
 });
 
+const UserFullnameBreadcrump = memo(function UserFullnameBreadcrump({
+  isLast,
+  path,
+}: TypeBreadcrumpContainer) {
+  const fullname = useSelectUserFullName();
+  return (
+    <DefaultBreadcrump
+      type="users/[id]"
+      isLast={isLast}
+      path={path}
+      name={fullname || "Пользователь"}
+    />
+  );
+});
+
 const BreadcrumpMapper: Record<
   NonNullable<PagesForNavbar>,
   NamedExoticComponent<TypeBreadcrumpContainer>
 > = {
   home: DefaultBreadcrump,
   "tasks/[id]": TaskNameBreadcrump,
+  "users/[id]": UserFullnameBreadcrump,
 };
 
 const BreadcrumpContainer = memo(function BreadcrumbContainer({

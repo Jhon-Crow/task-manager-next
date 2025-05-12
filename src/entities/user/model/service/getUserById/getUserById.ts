@@ -1,16 +1,31 @@
 "server only";
 import { handleAction } from "@/shared/lib/actions";
-import { TypeUser } from "../../types/user";
+import { TypeUser, TypeUserReceivedByID } from "../../types/user";
 import { prisma } from "@/shared/lib/db/prisma";
+import { TypeTask } from "@/entities/task/public-types";
 
 const getUserByIdImplementation = async (
   id: TypeUser["id"]
-): Promise<TypeUser | null> => {
+): Promise<TypeUserReceivedByID | null> => {
   const user = await prisma.user.findUnique({
     where: { id },
+    include: {
+      tasks: { include: { task: true } },
+    },
+    omit: {
+      password: true,
+    },
   });
-  return user;
+  if (!user) {
+    return null;
+  }
+  return {
+    ...user,
+    tasks: user.tasks.reduce((acc, task) => {
+      return [...acc, task.task];
+    }, [] as TypeTask[]),
+  };
 };
 
 export const getUserById = async (id: TypeUser["id"]) =>
-  handleAction<TypeUser | null, TypeUser["id"]>(getUserByIdImplementation, id);
+  handleAction(getUserByIdImplementation, id);

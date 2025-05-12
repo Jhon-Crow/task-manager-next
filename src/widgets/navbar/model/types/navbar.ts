@@ -5,7 +5,6 @@ type TypeOfBreadcrump =
   | "static"
   | "dynamic"
   | "dynamicPart"
-  | "installHook.js.map"
   | NonNullable<PagesForNavbar>;
 
 export type TypeBreadcrumps = {

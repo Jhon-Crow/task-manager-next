@@ -20,12 +20,6 @@ export const staticPaths = {
     type: "static",
     name: "Создать Задачу",
   } as const,
-  "tasks/[id]/update": {
-    key: "TASK_UPDATE",
-    path: (id: string) => `/tasks/${id}/update`,
-    type: "static",
-    name: "Обновить",
-  } as const,
   home: {
     key: "ROOT",
     path: "/",
@@ -38,6 +32,18 @@ export const staticPaths = {
     path: "/users",
     type: "static",
   } as const,
+  "tasks/[id]/update": {
+    key: "TASK_UPDATE",
+    path: (id: string) => `/tasks/${id}/update`,
+    type: "dynamicPart",
+    name: "Обновить",
+  } as const,
+  "users/create": {
+    key: "USER_CREATE",
+    path: "/users/create",
+    type: "static",
+    name: "Создать Пользователя",
+  } as const,
 } as const satisfies Record<TypeStaticPaths[number], TypeStaticPathObject>;
 
 export const dynamicPaths = {
@@ -47,12 +53,6 @@ export const dynamicPaths = {
     type: "dynamic",
     actionName: null,
   } as const,
-  // "tasks/[id]/update": {
-  //   key: "TASK_UPDATE",
-  //   path: (id: string) => `/tasks/${id}/update`,
-  //   type: "dynamic",
-  //   actionName: "Обновить",
-  // } as const,
   "users/[id]": {
     key: "USER",
     path: (id: string) => `/users/${id}`,
