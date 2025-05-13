@@ -1,4 +1,3 @@
-export {UserActionsMenu} from "./ui/user-actions-menu/user-actions-menu";
 
 export { useSelectUserFullName } from "./model/selectors/selectUser";
 
