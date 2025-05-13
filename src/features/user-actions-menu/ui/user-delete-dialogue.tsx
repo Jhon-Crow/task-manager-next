@@ -6,11 +6,12 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger
-} from "@/shared/ui/dialog";
+} from "@/shared/ui/Dialog/dialog";
 import {Button} from "@/shared/ui";
 import {deleteUserById} from "@/entities/user/model/service/deleteUserById/deleteUserById";
+import {TypeUser} from "@/entities/user/model/types/user";
 
-export const UserDeleteDialogue = ({userId}: {userId: string}) => {
+export const UserDeleteDialogue = ({userId}: {userId: TypeUser['id']}) => {
 
     const deleteHandler = () => deleteUserById(userId);
 

@@ -11,6 +11,7 @@ const initialState: UserSchema = {
 };
 
 const userSlice = buildSlice({
+  // todo проверить
   name: "userSlice",
   initialState,
   reducers: {

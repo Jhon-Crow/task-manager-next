@@ -12,4 +12,5 @@ export * from "./DropdownMenu/dropdown-menu";
 export * from "./Avatar/avatar";
 export * from "./Calendar/calendar";
 export * from "./Skeleton/skeleton";
-export * from './NotFoundUniversal/not-found-universal';
+export * from "./NotFoundUniversal/not-found-universal";
+export * from "./Dialog/dialog";

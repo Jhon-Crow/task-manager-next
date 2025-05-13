@@ -28,7 +28,7 @@ export function UserActionsOptions({
                 className='rounded-xl w-full'
                 onClick={updateHandler}
                 variant='secondary'
-            >Update</Button>
+            >Edit</Button>
             <UserDeleteDialogue userId={userId}/>
         </Card>
     );
