@@ -15,7 +15,6 @@ export function UserActionsMenu({children, userId}: UserActionsMenuProps){
 
     const onClickHandler = useCallback(() => {
         setIsOptionsOpened(!isOptionsOpened);
-        console.log(isOptionsOpened)
     },[isOptionsOpened])
 
     return (
@@ -26,7 +25,7 @@ export function UserActionsMenu({children, userId}: UserActionsMenuProps){
                 variant='ghost'
                 className='absolute top-1 right-3
                   text-gray-700
-                  z-99
+                  z-2
                   p-1
                   pb-3
                   h-1
@@ -35,14 +34,14 @@ export function UserActionsMenu({children, userId}: UserActionsMenuProps){
                   '
             >...</Button>
             : <UserActionsOptions
+                    userId={userId}
                     setIsOptionsOpened={setIsOptionsOpened}
-                    className='absolute top-1 right-3
+                    className='absolute top-1 right-0
+                  z-2
                   text-gray-700
-                  z-99
-                  p-1
-                  pb-3
+                  p-0
+                  gap-0
                   h-auto
-                  bg-red-400
                   flex items-center justify-center
                   text-center
                   '

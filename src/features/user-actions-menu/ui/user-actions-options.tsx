@@ -1,22 +1,35 @@
 'use client'
 
-import {useCallback} from "react";
+import {useState} from "react";
+import {useRouter} from "next/navigation";
+import {Button, Card} from "@/shared/ui";
+import {UserDeleteDialogue} from "./user-delete-dialogue";
 
 export function UserActionsOptions({
                                        className,
-                                       setIsOptionsOpened
+                                       setIsOptionsOpened,
+                                       userId
                                    }: {
     className?: string;
     setIsOptionsOpened: (value: boolean) => void;
+    userId: string;
 }) {
-    const mouseLeaveHandler = useCallback(() => setIsOptionsOpened(false),[setIsOptionsOpened]);
+    const router = useRouter();
+
+    const mouseLeaveHandler = () => setIsOptionsOpened(false);
+    const updateHandler = () => router.push(userId + '/update');
 
     return (
-        <div
+        <Card
             onMouseLeave={mouseLeaveHandler}
             className={className}
         >
-            OPTS
-        </div>
+            <Button
+                className='rounded-xl w-full'
+                onClick={updateHandler}
+                variant='secondary'
+            >Update</Button>
+            <UserDeleteDialogue userId={userId}/>
+        </Card>
     );
 }
