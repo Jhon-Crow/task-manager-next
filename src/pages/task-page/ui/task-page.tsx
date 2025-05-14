@@ -17,15 +17,20 @@ export default async function TaskPage({
   if (!data.data) {
     redirect("./not-found");
   }
-  const users = await getUsersAssignedToTask(id);
+  const workers = await getUsersAssignedToTask(id);
+  if (!workers.success) {
+    return;
+  }
   const author = await getUserById(data.data.authorId);
-  return (
-    <TaskPageCard
-      task={data.data}
-      author={
-        author.success ? (author.data ? author.data : undefined) : undefined
-      }
-      users={users.success ? users.data : undefined}
-    />
-  );
+  {
+    return (
+      <TaskPageCard
+        task={data.data}
+        author={
+          author.success ? (author.data ? author.data : undefined) : undefined
+        }
+        users={workers.success ? workers.data : undefined}
+      />
+    );
+  }
 }

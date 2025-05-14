@@ -1,3 +1,5 @@
+export { useSelectTaskTitle } from "./model/selectors/selectTask";
+
 export { useSelectTask } from "./model/selectors/selectTask";
 
 export { TaskPageCardClient } from "./ui/task-page-card-client/task-page-card-client";
