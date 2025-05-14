@@ -6,7 +6,9 @@ export function TaskFormWidget({ type }: { type: "create" | "update" }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Создать задачу</CardTitle>
+        <CardTitle>
+          {type === "create" ? "Создать задачу" : "Обновить Задачу"}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         {type === "create" ? <CreateTaskForm /> : <UpdateTaskForm />}

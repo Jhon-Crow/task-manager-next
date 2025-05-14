@@ -10,7 +10,6 @@ const deleteTaskByIdImplementation = async (id: unknown) => {
     // TODO
     throw new Error("deleteTask Жопа");
   }
-
   await prisma.task.delete({ where: { id } });
   revalidatePath(Routes.TASKS_LIST);
 };

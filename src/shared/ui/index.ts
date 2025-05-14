@@ -13,3 +13,4 @@ export * from "./Avatar/avatar";
 export * from "./Calendar/calendar";
 export * from "./Skeleton/skeleton";
 export * from "./ContextMenu/context-menu";
+export * from "./Dialog/dialog";

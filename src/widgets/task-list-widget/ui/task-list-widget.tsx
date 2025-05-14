@@ -17,6 +17,7 @@ export function TaskListWidget({ tasks }: { tasks: TypeTask[] }) {
               type={index % 2 === 0 ? "form" : "onclick"}
               key={task.id}
               id={task.id}
+              title={task.title}
             >
               <TaskListCard task={task} />
             </TaskContextMenu>

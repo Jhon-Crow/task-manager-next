@@ -7,7 +7,7 @@ import {
   TaskSchema,
 } from "../types/TaskSchema";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { TypeTaskForm } from "../types/task";
+import type { TypeTask, TypeTaskForm } from "../types/task";
 
 const initialState: TaskSchema = {
   task: null,
@@ -21,19 +21,41 @@ const taskSlice = buildSlice({
   name: "taskSlice",
   initialState,
   reducers: {
-    setTask: (state, { payload }: PayloadAction<TaskForSchema | null>) => {
-      state.task = payload;
+    setTask: {
+      reducer: (state, { payload }: PayloadAction<TaskForSchema | null>) => {
+        state.task = payload;
+      },
+      prepare: (task: TypeTask | null) => {
+        if (!task) return { payload: null };
+        return {
+          payload: {
+            ...task,
+            deadline: task.deadline.getTime(),
+            createdAt: task.createdAt.getTime(),
+            updatedAt: task.updatedAt.getTime(),
+          },
+        };
+      },
     },
 
-    setNewTask: (state, { payload }: PayloadAction<TaskFormForSchema>) => {
-      state.newTask = { ...payload, deadline: payload.deadline };
+    setNewTask: {
+      reducer: (state, { payload }: PayloadAction<TaskFormForSchema>) => {
+        state.newTask = payload;
+      },
+      prepare: (taskForm: TypeTaskForm) => {
+        return {
+          payload: { ...taskForm, deadline: taskForm.deadline.getTime() },
+        };
+      },
     },
-    setNewTaskDeadline: (
-      state,
-      { payload }: PayloadAction<number | undefined>
-    ) => {
-      if (!state.newTask || !payload) return;
-      state.newTask.deadline = payload;
+    setNewTaskDeadline: {
+      reducer: (state, { payload }: PayloadAction<number>) => {
+        if (!state.newTask) return;
+        state.newTask.deadline = payload;
+      },
+      prepare: (deadline: TypeTask["deadline"]) => {
+        return { payload: deadline.getTime() };
+      },
     },
     setNewTaskTitle: (state, { payload }: PayloadAction<string>) => {
       if (!state.newTask) return;

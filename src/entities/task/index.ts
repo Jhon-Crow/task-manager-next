@@ -1,3 +1,7 @@
+export { TaskFormSkeleton } from "./ui/task-form/skeleton/task-form-skeleton";
+
+export { deleteTaskById } from "./model/service/deleteTaskById/deleteTaskById";
+
 export { useSelectTaskTitle } from "./model/selectors/selectTask";
 
 export { useSelectTask } from "./model/selectors/selectTask";

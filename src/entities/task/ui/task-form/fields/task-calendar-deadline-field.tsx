@@ -24,14 +24,12 @@ export const TaskCalendarDeadlineField: TypeField<TypeTaskForm, "deadline"> = ({
             Выбрать дедлайн
           </FormLabel>
           <Calendar
-            className=""
             mode="single"
             fromMonth={currentDay}
             selected={field.value}
             onSelect={(day) => {
-              day?.setHours(23, 59, 59);
-              const time = day?.getTime();
-              setNewTaskDeadline(time);
+              if (!day) return;
+              setNewTaskDeadline(day);
               field.onChange(day);
             }}
             lang="ru-RU"

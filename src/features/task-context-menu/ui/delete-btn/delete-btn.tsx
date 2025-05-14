@@ -1,12 +1,12 @@
 import { Button } from "@/shared/ui";
-import { ComponentProps } from "react";
+import { ComponentProps, memo } from "react";
 
-export const DeleteTaskBtn = (
+export const DeleteBtn = memo(function DeleteBtn(
   props: Omit<ComponentProps<"button">, "children">
-) => {
+) {
   return (
     <Button variant={"destructive"} {...props}>
       Удалить
     </Button>
   );
-};
+});
