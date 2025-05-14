@@ -1,7 +1,9 @@
+import { checkAuth } from "@/entities/auth";
 import { TypeTask } from "@/entities/task/public-types";
 import { DeleteTaskBtnClick } from "@/features/delete-task";
 import DeleteTaskForm from "@/features/delete-task/ui/delete-task-form";
 import { Routes } from "@/shared/consts/paths";
+import { Role } from "@/shared/lib/db/generated";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -11,7 +13,7 @@ import {
 import Link from "next/link";
 import { ReactNode } from "react";
 
-export const TaskContextMenu = ({
+export const TaskContextMenu = async ({
   children,
   id,
   type,
@@ -20,6 +22,8 @@ export const TaskContextMenu = ({
   id: TypeTask["id"];
   type: "form" | "onclick";
 }) => {
+  const { user } = await checkAuth();
+
   return (
     <ContextMenu>
       <ContextMenuTrigger className="block">{children}</ContextMenuTrigger>
@@ -27,13 +31,15 @@ export const TaskContextMenu = ({
         <Link className="w-full h-full" href={Routes.TASK(id)}>
           <ContextMenuItem className="cursor-pointer">Открыть</ContextMenuItem>
         </Link>
-        <ContextMenuItem>
-          {type === "form" ? (
-            <DeleteTaskForm id={id} />
-          ) : (
-            <DeleteTaskBtnClick id={id} />
-          )}
-        </ContextMenuItem>
+        {user.role === Role["ADMIN"] && (
+          <ContextMenuItem>
+            {type === "form" ? (
+              <DeleteTaskForm id={id} />
+            ) : (
+              <DeleteTaskBtnClick id={id} />
+            )}
+          </ContextMenuItem>
+        )}
       </ContextMenuContent>
     </ContextMenu>
   );

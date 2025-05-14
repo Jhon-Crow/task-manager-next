@@ -22,7 +22,6 @@ export function TaskListWidget({ tasks }: { tasks: TypeTask[] }) {
             </TaskContextMenu>
           ))}
         </TimerProvider>
-        {/* <TaskList tasks={tasks} /> */}
       </CardContent>
     </Card>
   );

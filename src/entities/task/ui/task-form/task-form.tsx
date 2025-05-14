@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/shared/ui";
+import { Form, Input } from "@/shared/ui";
 import { TypeTask, TypeTaskForm } from "../../model/types/task";
 import { taskFormSchema } from "../../model/validation/schema";
 import { TaskTitleField } from "./fields/task-title-field";
@@ -19,10 +19,12 @@ import { useServerAction } from "@/shared/hooks/useServerAction";
 export function TaskForm({
   defaultValues,
   id,
+  authorId,
   submit,
 }: {
   defaultValues?: Partial<TypeTaskForm>;
   id?: TypeTask["id"];
+  authorId: TypeTask["authorId"];
   submit: (values: TypeTaskForm) => Promise<ApiResult<void>>;
 }) {
   const isCreate = defaultValues ? false : true;
@@ -38,6 +40,7 @@ export function TaskForm({
           title: "",
           deadline: deadline,
           description: "",
+          authorId,
         },
   });
 
@@ -65,6 +68,7 @@ export function TaskForm({
           <TaskDifficlyField control={form.control} name="difficulty" />
         </div>
         <TaskFormBtn isCreate={isCreate} className="block ml-auto" />
+        <Input type="hidden" name="authorId" value={authorId} />
       </form>
     </Form>
   );

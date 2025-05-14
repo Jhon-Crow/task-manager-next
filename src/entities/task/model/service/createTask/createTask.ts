@@ -4,7 +4,6 @@ import { prisma } from "@/shared/lib/db/prisma";
 import { taskFormSchema } from "../../validation/schema";
 import { handleAction } from "@/shared/lib/actions";
 
-const ADMIN_ID = "4c075b9f-9059-488f-b5e6-dccd57444901";
 const createTaskImplementation = async (values: unknown): Promise<void> => {
   const validatedValues = taskFormSchema.safeParse(values);
 
@@ -14,7 +13,7 @@ const createTaskImplementation = async (values: unknown): Promise<void> => {
   }
   const task = validatedValues.data;
   await prisma.task.create({
-    data: { ...task, authorId: ADMIN_ID },
+    data: { ...task },
   });
 };
 

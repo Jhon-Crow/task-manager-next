@@ -2,6 +2,8 @@ import { ReactNode } from "react";
 
 type RootStaticPaths = readonly ["home"];
 
+type LoginStaticPaths = readonly ["login"];
+
 type TaskStaticPaths = readonly ["tasks", "tasks/create", "tasks/[id]/update"];
 type TaskDynamicPaths = readonly ["tasks/[id]"];
 
@@ -11,6 +13,7 @@ type UserDynamicPaths = readonly ["users/[id]"];
 export type TypeStaticPaths = [
   ...TaskStaticPaths,
   ...RootStaticPaths,
+  ...LoginStaticPaths,
   ...UserStaticPaths
 ];
 export type TypeDynamicPaths = [...TaskDynamicPaths, ...UserDynamicPaths];
