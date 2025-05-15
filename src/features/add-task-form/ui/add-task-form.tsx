@@ -1,7 +1,11 @@
 import { checkAuth } from "@/entities/auth";
 import { createTask, TaskForm } from "@/entities/task";
+import { TypeTask } from "@/entities/task/public-types";
 
-export const CreateTaskForm = async () => {
-  const session = await checkAuth();
-  return <TaskForm submit={createTask} authorId={session.user.id} />;
+export const CreateTaskForm = ({
+  authorId,
+}: {
+  authorId: TypeTask["authorId"];
+}) => {
+  return <TaskForm submit={createTask} authorId={authorId} />;
 };

@@ -20,12 +20,12 @@ export async function logIn(prevState: unknown, formData: unknown) {
       switch (error.type) {
         case "CredentialsSignin": {
           return {
-            message: "Invalid Creditials",
+            message: "Неверный логин или пароль",
           };
         }
         default: {
           return {
-            message: "Error. Could not sign in",
+            message: "Неизвестная ошибка",
           };
         }
       }

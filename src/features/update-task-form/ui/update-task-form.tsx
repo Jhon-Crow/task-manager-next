@@ -6,11 +6,15 @@ import {
   useSelectTask,
   useTaskActions,
 } from "@/entities/task";
-import { updateTask } from "@/entities/task/model/service/updateTask/updateTask";
-import { TypeTaskForm } from "@/entities/task/public-types";
+import { updateTask } from "@/entities/task";
+import { TypeTask, TypeTaskForm } from "@/entities/task/public-types";
 import { useEffect, useMemo } from "react";
 
-export default function UpdateTaskForm() {
+export default function UpdateTaskForm({
+  authorId,
+}: {
+  authorId: TypeTask["authorId"];
+}) {
   const task = useSelectTask();
   const { setNewTask } = useTaskActions();
 
@@ -23,9 +27,10 @@ export default function UpdateTaskForm() {
             description: task?.description || "",
             difficulty: task?.difficulty || undefined,
             priority: task?.priority || undefined,
+            authorId,
           }
         : undefined,
-    [task]
+    [authorId, task]
   );
   useEffect(() => {
     if (!defaultValues) return;
@@ -35,6 +40,7 @@ export default function UpdateTaskForm() {
     <TaskForm
       defaultValues={defaultValues}
       id={task?.id}
+      authorId={authorId}
       submit={(values: TypeTaskForm) => updateTask(task?.id, values)}
     />
   ) : (

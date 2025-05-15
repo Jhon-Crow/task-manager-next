@@ -16,19 +16,25 @@ import { DeleteTaskDialogTrigger } from "../delete-task-dialog/delete-task-dialo
 import { DeleteTaskDialogContent } from "../delete-task-dialog/delete-task-dialog-content";
 import { OpenTaskLink } from "../links/open-task-link";
 import { UpdateTaskLink } from "../links/update-task-link";
+import { Session } from "next-auth";
 
 export const TaskContextMenu = ({
   children,
   id,
   title,
+  session,
+  authorId,
 }: {
   children: ReactNode;
   id: TypeTask["id"];
+  authorId: TypeTask["authorId"];
   title: TypeTask["title"];
-  type: "form" | "onclick";
+  session: Session;
 }) => {
   const [pending, startTransition] = useTransition();
   const handledDelete = useServerAction(deleteTaskById);
+  const isAdmin = session.user.role === "ADMIN";
+  const isAuthor = session.user.id === authorId;
   const handleDelete = () => {
     startTransition(async () => {
       await handledDelete(id);
@@ -47,9 +53,13 @@ export const TaskContextMenu = ({
         </ContextMenuTrigger>
         <ContextMenuContent>
           <OpenTaskLink id={id} />
-          <UpdateTaskLink id={id} />
-          <ContextMenuSeparator />
-          <DeleteTaskDialogTrigger />
+          {(isAdmin || isAuthor) && (
+            <>
+              <UpdateTaskLink id={id} />
+              <ContextMenuSeparator />
+              <DeleteTaskDialogTrigger />
+            </>
+          )}
         </ContextMenuContent>
       </ContextMenu>
       <DeleteTaskDialogContent deleteHandler={handleDelete} title={title} />

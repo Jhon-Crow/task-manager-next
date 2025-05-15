@@ -1,10 +1,12 @@
+import { checkAuth } from "@/entities/auth";
 import { TypeTask } from "@/entities/task/public-types";
 import { TaskListCard } from "@/entities/task/ui/task-list-card/task-list-card";
 import { TaskContextMenu } from "@/features/task-context-menu";
 import { TimerProvider } from "@/shared/providers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 
-export function TaskListWidget({ tasks }: { tasks: TypeTask[] }) {
+export async function TaskListWidget({ tasks }: { tasks: TypeTask[] }) {
+  const session = await checkAuth();
   return (
     <Card>
       <CardHeader>
@@ -12,9 +14,10 @@ export function TaskListWidget({ tasks }: { tasks: TypeTask[] }) {
       </CardHeader>
       <CardContent className="space-y-6">
         <TimerProvider>
-          {tasks.map((task, index) => (
+          {tasks.map((task) => (
             <TaskContextMenu
-              type={index % 2 === 0 ? "form" : "onclick"}
+              authorId={task.authorId}
+              session={session}
               key={task.id}
               id={task.id}
               title={task.title}

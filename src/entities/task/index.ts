@@ -1,3 +1,5 @@
+export { updateTask } from "./model/service/updateTask/updateTask";
+
 export { TaskFormSkeleton } from "./ui/task-form/skeleton/task-form-skeleton";
 
 export { deleteTaskById } from "./model/service/deleteTaskById/deleteTaskById";
