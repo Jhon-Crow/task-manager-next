@@ -1,16 +1,15 @@
-"use client";
 import {UserForm} from "@/entities/user/ui/user-form/user-form";
 import {getUserById} from "@/entities/user";
-import {useParams} from "next/navigation";
+import {User} from "@/shared/lib/db/generated";
+import {TypeUserForm} from "@/entities/user/model/types/user";
+import {updateUser} from "@/entities/user/model/service/updateUser/updateUser";
 
-export const UpdateUserForm = () => {
+export const UpdateUserForm = async ({userId}: {userId: User['id']}) => {
   // const user = useSelectUser(); //todo добавить селектор
   // const { setUser } = useUserActions();
 
-    const params = useParams();
-    const id = params?.id as string;
-    const defaultValues = getUserById(id);
-
+    const defaultValues = await getUserById(userId);
+    console.log(userId, defaultValues)
 
 
   //
@@ -41,9 +40,9 @@ export const UpdateUserForm = () => {
     // const defaultValues = 'lul'
   return (
       <UserForm
-          defaultValues={defaultValues}
-          // id={id}
-          // submit={(values: TypeTaskForm) => updateTask(task?.id, values)}
+          defaultValues={defaultValues.data}
+          // id={userId}
+          submit={(values: TypeUserForm) => updateUser(userId, values)}
       />
   );
 }
