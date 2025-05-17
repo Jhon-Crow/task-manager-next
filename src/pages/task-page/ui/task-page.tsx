@@ -2,6 +2,7 @@ import { getTaskById, TaskPageCard } from "@/entities/task";
 import { getUserById, getUsersAssignedToTask } from "@/entities/user";
 import { Task } from "@/shared/lib/db/generated";
 import { redirect } from "next/navigation";
+import {Routes} from "@/shared/consts/paths";
 
 export default async function TaskPage({
   params,
@@ -12,10 +13,10 @@ export default async function TaskPage({
   const data = await getTaskById(id);
   if (!data.success) {
     //TODO
-    return <div>Popa</div>;
+    return <div>Не успешно</div>;
   }
   if (!data.data) {
-    redirect("./not-found");
+    redirect('/not-found');
   }
   const users = await getUsersAssignedToTask(id);
   const author = await getUserById(data.data.authorId);
