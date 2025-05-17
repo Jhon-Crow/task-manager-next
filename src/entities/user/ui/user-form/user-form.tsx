@@ -24,36 +24,60 @@ export function UserForm({
   const isCreate = defaultValues ? false : true;
   const form = useForm<TypeUserForm>({
     resolver: zodResolver(userFormSchema),
-    defaultValues: defaultValues
-      ? defaultValues
-      : {
+      defaultValues: {
           role: "WORKER",
-        },
+          firstname: "",
+          lastname: "",
+          email: "",
+          imageUrl: "",
+          password: "",
+          confirmPassword: "",
+          ...defaultValues
+      },
   });
 
+    const defaultValuesNew = {
+        role: defaultValues.role || "WORKER",
+        firstname: defaultValues.firstname || "",
+        lastname: defaultValues.lastname || "",
+        email: defaultValues.email || "",
+        imageUrl: defaultValues.imageUrl || "",
+        password: "",
+        confirmPassword: ""
+    }
+
   const submitHandler = async (values: TypeUserForm) => {
-    const data = await submit(values);
+      let data;
+      if (isCreate){
+          data = await submit(values);
+      } else {
+          data = await submit(defaultValues.id, values);
+      }
     if (!data.success) {
       toast.error(data.error.message);
       return;
     }
     toast.info("Успешно");
-    if (isCreate) redirect(Routes.USERS_LIST);
+    redirect(Routes.USERS_LIST);
 
     redirect("../");
   };
+    console.log(defaultValuesNew)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
 
           <div className="flex gap-x-16">
               <UserTextField
-                  defaultValue={defaultValues.firstname}
+                  defaultValue={defaultValues?.firstname}
                   title='Имя'
                   name='firstname'
                   control={form.control}
               />
               <UserTextField
+                  defaultValue={defaultValues?.lastname || ''}
+                  // defaultValue={defaultValuesNew.lastname}
+                  // value={defaultValues?.lastname ? defaultValues.lastname : ''}
                   title='Фамилия (опц.)'
                   name='lastname'
                   control={form.control}
@@ -64,12 +88,14 @@ export function UserForm({
 
           <div className="flex gap-x-16">
           <UserTextField
+              defaultValue={defaultValues?.email}
               title='Email'
               name='email'
               control={form.control}
           />
 
           <UserTextField
+              defaultValue={defaultValues?.imageUrl ? defaultValues.imageUrl : ''}
               title='Аватарка (опц.)'
               name='imageUrl'
               control={form.control}
@@ -88,6 +114,7 @@ export function UserForm({
                               <FormItem className="flex items-center space-x-2">
                                   <FormControl>
                                       <Input
+                                          defaultValue={defaultValues?.password}
                                           type="password"
                                           onChange={(e) => field.onChange(e.target.value)}
                                       />
@@ -110,6 +137,7 @@ export function UserForm({
                               <FormItem className="flex items-center space-x-2">
                                   <FormControl>
                                       <Input
+                                          defaultValue={defaultValues?.password}
                                           type="password"
                                           onChange={(e) => field.onChange(e.target.value)}
                                       />
@@ -122,7 +150,9 @@ export function UserForm({
           />
 
           </div>
-          <UserRoleField control={form.control}/>
+          <UserRoleField
+              defaultValue={defaultValues?.role}
+              control={form.control}/>
 
           <div
               className='flex'

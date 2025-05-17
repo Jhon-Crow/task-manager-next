@@ -1,3 +1,4 @@
+'use server'
 import {UserForm} from "@/entities/user/ui/user-form/user-form";
 import {getUserById} from "@/entities/user";
 import {User} from "@/shared/lib/db/generated";
@@ -42,7 +43,8 @@ export const UpdateUserForm = async ({userId}: {userId: User['id']}) => {
       <UserForm
           defaultValues={defaultValues.data}
           // id={userId}
-          submit={(values: TypeUserForm) => updateUser(userId, values)}
+          // submit={(values: TypeUserForm) => updateUser(userId, values)}
+          submit={updateUser}
       />
   );
 }

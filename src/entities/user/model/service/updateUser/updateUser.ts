@@ -5,11 +5,11 @@ import { prisma } from "@/shared/lib/db/prisma";
 import { addDays, sleep } from "@/shared/lib/utils";
 // import { getTaskById } from "../getTaskById/getTaskById";
 import { handleAction } from "@/shared/lib/actions";
-import {userFormSchema} from "@/entities/user/model/validation/schema";
+import {userFormSchema, userFormServerSchema} from "@/entities/user/model/validation/schema";
 import {getTaskById} from "@/entities/task";
 
 const updateUserImplementation = async (id: unknown, values: unknown) => {
-  const validatedValues = userFormSchema.safeParse(values);
+  const validatedValues = userFormServerSchema.safeParse(values);
 
   if (!validatedValues.success || !id || !(typeof id === "string")) {
     throw new Error("updateUser Error " + validatedValues.error);

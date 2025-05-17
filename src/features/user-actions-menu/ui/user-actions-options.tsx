@@ -17,7 +17,7 @@ export function UserActionsOptions({
     const router = useRouter();
 
     const mouseLeaveHandler = () => setIsOptionsOpened(false);
-    const updateHandler = () => router.push(userId + '/update');
+    const updateHandler = () => router.push( 'users/' + userId + '/update');
 
     return (
         <Card
