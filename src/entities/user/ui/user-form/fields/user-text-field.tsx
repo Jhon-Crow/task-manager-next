@@ -6,6 +6,7 @@ export const UserTextField: TypeField<TypeUserForm, 'firstname' | 'lastname' | '
     title,
     name,
     control,
+    defaultValue,
   ...props
 }) => {
   return (
@@ -20,6 +21,7 @@ export const UserTextField: TypeField<TypeUserForm, 'firstname' | 'lastname' | '
                       <FormItem className="flex items-center space-x-2">
                           <FormControl>
                               <Input
+                                  defaultValue={defaultValue}
                                   type="text"
                                   onChange={(e) => field.onChange(e.target.value)}
                               />

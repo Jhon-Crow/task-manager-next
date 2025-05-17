@@ -1,5 +1,6 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/shared/ui";
 import {AddUserForm} from "@/features/add-user-form";
+import {UpdateUserForm} from "@/features/update-user-form";
 
 export function UserFormWidget({ type }: { type: "add" | "update" }) {
   return (
@@ -8,7 +9,7 @@ export function UserFormWidget({ type }: { type: "add" | "update" }) {
         <CardTitle>Создать задачу</CardTitle>
       </CardHeader>
       <CardContent>
-        {type === "add" ? <AddUserForm /> : '<UpdateTaskForm />'}
+        {type === "add" ? <AddUserForm /> : <UpdateUserForm/>}
       </CardContent>
     </Card>
   );

@@ -1,4 +1,4 @@
-import UserCreatePage from "@/pages/user-create-page";
+import UserUpdatePage from "@/pages/user-update-page";
 
 // todo сделать update и добавить роут
-export default UserCreatePage;
+export default UserUpdatePage;

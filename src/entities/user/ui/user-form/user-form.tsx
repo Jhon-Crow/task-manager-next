@@ -48,6 +48,7 @@ export function UserForm({
 
           <div className="flex gap-x-16">
               <UserTextField
+                  defaultValue={defaultValues.firstname}
                   title='Имя'
                   name='firstname'
                   control={form.control}

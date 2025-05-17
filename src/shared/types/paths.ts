@@ -5,7 +5,7 @@ type RootStaticPaths = readonly ["home"];
 type TaskStaticPaths = readonly ["tasks", "tasks/create", "tasks/[id]/update"];
 type TaskDynamicPaths = readonly ["tasks/[id]"];
 
-type UserStaticPaths = readonly ["users", "users/create"];
+type UserStaticPaths = readonly ["users", "users/create", "users/[id]/update"];
 type UserDynamicPaths = readonly ["users/[id]"];
 
 export type TypeStaticPaths = [
