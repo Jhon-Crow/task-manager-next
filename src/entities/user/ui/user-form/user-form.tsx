@@ -4,7 +4,7 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from "@/shared/ui";
 import {TypeUserForm} from "../../model/types/user";
-import {userFormSchema} from "../../model/validation/schema";
+import {userFormSchema, userFormUpdateSchema} from "../../model/validation/schema";
 import {UserTextField} from "./fields/user-text-field";
 import {UserRoleField} from "./fields/user-role-field";
 import {UserFormBtn} from "./user-form-btn";
@@ -23,7 +23,7 @@ export function UserForm({
 }) {
   const isCreate = defaultValues ? false : true;
   const form = useForm<TypeUserForm>({
-    resolver: zodResolver(userFormSchema),
+    resolver: zodResolver(isCreate ? userFormSchema : userFormUpdateSchema),
       defaultValues: {
           role: "WORKER",
           firstname: "",
@@ -35,16 +35,6 @@ export function UserForm({
           ...defaultValues
       },
   });
-
-    const defaultValuesNew = {
-        role: defaultValues.role || "WORKER",
-        firstname: defaultValues.firstname || "",
-        lastname: defaultValues.lastname || "",
-        email: defaultValues.email || "",
-        imageUrl: defaultValues.imageUrl || "",
-        password: "",
-        confirmPassword: ""
-    }
 
   const submitHandler = async (values: TypeUserForm) => {
       let data;
@@ -62,7 +52,6 @@ export function UserForm({
 
     redirect("../");
   };
-    console.log(defaultValuesNew)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
@@ -102,15 +91,14 @@ export function UserForm({
           />
           </div>
 
-          <div className="flex gap-x-16">
-
-          <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                  <FormItem>
-                      <FormLabel>Пароль</FormLabel>
-                      <div className="flex gap-4">
+          {isCreate && <div className="flex gap-x-16">
+              <FormField
+                  control={form.control}
+                  name="password"
+                  render={({field}) => (
+                      <FormItem>
+                          <FormLabel>{!isCreate && 'Новый'} Пароль</FormLabel>
+                          <div className="flex gap-4">
                               <FormItem className="flex items-center space-x-2">
                                   <FormControl>
                                       <Input
@@ -120,20 +108,18 @@ export function UserForm({
                                       />
                                   </FormControl>
                               </FormItem>
-                      </div>
-                      <FormMessage />
-                  </FormItem>
-              )}
-          />
-
-
-          <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                  <FormItem>
-                      <FormLabel>Повтори пароль</FormLabel>
-                      <div className="flex gap-4">
+                          </div>
+                          <FormMessage/>
+                      </FormItem>
+                  )}
+              />
+              <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({field}) => (
+                      <FormItem>
+                          <FormLabel>Повтори пароль</FormLabel>
+                          <div className="flex gap-4">
                               <FormItem className="flex items-center space-x-2">
                                   <FormControl>
                                       <Input
@@ -143,13 +129,13 @@ export function UserForm({
                                       />
                                   </FormControl>
                               </FormItem>
-                      </div>
-                      <FormMessage />
-                  </FormItem>
-              )}
-          />
+                          </div>
+                          <FormMessage/>
+                      </FormItem>
+                  )}
+              />
+          </div>}
 
-          </div>
           <UserRoleField
               defaultValue={defaultValues?.role}
               control={form.control}/>

@@ -10,8 +10,6 @@ export const UpdateUserForm = async ({userId}: {userId: User['id']}) => {
   // const { setUser } = useUserActions();
 
     const defaultValues = await getUserById(userId);
-    console.log(userId, defaultValues)
-
 
   //
   // const defaultValues = useMemo(
