@@ -5,6 +5,7 @@ import {TypeUserForm} from "@/entities/user/model/types/user";
 
 export const UserRoleField: TypeField<TypeUserForm, "role"> = ({
     control,
+    defaultValue,
     ...props
 }) => {
   return (
@@ -20,6 +21,7 @@ export const UserRoleField: TypeField<TypeUserForm, "role"> = ({
                           <FormItem key={r} className="flex items-center space-x-2">
                               <FormControl>
                                   <Input
+                                      defaultValue={defaultValue}
                                       type="radio"
                                       checked={field.value === r}
                                       onChange={() => field.onChange(r)}

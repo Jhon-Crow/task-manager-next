@@ -10,14 +10,15 @@ import { TypeUser } from "../../model/types/user";
 import { formatDateToRuShort } from "@/shared/lib/format/formatDayToRuShort";
 import { UserRoleIcon } from "@/entities/user/ui/users-icons/role-icon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/Avatar/avatar";
+import {TaskList} from "@/entities/task";
+import {TypeTask} from "@/entities/task/model/types/task";
 
-export function UserPageCard({ user }: { user: TypeUser }) {
+export function UserPageCard({ user }: { user: TypeUser & {tasks: TypeTask[]}}) {
   return (
     <Card
       className="
         justify-center
         pl-4 mb-4
-        {/*items-center*/}
         "
     >
       <CardHeader>
@@ -41,8 +42,9 @@ export function UserPageCard({ user }: { user: TypeUser }) {
         <UserRoleIcon role={user.role} className="size-10" />
         {user.role}
       </CardContent>
-      <CardFooter className="pt-4">
-        <span className="opacity-40">
+      <CardFooter className="pt-4 flex-col gap-4">
+        {user.tasks.length && <TaskList tasks={user.tasks}/>}
+        <span className="opacity-40 self-end">
           user created on {formatDateToRuShort(user.createdAt)}
         </span>
       </CardFooter>

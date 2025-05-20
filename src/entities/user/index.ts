@@ -1,3 +1,5 @@
+export { deleteUserById } from "./model/service/deleteUserById/deleteUserById";
+
 export { getUserByEmail } from "./model/service/getUserByEmail/getUserByEmail";
 
 export { useSelectUserFullName } from "./model/selectors/selectUser";
@@ -14,6 +16,7 @@ export { getUserById } from "./model/service/getUserById/getUserById";
 export { getAllUsers } from "./model/service/getAllUsers/getAllUsers";
 
 export { UserList } from "./ui/user-list/user-list";
+
 export {
   name as userReducerName,
   reducer as userSliceReducer,
