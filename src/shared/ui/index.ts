@@ -14,3 +14,6 @@ export * from "./Calendar/calendar";
 export * from "./Skeleton/skeleton";
 export * from "./ContextMenu/context-menu";
 export * from "./Dialog/dialog";
+export * from "./Table/table";
+export * from "./Tooltip/tooltip";
+export * from "./DataTable/data-table";

@@ -1,3 +1,16 @@
+export { taskDataDefaultColumns } from "./ui/task-data-table/columns/columns";
+
+export { useInfinityTasks } from "./hooks/useInfinityTasks";
+
+export {
+  useGetInfinityTaskQuery,
+  tasksMiddleware,
+  tasksReducer,
+  tasksReducerName,
+} from "./api/taskApi";
+
+export { TaskDataTable } from "./ui/task-data-table/task-data-table";
+
 export { updateTask } from "./model/service/updateTask/updateTask";
 
 export { TaskFormSkeleton } from "./ui/task-form/skeleton/task-form-skeleton";

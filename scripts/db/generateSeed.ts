@@ -116,8 +116,10 @@ async function main() {
     "Plan sprint tasks",
   ];
 
+  const taskTitleLarge = [...taskTitles, ...taskTitles, ...taskTitles];
+
   const tasks = await Promise.all(
-    taskTitles.map((title, index) => {
+    taskTitleLarge.map((title, index) => {
       // Alternate between admin and managers as authors
       const authorId =
         index % 3 === 0

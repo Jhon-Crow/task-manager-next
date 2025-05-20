@@ -1,13 +1,3 @@
-import { Button } from "@/shared/ui";
-import { ChevronDown } from "lucide-react";
-
 export default async function RootPage() {
-  return (
-    <>
-      Работаю{" "}
-      <Button className="text-lg">
-        <ChevronDown />
-      </Button>
-    </>
-  );
+  return <div className="mt-6 mx-auto w-[800px]"></div>;
 }

@@ -13,7 +13,7 @@ import { useEffect, useMemo } from "react";
 export default function UpdateTaskForm({
   authorId,
 }: {
-  authorId: TypeTask["authorId"];
+  authorId: TypeTask["author"]["id"];
 }) {
   const task = useSelectTask();
   const { setNewTask } = useTaskActions();

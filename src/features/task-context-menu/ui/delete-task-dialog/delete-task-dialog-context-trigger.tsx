@@ -1,9 +1,9 @@
 import { buttonVariants, ContextMenuItem, DialogTrigger } from "@/shared/ui";
 import { memo } from "react";
 
-export const DeleteTaskDialogTrigger = memo(function DeleteTaskDialogTrigger() {
-  return (
-    <>
+export const DeleteTaskContextDialogTrigger = memo(
+  function DeleteTaskDialogTrigger() {
+    return (
       <DialogTrigger asChild>
         <ContextMenuItem
           className={buttonVariants({
@@ -14,6 +14,6 @@ export const DeleteTaskDialogTrigger = memo(function DeleteTaskDialogTrigger() {
           Удалить
         </ContextMenuItem>
       </DialogTrigger>
-    </>
-  );
-});
+    );
+  }
+);

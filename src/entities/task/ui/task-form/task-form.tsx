@@ -24,7 +24,7 @@ export function TaskForm({
 }: {
   defaultValues?: Partial<TypeTaskForm>;
   id?: TypeTask["id"];
-  authorId: TypeTask["authorId"];
+  authorId: TypeTask["author"]["id"];
   submit: (values: TypeTaskForm) => Promise<ApiResult<void>>;
 }) {
   const isCreate = defaultValues ? false : true;

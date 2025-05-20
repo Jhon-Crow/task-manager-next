@@ -10,8 +10,8 @@ export default async function TaskPage({
   params: Promise<{ id: Task["id"] }>;
 }) {
   const id = (await params).id;
-  const data = await getTaskById(id);
-  if (!data.success) {
+  const taskData = await getTaskById(id);
+  if (!taskData.success) {
     //TODO
     return <div>Не успешно</div>;
   }
@@ -19,20 +19,8 @@ export default async function TaskPage({
   if (!data.data) {
     redirect(Routes.TASK(id) + "/not-found");
   }
-  const workers = await getUsersAssignedToTask(id);
-  if (!workers.success) {
-    return;
-  }
-  const author = await getUserById(data.data.authorId);
+  const task = taskData.data;
   {
-    return (
-      <TaskPageCard
-        task={data.data}
-        author={
-          author.success ? (author.data ? author.data : undefined) : undefined
-        }
-        users={workers.success ? workers.data : undefined}
-      />
-    );
+    return <TaskPageCard task={task} />;
   }
 }

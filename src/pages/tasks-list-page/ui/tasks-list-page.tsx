@@ -1,5 +1,10 @@
-import { getAllTasks } from "@/entities/task";
-import { TaskListWidget } from "@/widgets/task-list-widget";
+import { getAllTasks, tasksReducer } from "@/entities/task";
+import { DynamicModuleLoader } from "@/shared/lib/components";
+import { TaskListDataTableWidget } from "@/widgets/task-list-data-table-widget";
+
+const reducers: ReducersList = {
+  taskApi: tasksReducer,
+};
 
 export default async function TasksListPage() {
   const data = await getAllTasks();
@@ -7,5 +12,10 @@ export default async function TasksListPage() {
     //TODO
     return <div>{"Popa"}</div>;
   }
-  return <TaskListWidget tasks={data.data} />;
+  return (
+    <DynamicModuleLoader reducers={reducers}>
+      <TaskListDataTableWidget />
+      {/* <TaskListWidget tasks={data.data} /> */}
+    </DynamicModuleLoader>
+  );
 }
