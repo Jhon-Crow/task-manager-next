@@ -12,7 +12,7 @@ export const UserFormBtn = ({
 
   return (
     <Button
-      disabled={isSubmitting}
+      disabled={isSubmitting || isSubmitted}
       type="submit"
       className={className}
     >

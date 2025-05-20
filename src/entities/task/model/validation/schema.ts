@@ -7,4 +7,5 @@ export const taskFormSchema = z.object({
   description: z.string().max(300).optional(),
   difficulty: z.nativeEnum(Difficulty).optional(),
   priority: z.nativeEnum(Priority).optional(),
+  authorId: z.string(),
 });

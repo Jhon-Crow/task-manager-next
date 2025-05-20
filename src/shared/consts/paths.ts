@@ -44,6 +44,12 @@ export const staticPaths = {
     type: "static",
     name: "Создать Пользователя",
   } as const,
+  login: {
+    key: "LOGIN",
+    path: "/login",
+    type: "static",
+    name: "Авторизоваться",
+  },
   "users/[id]/update": {
     key: "USER_UPDATE",
     path: (id: string) => `/users/${id}/update`,

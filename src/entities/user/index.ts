@@ -1,5 +1,7 @@
 export { deleteUserById } from "./model/service/deleteUserById/deleteUserById";
 
+export { getUserByEmail } from "./model/service/getUserByEmail/getUserByEmail";
+
 export { useSelectUserFullName } from "./model/selectors/selectUser";
 
 export { UserProvider } from "./provider/UserProvider";

@@ -1,6 +1,7 @@
 import { User } from "@/shared/lib/db/generated";
 import { redirect } from "next/navigation";
 import { getUserById, UserPageCard, UserProvider } from "@/entities/user";
+import { Routes } from "@/shared/consts/paths";
 export default async function UserPage({
   params,
 }: {
@@ -9,7 +10,7 @@ export default async function UserPage({
   const id = (await params).id;
   const user = await getUserById(id);
   if (!user.success || !user.data) {
-    redirect("./not-found");
+    redirect(Routes.USER(id) + "/not-found");
   }
   console.log(user.data)
   return (
