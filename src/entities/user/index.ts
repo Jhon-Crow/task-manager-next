@@ -1,3 +1,4 @@
+export { deleteUserById } from "./model/service/deleteUserById/deleteUserById";
 
 export { useSelectUserFullName } from "./model/selectors/selectUser";
 

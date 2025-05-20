@@ -1,5 +1,3 @@
-import { TypeTaskForm } from "@/entities/task/model/types/task";
-import { useNewTaskContext } from "@/shared/hooks/useNewTaskContext";
 import { TypeField } from "@/shared/types";
 import {
   FormControl,
@@ -9,12 +7,11 @@ import {
   FormMessage,
   Input,
 } from "@/shared/ui";
-import {TypeUserForm} from "@/entities/user/model/types/user";
+import { TypeUserForm } from "@/entities/user/model/types/user";
 
 export const UserFirstnameField: TypeField<TypeUserForm, "firstname"> = ({
   ...props
 }) => {
-  const { setNewTask } = useNewTaskContext();
   return (
     <FormField
       {...props}
@@ -22,14 +19,7 @@ export const UserFirstnameField: TypeField<TypeUserForm, "firstname"> = ({
         <FormItem className="space-y-2">
           <FormLabel>Задача:</FormLabel>
           <FormControl>
-            <Input
-              placeholder="Название..."
-              {...field}
-              onChange={(e) => {
-                setNewTask({ title: e.target.value });
-                field.onChange(e);
-              }}
-            />
+            <Input placeholder="Название..." {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
