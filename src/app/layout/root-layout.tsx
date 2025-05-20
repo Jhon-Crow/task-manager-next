@@ -21,7 +21,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <SessionProvider>
         <StoreProvider>
-          <body className={`antialiased`}>
+          <body className={`antialiased relative`}>
             <Navbar />
             {children}
             <Toaster />

@@ -1,46 +1,68 @@
-import { checkAuth } from "@/entities/auth";
+"use client";
+
+import { deleteTaskById } from "@/entities/task";
 import { TypeTask } from "@/entities/task/public-types";
-import { DeleteTaskBtnClick } from "@/features/delete-task";
-import DeleteTaskForm from "@/features/delete-task/ui/delete-task-form";
-import { Routes } from "@/shared/consts/paths";
-import { Role } from "@/shared/lib/db/generated";
+import { useServerAction } from "@/shared/hooks/useServerAction";
+import { cn } from "@/shared/lib/utils";
 import {
   ContextMenu,
   ContextMenuContent,
-  ContextMenuItem,
+  ContextMenuSeparator,
   ContextMenuTrigger,
+  Dialog,
 } from "@/shared/ui";
-import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, useTransition } from "react";
+import { DeleteTaskDialogTrigger } from "../delete-task-dialog/delete-task-dialog-trigger";
+import { DeleteTaskDialogContent } from "../delete-task-dialog/delete-task-dialog-content";
+import { OpenTaskLink } from "../links/open-task-link";
+import { UpdateTaskLink } from "../links/update-task-link";
+import { Session } from "next-auth";
 
-export const TaskContextMenu = async ({
+export const TaskContextMenu = ({
   children,
   id,
-  type,
+  title,
+  session,
+  authorId,
 }: {
   children: ReactNode;
   id: TypeTask["id"];
-  type: "form" | "onclick";
+  authorId: TypeTask["authorId"];
+  title: TypeTask["title"];
+  session: Session;
 }) => {
-  const { user } = await checkAuth();
+  const [pending, startTransition] = useTransition();
+  const handledDelete = useServerAction(deleteTaskById);
+  const isAdmin = session.user.role === "ADMIN";
+  const isAuthor = session.user.id === authorId;
+  const handleDelete = () => {
+    startTransition(async () => {
+      await handledDelete(id);
+    });
+  };
 
   return (
-    <ContextMenu>
-      <ContextMenuTrigger className="block">{children}</ContextMenuTrigger>
-      <ContextMenuContent>
-        <Link className="w-full h-full" href={Routes.TASK(id)}>
-          <ContextMenuItem className="cursor-pointer">Открыть</ContextMenuItem>
-        </Link>
-        {user.role === Role["ADMIN"] && (
-          <ContextMenuItem>
-            {type === "form" ? (
-              <DeleteTaskForm id={id} />
-            ) : (
-              <DeleteTaskBtnClick id={id} />
-            )}
-          </ContextMenuItem>
-        )}
-      </ContextMenuContent>
-    </ContextMenu>
+    <Dialog>
+      <ContextMenu>
+        <ContextMenuTrigger
+          disabled={pending}
+          asChild
+          className={cn("block", { "opacity-30": pending })}
+        >
+          {children}
+        </ContextMenuTrigger>
+        <ContextMenuContent>
+          <OpenTaskLink id={id} />
+          {(isAdmin || isAuthor) && (
+            <>
+              <UpdateTaskLink id={id} />
+              <ContextMenuSeparator />
+              <DeleteTaskDialogTrigger />
+            </>
+          )}
+        </ContextMenuContent>
+      </ContextMenu>
+      <DeleteTaskDialogContent deleteHandler={handleDelete} title={title} />
+    </Dialog>
   );
 };

@@ -1,3 +1,5 @@
+export { setMskTimeEnd } from "./setMskTimeEnd/setMskTimeEnd";
+
 export { addDays } from "./addDays/addDays";
 
 export { cn } from "./cn/cn";

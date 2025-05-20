@@ -21,16 +21,7 @@ export const TaskProvider = ({ children, task }: TaskProviderProps) => {
 
   useEffect(() => {
     changePage("tasks/[id]");
-    setTask(
-      task
-        ? {
-            ...task,
-            deadline: task?.deadline.getTime(),
-            createdAt: task?.createdAt.getTime(),
-            updatedAt: task?.updatedAt.getTime(),
-          }
-        : null
-    );
+    setTask(task ? task : null);
   }, [changePage, setTask, task]);
   return (
     <DynamicModuleLoader reducers={reducers}>{children}</DynamicModuleLoader>

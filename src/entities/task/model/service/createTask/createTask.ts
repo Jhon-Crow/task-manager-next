@@ -3,6 +3,7 @@
 import { prisma } from "@/shared/lib/db/prisma";
 import { taskFormSchema } from "../../validation/schema";
 import { handleAction } from "@/shared/lib/actions";
+import { setMskTimeEnd } from "@/shared/lib/utils";
 
 const createTaskImplementation = async (values: unknown): Promise<void> => {
   const validatedValues = taskFormSchema.safeParse(values);
@@ -12,8 +13,9 @@ const createTaskImplementation = async (values: unknown): Promise<void> => {
     throw new Error("createTaskValidation жопа");
   }
   const task = validatedValues.data;
+  const newDates = setMskTimeEnd(task.deadline);
   await prisma.task.create({
-    data: { ...task },
+    data: { ...task, deadline: newDates },
   });
 };
 

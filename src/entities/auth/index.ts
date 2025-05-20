@@ -1,6 +1,6 @@
-export { SignOutButton } from "./ui/sign-out-btn/sign-out-btn";
+export { logIn } from "./model/service/logIn/logIn";
 
-export { AuthForm } from "./ui/auth-form/auth-form";
+export { SignOutButton } from "./ui/sign-out-btn/sign-out-btn";
 
 export { checkAuth } from "./model/service/checkAuth/checkAuth";
 

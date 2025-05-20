@@ -8,6 +8,7 @@ export const SignOutButton = () => {
   const [pending, startTranstion] = useTransition();
   return (
     <Button
+      variant={"ghost"}
       disabled={pending}
       onClick={() => {
         startTranstion(async () => {
