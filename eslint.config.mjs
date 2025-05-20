@@ -14,6 +14,19 @@ const eslintConfig = [
   {
     ignores: ["src/shared/generated/**"],
   },
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_", // игнорировать неиспользуемые аргументы, начинающиеся с _
+          varsIgnorePattern: "^_", // игнорировать неиспользуемые переменные, начинающиеся с _
+          caughtErrorsIgnorePattern: "^_", // игнорировать неиспользуемые ошибки в catch
+        },
+      ],
+    },
+  },
 ];
 
 export default eslintConfig;
