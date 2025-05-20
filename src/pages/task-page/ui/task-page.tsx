@@ -1,8 +1,8 @@
 import { getTaskById, TaskPageCard } from "@/entities/task";
 import { getUserById, getUsersAssignedToTask } from "@/entities/user";
+import { Routes } from "@/shared/consts/paths";
 import { Task } from "@/shared/lib/db/generated";
 import { redirect } from "next/navigation";
-import {Routes} from "@/shared/consts/paths";
 
 export default async function TaskPage({
   params,
@@ -15,8 +15,10 @@ export default async function TaskPage({
     //TODO
     return <div>Не успешно</div>;
   }
+  console.log(id);
+
   if (!data.data) {
-    redirect('/not-found');
+    redirect(Routes.TASK(id) + "/not-found");
   }
   const users = await getUsersAssignedToTask(id);
   const author = await getUserById(data.data.authorId);
