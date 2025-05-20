@@ -5,6 +5,7 @@ import { getUserByEmail } from "@/entities/user";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import NextAuth from "next-auth";
+import { sleep } from "@/shared/lib/utils";
 
 const config = {
   pages: {
@@ -20,7 +21,7 @@ const config = {
         const { email, password } = validationData.data;
         const user = await getUserByEmail(email);
         if (!user.success || !user.data) return null;
-
+        await sleep(10);
         const { password: hashedPassword } = user.data;
         const passwordMatch = bcrypt.compare(password, hashedPassword);
         if (!passwordMatch) return null;

@@ -19,6 +19,7 @@ const getUserByIdImplementation = async (
   if (!user) {
     return null;
   }
+
   return {
     ...user,
     tasks: user.tasks.reduce((acc, task) => {
