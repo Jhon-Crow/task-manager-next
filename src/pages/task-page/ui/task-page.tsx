@@ -15,7 +15,6 @@ export default async function TaskPage({
     //TODO
     return <div>Не успешно</div>;
   }
-  console.log(id);
 
   if (!data.data) {
     redirect(Routes.TASK(id) + "/not-found");

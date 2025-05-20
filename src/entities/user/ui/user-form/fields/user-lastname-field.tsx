@@ -9,7 +9,7 @@ import {
 } from "@/shared/ui";
 import { TypeUserCreateForm } from "@/entities/user/model/types/user";
 
-export const UserPasswordField: TypeField<TypeUserCreateForm, "password"> = ({
+export const UserLastnameField: TypeField<TypeUserCreateForm, "lastname"> = ({
   ...props
 }) => {
   return (
@@ -17,9 +17,9 @@ export const UserPasswordField: TypeField<TypeUserCreateForm, "password"> = ({
       {...props}
       render={({ field }) => (
         <FormItem className="space-y-2">
-          <FormLabel>Пароль:</FormLabel>
+          <FormLabel>Фамилия:</FormLabel>
           <FormControl>
-            <Input placeholder="Введите пароль..." type="password" {...field} />
+            <Input placeholder="Введите фамилию..." {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

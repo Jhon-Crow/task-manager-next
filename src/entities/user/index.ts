@@ -1,3 +1,9 @@
+export { createUser } from "./model/service/createUser/createUser";
+
+export { UserForm } from "./ui/user-form/user-form";
+
+export { updateUser } from "./model/service/updateUser/updateUser";
+
 export { deleteUserById } from "./model/service/deleteUserById/deleteUserById";
 
 export { getUserByEmail } from "./model/service/getUserByEmail/getUserByEmail";

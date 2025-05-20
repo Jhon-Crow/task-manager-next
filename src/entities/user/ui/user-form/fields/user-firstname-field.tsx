@@ -7,9 +7,9 @@ import {
   FormMessage,
   Input,
 } from "@/shared/ui";
-import { TypeUserForm } from "@/entities/user/model/types/user";
+import { TypeUserCreateForm } from "@/entities/user/model/types/user";
 
-export const UserFirstnameField: TypeField<TypeUserForm, "firstname"> = ({
+export const UserFirstnameField: TypeField<TypeUserCreateForm, "firstname"> = ({
   ...props
 }) => {
   return (
@@ -17,9 +17,9 @@ export const UserFirstnameField: TypeField<TypeUserForm, "firstname"> = ({
       {...props}
       render={({ field }) => (
         <FormItem className="space-y-2">
-          <FormLabel>Задача:</FormLabel>
+          <FormLabel>Имя:</FormLabel>
           <FormControl>
-            <Input placeholder="Название..." {...field} />
+            <Input placeholder="Введите имя..." {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

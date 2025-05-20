@@ -2,161 +2,142 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Form } from "@/shared/ui";
 import {
-  Button,
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Input,
-} from "@/shared/ui";
-import { TypeUserForm } from "../../model/types/user";
+  TypeUser,
+  TypeUserCreateForm,
+  TypeUserUpdateForm,
+} from "../../model/types/user";
 import {
-  userFormSchema,
-  userFormUpdateSchema,
+  userCreateFormClientSchema,
+  userUpdateFormSchema,
 } from "../../model/validation/schema";
-import { UserTextField } from "./fields/user-text-field";
 import { UserRoleField } from "./fields/user-role-field";
 import { UserFormBtn } from "./user-form-btn";
 import { ApiResult } from "@/shared/types";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Routes } from "@/shared/consts/paths";
+import { ReactNode } from "react";
+import { UserFirstnameField } from "./fields/user-firstname-field";
+import { UserLastnameField } from "./fields/user-lastname-field";
+import { UserEmailField } from "./fields/user-email-field";
+import { UserImageUrlField } from "./fields/user-image-url-field copy";
+import { UserPasswordField } from "./fields/user-password-field";
+import { UserConfirmPasswordField } from "./fields/user-confirm-password-field";
+
+type CreateUserFormProps = {
+  defaultValues?: undefined;
+  userId?: undefined;
+  submit: (values: TypeUserCreateForm) => Promise<ApiResult<void>>;
+};
+
+type UpdateUserFormProps = {
+  defaultValues: TypeUserUpdateForm;
+  userId: TypeUser["id"];
+  submit: (
+    values: TypeUserUpdateForm,
+    id: TypeUser["id"]
+  ) => Promise<ApiResult<void>>;
+};
 
 export function UserForm({
   defaultValues,
   submit,
-}: {
-  defaultValues?: TypeUserForm;
-  submit: (values: TypeUserForm) => Promise<ApiResult<void>>;
-  sideEffect?: (values: Partial<TypeUserForm>) => void;
-}) {
-  const isCreate = defaultValues ? false : true;
-  const form = useForm<TypeUserForm>({
-    resolver: zodResolver(isCreate ? userFormSchema : userFormUpdateSchema),
-    defaultValues: {
-      role: "WORKER",
-      firstname: "",
-      lastname: "",
-      email: "",
-      imageUrl: "",
-      password: "",
-      confirmPassword: "",
-      ...defaultValues,
-    },
+  userId,
+}: CreateUserFormProps | UpdateUserFormProps): ReactNode {
+  const isCreate = !defaultValues;
+
+  const form = useForm<TypeUserCreateForm | TypeUserUpdateForm>({
+    resolver: zodResolver(
+      isCreate ? userCreateFormClientSchema : userUpdateFormSchema
+    ),
+    defaultValues: !defaultValues
+      ? {
+          role: "WORKER",
+          firstname: "",
+          lastname: "",
+          email: "",
+          imageUrl: "",
+          password: "",
+          confirmPassword: "",
+        }
+      : {
+          role: defaultValues!.role,
+          firstname: defaultValues!.firstname,
+          email: defaultValues!.email,
+          imageUrl: defaultValues!.imageUrl ? defaultValues!.imageUrl : "",
+          lastname: defaultValues!.lastname ? defaultValues!.lastname : "",
+        },
   });
 
-  const submitHandler = async (values: TypeUserForm) => {
-    let data;
-    if (isCreate) {
-      data = await submit(values);
-    } else {
-      data = await submit(defaultValues.id, values);
-    }
+  const submitHandler = async (
+    values: typeof userId extends string
+      ? TypeUserUpdateForm
+      : TypeUserCreateForm
+  ) => {
+    const data = await (userId !== undefined
+      ? submit(values, userId)
+      : submit(values));
+
     if (!data.success) {
       toast.error(data.error.message);
       return;
     }
     toast.info("Успешно");
+    if (userId) {
+      redirect(Routes.USER(userId));
+    }
     redirect(Routes.USERS_LIST);
-
-    redirect("../");
   };
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
+      <form
+        // @ts-expect-error nu tak nado
+        onSubmit={form.handleSubmit(submitHandler)}
+        className="space-y-8"
+      >
         <div className="flex gap-x-16">
-          <UserTextField
-            defaultValue={defaultValues?.firstname}
-            title="Имя"
-            name="firstname"
-            control={form.control}
-          />
-          <UserTextField
-            defaultValue={defaultValues?.lastname || ""}
-            // defaultValue={defaultValuesNew.lastname}
-            // value={defaultValues?.lastname ? defaultValues.lastname : ''}
-            title="Фамилия (опц.)"
+          {/* @ts-expect-error nu tak nado */}
+          <UserFirstnameField control={form.control} name="firstname" />
+          <UserLastnameField
             name="lastname"
+            // @ts-expect-error nu tak nado
             control={form.control}
           />
         </div>
 
         <div className="flex gap-x-16">
-          <UserTextField
-            defaultValue={defaultValues?.email}
-            title="Email"
-            name="email"
-            control={form.control}
-          />
+          {/* @ts-expect-error nu tak nado */}
+          <UserEmailField control={form.control} name="email" />
 
-          <UserTextField
-            defaultValue={defaultValues?.imageUrl ? defaultValues.imageUrl : ""}
-            title="Аватарка (опц.)"
-            name="imageUrl"
+          <UserImageUrlField
+            // @ts-expect-error nu tak nado
             control={form.control}
+            name="imageUrl"
           />
         </div>
 
         {isCreate && (
           <div className="flex gap-x-16">
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{!isCreate && "Новый"} Пароль</FormLabel>
-                  <div className="flex gap-4">
-                    <FormItem className="flex items-center space-x-2">
-                      <FormControl>
-                        <Input
-                          defaultValue={defaultValues?.password}
-                          type="password"
-                          onChange={(e) => field.onChange(e.target.value)}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
+            {/* @ts-expect-error nu tak nado */}
+            <UserPasswordField control={form.control} name="password" />
+            <UserConfirmPasswordField
+              // @ts-expect-error nu tak nado
               control={form.control}
               name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Повтори пароль</FormLabel>
-                  <div className="flex gap-4">
-                    <FormItem className="flex items-center space-x-2">
-                      <FormControl>
-                        <Input
-                          defaultValue={defaultValues?.password}
-                          type="password"
-                          onChange={(e) => field.onChange(e.target.value)}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
           </div>
         )}
 
         <UserRoleField
           defaultValue={defaultValues?.role}
+          // @ts-expect-error nu tak nado
           control={form.control}
         />
 
         <div className="flex">
-          <Button
-            variant="destructive"
-            onClick={() => redirect(Routes.USERS_LIST)}
-          >
+          <Button variant="destructive" onClick={() => form.reset()}>
             Отменить
           </Button>
           <UserFormBtn isCreate={isCreate} className="block ml-auto" />
