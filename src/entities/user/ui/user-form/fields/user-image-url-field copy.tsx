@@ -9,7 +9,7 @@ import {
 } from "@/shared/ui";
 import { TypeUserCreateForm } from "@/entities/user/model/types/user";
 
-export const UserPasswordField: TypeField<TypeUserCreateForm, "password"> = ({
+export const UserImageUrlField: TypeField<TypeUserCreateForm, "imageUrl"> = ({
   ...props
 }) => {
   return (
@@ -17,9 +17,9 @@ export const UserPasswordField: TypeField<TypeUserCreateForm, "password"> = ({
       {...props}
       render={({ field }) => (
         <FormItem className="space-y-2">
-          <FormLabel>Пароль:</FormLabel>
+          <FormLabel>Введите адрес изображения:</FormLabel>
           <FormControl>
-            <Input placeholder="Введите пароль..." type="password" {...field} />
+            <Input placeholder="Введите адрес изображения..." {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

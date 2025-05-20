@@ -8,11 +8,11 @@ export const UserFormBtn = ({
   isCreate: boolean;
   className?: string;
 }) => {
-  const { isSubmitting, isSubmitted } = useFormState();
+  const { isSubmitting, isSubmitted, isValid } = useFormState();
 
   return (
     <Button
-      disabled={isSubmitting || isSubmitted}
+      disabled={(isSubmitting || isSubmitted) && !isValid}
       type="submit"
       className={className}
     >

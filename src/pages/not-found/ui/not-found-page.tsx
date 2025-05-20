@@ -15,7 +15,6 @@ import { LucideLink } from "lucide-react";
 
 export default function NotFoundPage() {
   const pathname = usePathname()?.split("/");
-  console.log(pathname);
   if (pathname?.[1] === "tasks") {
     return (
       <Card className="pl-4 mx-auto max-w-[500px]">

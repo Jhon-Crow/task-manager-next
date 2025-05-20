@@ -12,7 +12,6 @@ export default async function UserPage({
   if (!user.success || !user.data) {
     redirect(Routes.USER(id) + "/not-found");
   }
-  console.log(user.data)
   return (
     <UserProvider user={user.data}>
       <UserPageCard user={user.data} />
