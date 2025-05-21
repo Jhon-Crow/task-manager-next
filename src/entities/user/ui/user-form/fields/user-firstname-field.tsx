@@ -7,11 +7,15 @@ import {
   FormMessage,
   Input,
 } from "@/shared/ui";
-import { TypeUserCreateForm } from "@/entities/user/model/types/user";
+import {
+  TypeUserCreateForm,
+  TypeUserUpdateForm,
+} from "@/entities/user/model/types/user";
 
-export const UserFirstnameField: TypeField<TypeUserCreateForm, "firstname"> = ({
-  ...props
-}) => {
+export const UserFirstnameField: TypeField<
+  TypeUserCreateForm | TypeUserUpdateForm,
+  "firstname"
+> = ({ ...props }) => {
   return (
     <FormField
       {...props}

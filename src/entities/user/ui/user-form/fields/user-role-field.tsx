@@ -8,13 +8,15 @@ import {
   Input,
 } from "@/shared/ui";
 import { role } from "../../../model/consts/consts";
-import { TypeUserCreateForm } from "@/entities/user/model/types/user";
+import {
+  TypeUserCreateForm,
+  TypeUserUpdateForm,
+} from "@/entities/user/model/types/user";
 
-export const UserRoleField: TypeField<TypeUserCreateForm, "role"> = ({
-  control,
-  defaultValue,
-  ...props
-}) => {
+export const UserRoleField: TypeField<
+  TypeUserCreateForm | TypeUserUpdateForm,
+  "role"
+> = ({ control, defaultValue, ...props }) => {
   return (
     <FormField
       {...props}

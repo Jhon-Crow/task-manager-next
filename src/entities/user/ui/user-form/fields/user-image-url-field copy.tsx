@@ -7,11 +7,15 @@ import {
   FormMessage,
   Input,
 } from "@/shared/ui";
-import { TypeUserCreateForm } from "@/entities/user/model/types/user";
+import {
+  TypeUserCreateForm,
+  TypeUserUpdateForm,
+} from "@/entities/user/model/types/user";
 
-export const UserImageUrlField: TypeField<TypeUserCreateForm, "imageUrl"> = ({
-  ...props
-}) => {
+export const UserImageUrlField: TypeField<
+  TypeUserCreateForm | TypeUserUpdateForm,
+  "imageUrl"
+> = ({ ...props }) => {
   return (
     <FormField
       {...props}

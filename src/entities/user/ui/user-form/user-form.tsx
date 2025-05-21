@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { Control, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Form } from "@/shared/ui";
 import {
@@ -72,59 +72,44 @@ export function UserForm({
   });
 
   const submitHandler = async (
-    values: typeof userId extends string
-      ? TypeUserUpdateForm
-      : TypeUserCreateForm
+    values: TypeUserUpdateForm | TypeUserCreateForm
   ) => {
-    const data = await (userId !== undefined
-      ? submit(values, userId)
-      : submit(values));
+    const data = await (isCreate
+      ? submit(values as TypeUserCreateForm)
+      : submit(values, userId));
 
     if (!data.success) {
       toast.error(data.error.message);
       return;
     }
     toast.info("Успешно");
-    if (userId) {
-      redirect(Routes.USER(userId));
+    if (isCreate) {
+      redirect(Routes.USERS_LIST);
     }
-    redirect(Routes.USERS_LIST);
+    redirect(Routes.USER(userId));
   };
   return (
     <Form {...form}>
-      <form
-        // @ts-expect-error nu tak nado
-        onSubmit={form.handleSubmit(submitHandler)}
-        className="space-y-8"
-      >
+      <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
         <div className="flex gap-x-16">
-          {/* @ts-expect-error nu tak nado */}
           <UserFirstnameField control={form.control} name="firstname" />
-          <UserLastnameField
-            name="lastname"
-            // @ts-expect-error nu tak nado
-            control={form.control}
-          />
+          <UserLastnameField name="lastname" control={form.control} />
         </div>
 
         <div className="flex gap-x-16">
-          {/* @ts-expect-error nu tak nado */}
           <UserEmailField control={form.control} name="email" />
 
-          <UserImageUrlField
-            // @ts-expect-error nu tak nado
-            control={form.control}
-            name="imageUrl"
-          />
+          <UserImageUrlField control={form.control} name="imageUrl" />
         </div>
 
         {isCreate && (
           <div className="flex gap-x-16">
-            {/* @ts-expect-error nu tak nado */}
-            <UserPasswordField control={form.control} name="password" />
+            <UserPasswordField
+              control={form.control as Control<TypeUserCreateForm>}
+              name="password"
+            />
             <UserConfirmPasswordField
-              // @ts-expect-error nu tak nado
-              control={form.control}
+              control={form.control as Control<TypeUserCreateForm>}
               name="confirmPassword"
             />
           </div>
@@ -132,8 +117,8 @@ export function UserForm({
 
         <UserRoleField
           defaultValue={defaultValues?.role}
-          // @ts-expect-error nu tak nado
           control={form.control}
+          name="role"
         />
 
         <div className="flex">
