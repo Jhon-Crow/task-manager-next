@@ -1,20 +1,3 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Skeleton,
-} from "@/shared/ui";
+import {UserLoader} from "@/entities/user";
 
-export default function Loading() {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle> Загрузка...</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Skeleton className="w-full h-24" />
-      </CardContent>
-    </Card>
-  );
-}
+export default UserLoader;
