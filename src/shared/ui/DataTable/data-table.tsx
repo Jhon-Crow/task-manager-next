@@ -92,7 +92,7 @@ function DataTableLayout({
   );
 }
 
-function DataTableContent<TData>({
+function DataTableContent<TData extends object>({
   rows,
   columnsLength,
   isLoading,
@@ -101,41 +101,45 @@ function DataTableContent<TData>({
   columnsLength: number;
   isLoading?: boolean;
 }) {
-  return (
+  return rows.length ? (
     <>
-      {rows.length ? (
-        <>
-          {rows.map((row) => (
-            <TableRow key={row.id} data-state={row.getIsSelected()}>
-              {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-          {isLoading && (
-            <TableRow className="p-0">
-              <TableCell className="p-0" colSpan={columnsLength}>
-                <Skeleton className="w-full h-24 rounded-none" />
+      {rows.map((row) => {
+        return (
+          <TableRow
+            key={row.id}
+            data-state={row.getIsSelected()}
+            data-pending={
+              "pending" in row.original ? row.original.pending : undefined
+            }
+          >
+            {row.getVisibleCells().map((cell) => (
+              <TableCell key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableCell>
-            </TableRow>
-          )}
-        </>
-      ) : isLoading ? (
+            ))}
+          </TableRow>
+        );
+      })}
+      {isLoading && (
         <TableRow className="p-0">
           <TableCell className="p-0" colSpan={columnsLength}>
             <Skeleton className="w-full h-24 rounded-none" />
           </TableCell>
         </TableRow>
-      ) : (
-        <TableRow>
-          <TableCell colSpan={columnsLength} className="h-24 text-center">
-            Нет Данных.
-          </TableCell>
-        </TableRow>
       )}
     </>
+  ) : isLoading ? (
+    <TableRow className="p-0">
+      <TableCell className="p-0" colSpan={columnsLength}>
+        <Skeleton className="w-full h-24 rounded-none" />
+      </TableCell>
+    </TableRow>
+  ) : (
+    <TableRow>
+      <TableCell colSpan={columnsLength} className="h-24 text-center">
+        Нет Данных.
+      </TableCell>
+    </TableRow>
   );
 }
 

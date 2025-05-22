@@ -1,4 +1,4 @@
-import { useActions } from "../../../model/slice/taskSlice";
+import { useActions } from "../../../model/slices/taskSlice";
 import { TypeTaskForm } from "@/entities/task/public-types";
 import { TypeField } from "@/shared/types";
 import {

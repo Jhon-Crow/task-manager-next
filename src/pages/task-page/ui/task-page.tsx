@@ -1,5 +1,4 @@
 import { getTaskById, TaskPageCard } from "@/entities/task";
-import { getUserById, getUsersAssignedToTask } from "@/entities/user";
 import { Routes } from "@/shared/consts/paths";
 import { Task } from "@/shared/lib/db/generated";
 import { redirect } from "next/navigation";
@@ -16,7 +15,7 @@ export default async function TaskPage({
     return <div>Не успешно</div>;
   }
 
-  if (!data.data) {
+  if (!taskData.data) {
     redirect(Routes.TASK(id) + "/not-found");
   }
   const task = taskData.data;

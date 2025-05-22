@@ -1,3 +1,5 @@
+export type { TasksListSchema } from "./model/types/TasksListSchema";
+
 export type { TasksResponse, TasksFilters } from "./model/types/api";
 
 export type {

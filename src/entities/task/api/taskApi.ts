@@ -37,5 +37,5 @@ export const {
   useGetInfinityTaskQuery,
   middleware: tasksMiddleware,
   reducer: tasksReducer,
-  reducerPath: tasksReducerName,
+  reducerPath: tasksApiReducerName,
 } = tasksApi;

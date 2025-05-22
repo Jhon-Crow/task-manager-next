@@ -1,3 +1,11 @@
+export {
+  useTasksListActions,
+  tasksListReducer,
+  tasksListReducerName,
+} from "./model/slices/tasksListSlice";
+
+export { getAllTasksRoute } from "./model/route/get-all-tasks-route";
+
 export { taskDataDefaultColumns } from "./ui/task-data-table/columns/columns";
 
 export { useInfinityTasks } from "./hooks/useInfinityTasks";
@@ -6,7 +14,7 @@ export {
   useGetInfinityTaskQuery,
   tasksMiddleware,
   tasksReducer,
-  tasksReducerName,
+  tasksApiReducerName,
 } from "./api/taskApi";
 
 export { TaskDataTable } from "./ui/task-data-table/task-data-table";
@@ -34,4 +42,4 @@ export {
   reducer as taskReducer,
   setTask,
   useActions as useTaskActions,
-} from "./model/slice/taskSlice";
+} from "./model/slices/taskSlice";

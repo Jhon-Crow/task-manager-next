@@ -1,8 +1,16 @@
 import { currentPageReducerName } from "@/shared/lib/slices/currentPage";
 import type { CurrentPageSchema } from "@/shared/lib/slices/currentPage/public-types";
 import { createReduxStore } from "../config/store";
-import { taskReducerName, tasksReducerName } from "@/entities/task";
-import { TaskSchema, TasksResponse } from "@/entities/task/public-types";
+import {
+  taskReducerName,
+  tasksListReducerName,
+  tasksApiReducerName,
+} from "@/entities/task";
+import {
+  TaskSchema,
+  TasksListSchema,
+  TasksResponse,
+} from "@/entities/task/public-types";
 import { UserSchema } from "@/entities/user/types";
 import { userReducerName } from "@/entities/user";
 
@@ -11,7 +19,8 @@ declare global {
     [currentPageReducerName]: CurrentPageSchema;
     [taskReducerName]?: TaskSchema;
     [userReducerName]?: UserSchema;
-    [tasksReducerName]?: TasksResponse;
+    [tasksApiReducerName]?: TasksResponse;
+    [tasksListReducerName]?: TasksListSchema;
   }
   type StateSchemaKey = keyof StateSchema;
 

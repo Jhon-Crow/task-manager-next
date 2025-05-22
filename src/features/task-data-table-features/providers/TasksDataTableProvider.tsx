@@ -39,7 +39,6 @@ export const TaskDataTableSortingProvider = ({
 
   const fetchMoreOnButtomReacher = useCallback(() => {
     if (isBottomVisible) {
-      console.log("Я ТУТ");
       fetchNextPage();
     }
   }, [fetchNextPage, isBottomVisible]);
@@ -56,11 +55,6 @@ export const TaskDataTableSortingProvider = ({
       sorting,
     },
   });
-  console.log(
-    Object.values(
-      Object.assign({}, taskDataDefaultColumns, taskDataTableMenuInColumns)
-    )
-  );
 
   const { rows } = table.getRowModel();
 
@@ -82,11 +76,11 @@ export const TaskDataTableSortingProvider = ({
       setFilters,
       tableRef: tableContainerRef,
       rows,
+      rowVirtualizer,
       isLoading: isFetching || isLoading,
     }),
-    [isFetching, isLoading, rows, table]
+    [isFetching, isLoading, rowVirtualizer, rows, table]
   );
-  console.log(tasks);
 
   return (
     <TasksDataTableContext value={value}>{children}</TasksDataTableContext>

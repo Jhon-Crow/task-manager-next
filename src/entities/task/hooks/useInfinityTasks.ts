@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useGetInfinityTaskQuery } from "../api/taskApi";
 import { TasksFilters, TypeTask } from "../public-types";
+import { useSelectAllTasks } from "../model/selectors/selectTaskList";
+import { useTasksListActions } from "../model/slices/tasksListSlice";
 
 export const useInfinityTasks = (params: {
   initialFilters: TasksFilters;
@@ -13,10 +15,11 @@ export const useInfinityTasks = (params: {
     cursor: undefined as string | undefined,
     filters: params.initialFilters,
   });
-  const [allTasks, setAllTasks] = useState<TypeTask[]>([]);
+  const tasks = useSelectAllTasks();
   const [newCursor, setNewCursor] = useState<TypeTask["id"] | null | undefined>(
     undefined
   );
+  const { addTasks, removeAllTasks } = useTasksListActions();
 
   const { data, isLoading, isFetching } = useGetInfinityTaskQuery(newParams, {
     selectFromResult: ({ data, ...rest }) => ({
@@ -27,33 +30,33 @@ export const useInfinityTasks = (params: {
 
   useEffect(() => {
     if (data && newCursor !== null && newCursor !== data.nextCursor) {
-      setAllTasks((prev) => [...prev, ...data.tasks]);
+      addTasks(data.tasks);
       setNewCursor(data.nextCursor || null);
     }
-  }, [data, newCursor]);
+  }, [addTasks, data, newCursor]);
 
   const fetchNextPage = useCallback(() => {
-    console.log(newCursor);
-    console.log(newCursor, !isFetching, !isLoading);
-
     setNewParams((prev) => ({
       ...prev,
       cursor: newCursor ? newCursor : undefined,
     }));
-  }, [isFetching, isLoading, newCursor]);
+  }, [newCursor]);
 
-  const updateFilters = useCallback((newFilters: TasksFilters) => {
-    setAllTasks([]);
-    setNewCursor(null);
-    setNewParams({
-      pageSize: 10,
-      cursor: undefined,
-      filters: newFilters,
-    });
-  }, []);
+  const updateFilters = useCallback(
+    (newFilters: TasksFilters) => {
+      removeAllTasks();
+      setNewCursor(null);
+      setNewParams({
+        pageSize: 10,
+        cursor: undefined,
+        filters: newFilters,
+      });
+    },
+    [removeAllTasks]
+  );
 
   return {
-    tasks: allTasks,
+    tasks,
     fetchNextPage,
     hasNextPage: !!newCursor,
     isLoading,
