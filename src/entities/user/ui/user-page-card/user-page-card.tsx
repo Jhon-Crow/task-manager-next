@@ -24,7 +24,7 @@ export function UserPageCard({ user }: { user: TypeUser & {tasks: TypeTask[]}}) 
       <CardHeader>
         <Avatar className="size-40">
           <AvatarImage src={user.imageUrl || undefined} alt="user-avatar-img" />
-          <AvatarFallback>
+          <AvatarFallback className='text-5xl'>
             {user.firstname[0]}
             {user.lastname ? user.lastname[0] : null}
           </AvatarFallback>
@@ -43,7 +43,7 @@ export function UserPageCard({ user }: { user: TypeUser & {tasks: TypeTask[]}}) 
         {user.role}
       </CardContent>
       <CardFooter className="pt-4 flex-col gap-4">
-        {user.tasks.length && <TaskList tasks={user.tasks}/>}
+        {user.tasks.length ? <TaskList tasks={user.tasks}/> : null}
         <span className="opacity-40 self-end">
           user created on {formatDateToRuShort(user.createdAt)}
         </span>
