@@ -21,7 +21,6 @@ export async function getAllTasksRoute(req: NextApiRequest) {
       where,
       take: pageSize + 1, // Берем на 1 больше для проверки наличия следующей страницы
       ...(cursor && {
-        skip: 1, // Пропускаем курсорный элемент
         cursor: {
           id: cursor,
         },

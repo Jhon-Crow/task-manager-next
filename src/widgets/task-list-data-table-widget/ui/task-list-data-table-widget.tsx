@@ -1,19 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 import { DataTableForWidget } from "./data-table-for-widget";
 import { TimerProvider } from "@/shared/providers";
-import { TaskDataTableSortingProvider } from "@/features/task-data-table-features";
+import { TaskDataTableProvider } from "@/features/task-data-table-features";
+import Count from "./count";
 
 export const TaskListDataTableWidget = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Задачи</CardTitle>
+        <CardTitle>
+          Задачи <Count />
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <TimerProvider>
-          <TaskDataTableSortingProvider>
+          <TaskDataTableProvider>
             <DataTableForWidget />
-          </TaskDataTableSortingProvider>
+          </TaskDataTableProvider>
         </TimerProvider>
       </CardContent>
     </Card>

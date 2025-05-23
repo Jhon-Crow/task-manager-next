@@ -18,6 +18,7 @@ export const useIsBottomVisible = (
           rect.bottom <=
             (window.innerHeight || document.documentElement.clientHeight) &&
           rect.top >= 0;
+
         setIsBottomVisible(isVisible);
       },
       { threshold }

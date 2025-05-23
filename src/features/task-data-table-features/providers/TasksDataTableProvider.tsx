@@ -14,22 +14,23 @@ import {
   useRef,
   useState,
 } from "react";
-import { TasksDataTableContext } from "../contexts/TasksDataTableContext";
 import { TasksFilters } from "@/entities/task/public-types";
 import { taskDataDefaultColumns, useInfinityTasks } from "@/entities/task";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useIsBottomVisible } from "@/shared/hooks/useIsBottomVisible";
 import { taskDataTableMenuInColumns } from "../ui/task-data-table-menu/task-data-table-menu";
+import { TasksDataTableContext } from "../contexts/TasksDataTableContext";
+import { taskDataTableSortingInColumns } from "../ui/task-data-table-sortings/task-data-table-sorting";
 
-export const TaskDataTableSortingProvider = ({
+export const TaskDataTableProvider = ({
   children,
 }: {
   children: ReactNode;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filters, setFilters] = useState<TasksFilters>({});
-  const tableContainerRef = useRef<HTMLDivElement>(null);
-  const isBottomVisible = useIsBottomVisible(tableContainerRef);
+  const observerRef = useRef<HTMLDivElement>(null);
+  const isBottomVisible = useIsBottomVisible(observerRef);
 
   const { tasks, isFetching, isLoading, fetchNextPage, hasNextPage } =
     useInfinityTasks({
@@ -42,15 +43,22 @@ export const TaskDataTableSortingProvider = ({
       fetchNextPage();
     }
   }, [fetchNextPage, isBottomVisible]);
+
   const table = useReactTable({
     data: tasks,
     columns: Object.values(
-      Object.assign({}, taskDataDefaultColumns, {
-        actions: taskDataTableMenuInColumns,
-      })
+      Object.assign(
+        {},
+        taskDataDefaultColumns,
+        {
+          actions: taskDataTableMenuInColumns,
+        },
+        taskDataTableSortingInColumns
+      )
     ),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
     state: {
       sorting,
     },
@@ -60,7 +68,7 @@ export const TaskDataTableSortingProvider = ({
 
   const rowVirtualizer = useVirtualizer({
     count: hasNextPage ? rows.length + 1 : rows.length,
-    getScrollElement: () => tableContainerRef.current,
+    getScrollElement: () => observerRef.current,
     estimateSize: () => 60,
     overscan: 5,
   });
@@ -74,7 +82,7 @@ export const TaskDataTableSortingProvider = ({
       table,
       setSorting,
       setFilters,
-      tableRef: tableContainerRef,
+      observerRef,
       rows,
       rowVirtualizer,
       isLoading: isFetching || isLoading,

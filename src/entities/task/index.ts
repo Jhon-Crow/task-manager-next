@@ -1,4 +1,9 @@
 export {
+  useSelectTaskTitleInTaskListById,
+  useSelectTaskPendingInTaskListById,
+} from "./model/selectors/selectTaskList";
+
+export {
   useTasksListActions,
   tasksListReducer,
   tasksListReducerName,

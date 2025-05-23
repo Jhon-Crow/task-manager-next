@@ -11,7 +11,7 @@ type TasksDataTableContextValues = {
   setFilters: Dispatch<SetStateAction<TasksFilters>>;
   rowVirtualizer: Virtualizer<HTMLDivElement, Element>;
   table: Table<TypeTask>;
-  tableRef: Ref<HTMLDivElement> | null;
+  observerRef: Ref<HTMLDivElement> | null;
   isLoading: boolean;
 };
 

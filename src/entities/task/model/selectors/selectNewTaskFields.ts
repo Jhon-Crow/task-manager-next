@@ -19,6 +19,3 @@ export const [useSelectNewTaskDifficulty, selectNewTaskDifficulty] =
 export const [useSelectNewTaskPriority, selectNewTaskPriority] = buildSelectors(
   (state) => state.taskSlice?.newTask?.priority
 );
-
-export const selectNewTaskCHETO = (state: StateSchema) =>
-  state.taskSlice?.newTask.priority;
