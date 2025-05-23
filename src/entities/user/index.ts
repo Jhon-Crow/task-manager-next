@@ -1,4 +1,4 @@
-export {UserLoader} from "./ui/user-loader/user-loader";
+export {UsersListPageSkeleton} from "../../pages/users-list-page/ui/users-list-page-skeleton";
 
 export { createUser } from "./model/service/createUser/createUser";
 

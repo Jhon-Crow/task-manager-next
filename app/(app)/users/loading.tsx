@@ -1,3 +1,3 @@
-import {UserLoader} from "@/entities/user";
+import {UsersListPageSkeleton} from "@/entities/user";
 
-export default UserLoader;
+export default UsersListPageSkeleton;
