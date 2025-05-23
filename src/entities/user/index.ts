@@ -1,3 +1,5 @@
+export {UsersListPageSkeleton} from "../../pages/users-list-page/ui/users-list-page-skeleton";
+
 export { createUser } from "./model/service/createUser/createUser";
 
 export { UserForm } from "./ui/user-form/user-form";
@@ -22,6 +24,8 @@ export { getUserById } from "./model/service/getUserById/getUserById";
 export { getAllUsers } from "./model/service/getAllUsers/getAllUsers";
 
 export { UserList } from "./ui/user-list/user-list";
+
+
 
 export {
   name as userReducerName,
