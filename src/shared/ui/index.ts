@@ -17,3 +17,4 @@ export * from "./Dialog/dialog";
 export * from "./Table/table";
 export * from "./Tooltip/tooltip";
 export * from "./DataTable/data-table";
+export * from "./DataTableV2/data-table-v2";

@@ -1,3 +1,5 @@
+export { getAllWorkers } from "./model/service/getAllWorkers/getAllWorkers";
+
 export { createUser } from "./model/service/createUser/createUser";
 
 export { UserForm } from "./ui/user-form/user-form";

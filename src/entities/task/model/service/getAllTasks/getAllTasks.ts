@@ -35,6 +35,7 @@ const getAllTasksImplementation = async (): Promise<TypeTask[]> => {
               firstname: true,
               lastname: true,
               imageUrl: true,
+              email: true,
             },
           },
         },
