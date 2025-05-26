@@ -33,6 +33,7 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 tailwind.config.js
+prettier.config.ts
 
 # vercel
 .vercel

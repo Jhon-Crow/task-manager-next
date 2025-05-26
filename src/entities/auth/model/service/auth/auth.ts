@@ -14,7 +14,6 @@ const config = {
     Credentials({
       async authorize(credentials) {
         const validationData = authSchema.safeParse(credentials);
-
         if (!validationData.success) return null;
 
         const { email, password } = validationData.data;
@@ -22,7 +21,7 @@ const config = {
         if (!user.success || !user.data) return null;
 
         const { password: hashedPassword } = user.data;
-        const passwordMatch = bcrypt.compare(password, hashedPassword);
+        const passwordMatch = await bcrypt.compare(password, hashedPassword);
         if (!passwordMatch) return null;
         const { id, imageUrl, role } = user.data;
         return { id, email, role, image: imageUrl };
