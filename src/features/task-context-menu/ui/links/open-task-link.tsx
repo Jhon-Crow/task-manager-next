@@ -1,5 +1,5 @@
 import { TypeTask } from "@/entities/task/public-types";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 import { Button, ContextMenuItem } from "@/shared/ui";
 import Link from "next/link";
 import React, { memo } from "react";

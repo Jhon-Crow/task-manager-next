@@ -12,7 +12,7 @@ import { TaskDifficlyField } from "./fields/task-difficulty-field";
 import { TaskFormBtn } from "./task-form-btn";
 import { ApiResult } from "@/shared/types";
 import { redirect } from "next/navigation";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 import { TaskCalendarDeadlineField } from "./fields/task-calendar-deadline-field";
 import { useServerAction } from "@/shared/hooks/useServerAction";
 

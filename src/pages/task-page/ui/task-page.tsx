@@ -1,5 +1,5 @@
 import { getTaskById, TaskPageCard } from "@/entities/task";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 import { Task } from "@/shared/lib/db/generated";
 import { redirect } from "next/navigation";
 

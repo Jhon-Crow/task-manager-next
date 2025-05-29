@@ -6,7 +6,7 @@ import { Timer, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui";
 import type { ColumnDef } from "@tanstack/react-table";
 import { UserAvatar } from "@/entities/user";
 import Link from "next/link";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 import { TypeUser } from "@/entities/user/types";
 import { cn } from "@/shared/lib/utils";
 import { Crown } from "lucide-react";

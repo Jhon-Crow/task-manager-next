@@ -18,4 +18,5 @@ export * from "./Table/table";
 export * from "./Tooltip/tooltip";
 export * from "./DataTable/data-table";
 export * from "./DataTableV2/data-table-v2";
+export * from "./DataTableV2/data-table-sorting-header";
 export * from "./Checkbox/checkbox";

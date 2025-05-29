@@ -1,25 +1,25 @@
-// 'use client'
-import {TaskPageCardClient} from "@/entities/task";
-import {TaskFormWidget} from "@/widgets/task-form-widget";
-import {UsersDataTable} from "@/entities/user/ui/users-data-table/users-data-table";
-import {getAllUsers} from "@/entities/user";
+import { TaskPageCardClient } from "@/entities/task";
+import { TaskFormWidget } from "@/widgets/task-form-widget";
+import { getAllWorkers } from "@/entities/user";
+import { toast } from "sonner";
+import { WorkersDataTableWithFeatures } from "@/features/user-data-table-features";
+import { TypeTaskWorker } from "@/entities/task/public-types";
 
 export default async function TaskCreatePage() {
-    // const [selectedUser, setSelectedUser] = useState();
-
-    const data = await getAllUsers().then(user => user.data);
-
+  let workers: TypeTaskWorker[] = [];
+  const data = await getAllWorkers();
+  if (!data.success) {
+    toast.error("Не удалось получить данные");
+  } else {
+    workers = data.data;
+  }
   return (
     <div className="flex gap-x-12 mx-auto max-w-[1200px] items-start mt-6">
       <div>
-          <TaskPageCardClient />
-          <div>
-              <UsersDataTable
-                  data={data}
-                              /*todo FIX when use client everything breaks*/
-                              // setSelectedUser={setSelectedUser}
-              />
-          </div>
+        <TaskPageCardClient />
+        <div>
+          <WorkersDataTableWithFeatures workers={workers} />
+        </div>
       </div>
 
       <TaskFormWidget type="create" />

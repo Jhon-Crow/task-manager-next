@@ -1,6 +1,6 @@
 import { TypeTaskWorker } from "@/entities/task/model/types/task";
 import { UserAvatar } from "@/entities/user";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 import { cn } from "@/shared/lib/utils";
 import Link from "next/link";
 

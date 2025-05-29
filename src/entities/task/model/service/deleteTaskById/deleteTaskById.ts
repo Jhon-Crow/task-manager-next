@@ -1,6 +1,6 @@
 "use server";
 
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 import { handleAction } from "@/shared/lib/actions";
 import { prisma } from "@/shared/lib/db/prisma";
 import { sleep } from "@/shared/lib/utils";

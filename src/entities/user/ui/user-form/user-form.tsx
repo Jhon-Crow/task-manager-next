@@ -17,7 +17,7 @@ import { UserFormBtn } from "./user-form-btn";
 import { ApiResult } from "@/shared/types";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 import { ReactNode } from "react";
 import { UserFirstnameField } from "./fields/user-firstname-field";
 import { UserLastnameField } from "./fields/user-lastname-field";

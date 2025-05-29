@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/shared/ui";
 import { usePathname } from "next/navigation";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 import { LucideLink } from "lucide-react";
 
 export default function NotFoundPage() {

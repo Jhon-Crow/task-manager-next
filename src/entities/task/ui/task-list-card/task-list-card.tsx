@@ -8,7 +8,7 @@ import {
 } from "@/shared/ui";
 import { TypeTask } from "../../public-types";
 import Link from "next/link";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 import { TaskPriorityIcon } from "../tasks-icons/priority-icon";
 import { TaskDifficultyIcon } from "../tasks-icons/difficulty-icon";
 

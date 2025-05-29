@@ -3,7 +3,7 @@
 import { DropdownMenuItem } from "@/shared/ui";
 import { UserDeleteDialogTrigger } from "./user-delete-dialog-trigger";
 import Link from "next/link";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 
 export function UserActionsOptions({ userId }: { userId: string }) {
   return (

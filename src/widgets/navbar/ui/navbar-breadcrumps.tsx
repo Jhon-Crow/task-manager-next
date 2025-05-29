@@ -17,7 +17,7 @@ import { useSelectCurrentPage } from "@/shared/lib/slices/currentPage";
 import { usePathname } from "next/navigation";
 import { getBreadcrumbs } from "../routes/routes";
 import { SignOutButton } from "@/entities/auth";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 
 export const NavbarBreadcrumps = () => {
   const pathname = usePathname();

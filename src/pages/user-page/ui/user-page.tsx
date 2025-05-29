@@ -1,7 +1,7 @@
 import { User } from "@/shared/lib/db/generated";
 import { redirect } from "next/navigation";
 import { getUserById, UserPageCard, UserProvider } from "@/entities/user";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 export default async function UserPage({
   params,
 }: {
