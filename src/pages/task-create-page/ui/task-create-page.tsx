@@ -47,14 +47,16 @@ export default async function TaskCreatePage() {
         }
     ]
 
-    console.log(data)
+    // console.log(data)
 
   return (
     <div className="flex gap-x-12 mx-auto max-w-[1200px] items-start mt-6">
       <div>
           <TaskPageCardClient />
           <div>
-              <UsersDataTable data={data}
+              <UsersDataTable
+                  // data={data}
+                              /*todo FIX when use client everything breaks*/
                               // setSelectedUser={setSelectedUser}
               />
           </div>

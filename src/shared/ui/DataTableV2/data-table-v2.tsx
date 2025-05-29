@@ -39,7 +39,7 @@ export function DataTableV2<TData>({
         {body || (
           <DefaultTableBody
             rows={table.getRowModel().rows}
-            columnsLength={table.getAllColumns().length}
+            columnsLength={table.getAllColumns() ? table.getAllColumns().length : 1}
           />
         )}
       </Table>

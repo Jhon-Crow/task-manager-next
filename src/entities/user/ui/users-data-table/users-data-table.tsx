@@ -12,16 +12,25 @@ import {
 export function UsersDataTable({ data, setSelectedUser }) {
     const [rowSelection, setRowSelection] = useState({});
 
+    // const selectedUsers = Object.keys(rowSelection).map(k => data[k]);
+
+
     useEffect(() => {
         setRowSelection({});
     }, [data]);
-
+    //
     useEffect(() => {
         if (!setSelectedUser) return;
 
-        const selectedRowIndices = Object.keys(rowSelection);
-        const selectedUsers = selectedRowIndices.map(index => data[parseInt(index)]);
+        // const selectedRowIndices = Object.keys(rowSelection);
+        // const selectedUsers = selectedRowIndices.map(index => data[parseInt(index)]);
+
+
+        const selectedUsers = Object.keys(rowSelection).map(k => data[k]);
+
         setSelectedUser(selectedUsers);
+        console.log(selectedUsers)
+
     }, [rowSelection, data, setSelectedUser]);
 
     const columns = [
@@ -44,24 +53,47 @@ export function UsersDataTable({ data, setSelectedUser }) {
             enableSorting: false,
             enableHiding: false,
         },
-        ...Object.keys(data[0] ?? {}).map(k => ({
-            accessorKey: k,
-            header: k.charAt(0).toUpperCase() + k.slice(1),
+
+        {
+            accessorKey: 'firstname',
+            header: 'Имя',
             cell: ({ row }) => (
-                <div className="capitalize">
-                    {String(row.getValue(k))}
-                </div>
-            )
-        }))
+                    <div className="capitalize">
+                        {String(row.getValue('firstname') || '')}
+                    </div>
+                )
+        }
+
+        // ...Object.keys(data[0] ?? {}).map(k => ({
+        //     accessorKey: k,
+        //     header: k.charAt(0).toUpperCase() + k.slice(1),
+        //     cell: ({ row }) => (
+        //         <div className="capitalize">
+        //             {String(row.getValue(k) || '')}
+        //         </div>
+        //     )
+        // }))
+
     ];
+
+    console.log(columns)
+
+
+   // const selectedUsers = Object.keys(rowSelection).map(k => data[k]);
+
+   // useEffect(() => {
+   //
+   // },[rowSelection]);
+
+    // console.log(selectedUsers)
 
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
+        // getPaginationRowModel: getPaginationRowModel(),
+        // getSortedRowModel: getSortedRowModel(),
+        // getFilteredRowModel: getFilteredRowModel(),
         onRowSelectionChange: setRowSelection,
         state: {
             rowSelection,
