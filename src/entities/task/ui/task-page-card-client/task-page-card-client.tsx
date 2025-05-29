@@ -14,6 +14,8 @@ import {
   TaskCardDifficultyClient,
   TaskCardDeadlineClient,
 } from "./parts";
+import { TaskCardAuthorClient } from "./parts/taks-card-author-client";
+import { TaskCardWorkersListClient } from "./parts/task-card-workers-client";
 
 export const TaskPageCardClient = ({ className }: { className?: string }) => {
   return (
@@ -21,11 +23,11 @@ export const TaskPageCardClient = ({ className }: { className?: string }) => {
       <TaskCardInfoWrapper>
         <TaskCardHeaderWrapper>
           <TaskCardTitleClient />
-          {/* TODO Author когда добавится сессия */}
+          <TaskCardAuthorClient />
         </TaskCardHeaderWrapper>
         <TaskCardDescriptionClient />
         <TaskCardFooterWrapper>
-          {/* TODO Workers когда добавлю таблицы для изменения работников*/}
+          <TaskCardWorkersListClient />
           <TaskCardIconsWrapper>
             <TaskCardPriorityClient />
             <TaskCardDifficultyClient />

@@ -27,7 +27,8 @@ export default function UpdateTaskForm({
             description: task?.description || "",
             difficulty: task?.difficulty || undefined,
             priority: task?.priority || undefined,
-            authorId,
+            authorId: task?.author.id || authorId,
+            workersId: task.workers?.map((worker) => worker.id) || [],
           }
         : undefined,
     [authorId, task]
@@ -40,7 +41,6 @@ export default function UpdateTaskForm({
     <TaskForm
       defaultValues={defaultValues}
       id={task?.id}
-      authorId={authorId}
       submit={(values: TypeTaskForm) => updateTask(task?.id, values)}
     />
   ) : (

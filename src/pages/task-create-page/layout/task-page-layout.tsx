@@ -2,7 +2,6 @@ import { getTaskById, TaskProvider } from "@/entities/task";
 import { TypeTask } from "@/entities/task/public-types";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
-import { Routes } from "@/shared/routes/paths";
 
 export default async function TaskPageLayout({
   children,

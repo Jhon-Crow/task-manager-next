@@ -1,4 +1,4 @@
-"server-only";
+"server only";
 
 import { prisma } from "@/shared/lib/db/prisma";
 import { TypeUser } from "../../types/user";
@@ -11,5 +11,5 @@ const getUserByEmailImplementation = async (email: TypeUser["email"]) => {
   return data;
 };
 
-export const getUserByEmail = (email: TypeUser["email"]) =>
+export const getUserByEmail = async (email: TypeUser["email"]) =>
   handleAction(getUserByEmailImplementation, email);

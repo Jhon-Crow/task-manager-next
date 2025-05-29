@@ -1,4 +1,3 @@
-
 import {
   Cell,
   flexRender,
@@ -16,20 +15,23 @@ import {
   TableRow,
 } from "../Table/table";
 import { ReactNode } from "react";
+import { cn } from "@/shared/lib/utils";
 
 type DataTableProps<TData> = {
   table: TypeTable<TData>;
   headers?: ReactNode;
   body?: ReactNode;
+  className?: string;
 };
 
 export function DataTableV2<TData>({
   table,
   headers,
   body,
+  className,
 }: DataTableProps<TData>) {
   return (
-    <div className="rounded-md border">
+    <div className={cn("rounded-md border", className)}>
       <Table>
         {headers || (
           <DefaultDataTableHeaderGroups
@@ -39,7 +41,7 @@ export function DataTableV2<TData>({
         {body || (
           <DefaultTableBody
             rows={table.getRowModel().rows}
-            columnsLength={table.getAllColumns() ? table.getAllColumns().length : 1}
+            columnsLength={table.getAllColumns().length}
           />
         )}
       </Table>

@@ -24,6 +24,8 @@ export const TaskProvider = ({ children, task }: TaskProviderProps) => {
     setTask(task ? task : null);
   }, [changePage, setTask, task]);
   return (
-    <DynamicModuleLoader reducers={reducers}>{children}</DynamicModuleLoader>
+    <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
+      {children}
+    </DynamicModuleLoader>
   );
 };

@@ -7,14 +7,12 @@ import {
   TaskSchema,
 } from "../types/TaskSchema";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { TypeTask, TypeTaskForm } from "../types/task";
+import type { TypeTask, TypeTaskForm, TypeTaskWorker } from "../types/task";
 
 const initialState: TaskSchema = {
   task: null,
-  newTask: { deadline: new Date().getTime() } as Omit<
-    TypeTaskForm,
-    "deadline"
-  > & { deadline: number },
+  newTask: {} as TaskFormForSchema,
+  workers: [],
 };
 
 const taskSlice = buildSlice({
@@ -37,7 +35,9 @@ const taskSlice = buildSlice({
         };
       },
     },
-
+    setWorkers: (state, { payload }: PayloadAction<TypeTaskWorker[]>) => {
+      state.workers = payload;
+    },
     setNewTask: {
       reducer: (state, { payload }: PayloadAction<TaskFormForSchema>) => {
         state.newTask = payload;
@@ -47,6 +47,16 @@ const taskSlice = buildSlice({
           payload: { ...taskForm, deadline: taskForm.deadline.getTime() },
         };
       },
+    },
+    setNewTaskWorkers: (
+      state,
+      { payload }: PayloadAction<TypeTaskWorker["id"][]>
+    ) => {
+      if (!state.newTask) return;
+      const workersId = state.workers
+        .filter((worker) => payload.some((id) => id === worker.id))
+        .map((worker) => worker.id);
+      state.newTask.workersId = workersId;
     },
     setNewTaskDeadline: {
       reducer: (state, { payload }: PayloadAction<number>) => {

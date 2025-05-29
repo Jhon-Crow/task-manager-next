@@ -1,4 +1,4 @@
-"server only";
+"use server";
 import { handleAction } from "@/shared/lib/actions";
 import { TypeUser, TypeUserReceivedByID } from "../../types/user";
 import { prisma } from "@/shared/lib/db/prisma";
@@ -22,8 +22,8 @@ const getUserByIdImplementation = async (
 
   return {
     ...user,
-    tasks: user.tasks.reduce((acc, task) => {
-      return [...acc, task.task];
+    tasks: user.tasks.reduce((acc, { task }) => {
+      return [...acc, { ...task, author: user }];
     }, [] as TypeTask[]),
   };
 };
