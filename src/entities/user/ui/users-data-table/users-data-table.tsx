@@ -1,6 +1,6 @@
 'use client'
-import React from 'react';
-import {Checkbox, DataTableV2} from "@/shared/ui";
+import React, { useState, useEffect } from 'react';
+import { Checkbox, DataTableV2 } from "@/shared/ui";
 import {
     getCoreRowModel,
     getFilteredRowModel,
@@ -9,68 +9,64 @@ import {
     useReactTable
 } from "@tanstack/react-table";
 
-export function UsersDataTable({data, setSelectedUser}) {
+export function UsersDataTable({ data, setSelectedUser }) {
+    const [rowSelection, setRowSelection] = useState({});
 
+    useEffect(() => {
+        setRowSelection({});
+    }, [data]);
 
-    const columns = Object.keys(data[0]).map((k) => ({
-        accessorKey: k,
-        header: k.charAt(0).toUpperCase() + k.slice(1), // Заглавная первая буква
-        cell: ({ row }) => {
-            let rowValue = row.getValue(k);
-            if (typeof rowValue !== 'string') rowValue = '';
-            return (
+    useEffect(() => {
+        if (!setSelectedUser) return;
+
+        const selectedRowIndices = Object.keys(rowSelection);
+        const selectedUsers = selectedRowIndices.map(index => data[parseInt(index)]);
+        setSelectedUser(selectedUsers);
+    }, [rowSelection, data, setSelectedUser]);
+
+    const columns = [
+        {
+            id: "select",
+            header: ({ table }) => (
+                <Checkbox
+                    checked={table.getIsAllPageRowsSelected()}
+                    onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+                    aria-label="Select all"
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={value => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            ),
+            enableSorting: false,
+            enableHiding: false,
+        },
+        ...Object.keys(data[0] ?? {}).map(k => ({
+            accessorKey: k,
+            header: k.charAt(0).toUpperCase() + k.slice(1),
+            cell: ({ row }) => (
                 <div className="capitalize">
-                    {rowValue}
+                    {String(row.getValue(k))}
                 </div>
             )
-        },
-    })).slice(1)
-        .unshift(
-    //     {
-    //         id: "select",
-    //         header: ({ table }) => (
-    //             <Checkbox
-    //                 checked={
-    //                     table.getIsAllPageRowsSelected() ||
-    //                     (table.getIsSomePageRowsSelected() && "indeterminate")
-    //                 }
-    //                 onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-    //                 aria-label="Select all"
-    //             />
-    //         ),
-    //         cell: ({ row }) => (
-    //             <Checkbox
-    //                 checked={row.getIsSelected()}
-    //                 onCheckedChange={(value) => row.toggleSelected(!!value)}
-    //                 aria-label="Select row"
-    //             />
-    //         ),
-    //         enableSorting: false,
-    //         enableHiding: false,
-    //     },
-    );
+        }))
+    ];
 
     const table = useReactTable({
         data,
         columns,
-        // onSortingChange: setSorting,
-        // onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
-        // onColumnVisibilityChange: setColumnVisibility,
-        // onRowSelectionChange: setRowSelection,
+        onRowSelectionChange: setRowSelection,
         state: {
-        //     sorting,
-        //     columnFilters,
-        //     columnVisibility,
-        //     rowSelection,
+            rowSelection,
         },
-    })
-    return (
-        // <div></div>
-        <DataTableV2 table={table}/>
-    );
-}
+    });
 
+    return <DataTableV2 table={table} />;
+}
