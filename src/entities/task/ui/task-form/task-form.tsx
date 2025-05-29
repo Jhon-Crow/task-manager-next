@@ -15,20 +15,28 @@ import { redirect } from "next/navigation";
 import { Routes } from "@/shared/consts/paths";
 import { TaskCalendarDeadlineField } from "./fields/task-calendar-deadline-field";
 import { useServerAction } from "@/shared/hooks/useServerAction";
+import { useSession } from "next-auth/react";
+import { useSelectNewTaskWorkersId } from "../../model/selectors/selectNewTaskFields";
 
 export function TaskForm({
   defaultValues,
   id,
-  authorId,
   submit,
 }: {
   defaultValues?: Partial<TypeTaskForm>;
   id?: TypeTask["id"];
-  authorId: TypeTask["author"]["id"];
   submit: (values: TypeTaskForm) => Promise<ApiResult<void>>;
 }) {
+  const { data } = useSession();
+  if (!data) {
+    redirect(Routes.ROOT);
+  }
+  const {
+    user: { id: authorId },
+  } = data;
   const isCreate = defaultValues ? false : true;
   const now = new Date();
+  const workersId = useSelectNewTaskWorkersId() || [];
   now.setHours(23, 59, 59);
   const handledSubmit = useServerAction(submit);
   const deadline = defaultValues?.deadline ? defaultValues.deadline : now;
@@ -41,14 +49,16 @@ export function TaskForm({
           deadline: deadline,
           description: "",
           authorId,
+          workersId: [],
         },
   });
 
   const submitHandler = async (values: TypeTaskForm) => {
-    const success = await handledSubmit(values);
+    const success = await handledSubmit({ ...values, workersId });
     if (success === false) return;
     redirect(id ? Routes.TASK(id) : Routes.TASKS_LIST);
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">

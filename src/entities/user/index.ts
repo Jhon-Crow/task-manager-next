@@ -1,3 +1,5 @@
+export { UsersDataTable } from "./ui/users-data-table/users-data-table";
+
 export { getAllWorkers } from "./model/service/getAllWorkers/getAllWorkers";
 
 export { createUser } from "./model/service/createUser/createUser";

@@ -2,7 +2,6 @@ import { getTaskById, TaskProvider } from "@/entities/task";
 import { TypeTask } from "@/entities/task/public-types";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
-import {Routes} from "@/shared/consts/paths";
 
 export default async function TaskPageLayout({
   children,
@@ -16,7 +15,7 @@ export default async function TaskPageLayout({
   if (id) {
     const data = await getTaskById(id);
     if (!data.success) {
-      redirect('/not-found');
+      redirect("/not-found");
     }
     task = data.data;
   }

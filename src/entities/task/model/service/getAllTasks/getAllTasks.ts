@@ -5,6 +5,7 @@ import { TypeTask } from "../../types/task";
 import { handleAction } from "@/shared/lib/actions";
 
 const getAllTasksImplementation = async (): Promise<TypeTask[]> => {
+  const currentDate = new Date();
   const tasks = await prisma.task.findMany({
     select: {
       id: true,
@@ -44,8 +45,21 @@ const getAllTasksImplementation = async (): Promise<TypeTask[]> => {
   });
 
   return tasks.reduce((acc, task) => {
+    const isOverdue = task.deadline < currentDate && !task.completed;
+
+    // Обновляем задачу в базе данных, если она просрочена
+    if (isOverdue) {
+      prisma.task
+        .update({
+          where: { id: task.id },
+          data: { completed: false },
+        })
+        .catch(console.error); // Обработка ошибок на случай проблем с БД
+    }
+
     acc.push({
       ...task,
+      completed: isOverdue ? false : task.completed,
       workers: task.assignments.map(({ user }) => user),
     });
     return acc;
