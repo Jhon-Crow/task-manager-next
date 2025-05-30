@@ -8,4 +8,5 @@ export const taskFormSchema = z.object({
   difficulty: z.nativeEnum(Difficulty).optional(),
   priority: z.nativeEnum(Priority).optional(),
   authorId: z.string(),
+  workersId: z.array(z.string()),
 });

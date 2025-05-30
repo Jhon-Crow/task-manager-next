@@ -12,7 +12,7 @@ import {
 import { difficulty } from "../../../model/consts/consts";
 import { TypeDifficultTask, TypeTaskForm } from "../../../model/types/task";
 import { TaskDifficultyIcon } from "../../tasks-icons/difficulty-icon";
-import { useActions } from "../../../model/slice/taskSlice";
+import { useActions } from "../../../model/slices/taskSlice";
 
 export const TaskDifficlyField: TypeField<TypeTaskForm, "difficulty"> = ({
   ...props

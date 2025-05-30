@@ -7,7 +7,7 @@ export const TaskCardWorkersList = ({
 }: {
   workers?: TypeTaskWorker[];
 }) =>
-  workers ? (
+  workers?.length && workers.length > 0 ? (
     <div className="flex items-center justify-end flex-row-reverse">
       {workers.slice(0, 3).map((worker, index, array) => (
         <TaskCardWorker

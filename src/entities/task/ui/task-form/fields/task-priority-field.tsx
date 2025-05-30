@@ -12,7 +12,7 @@ import {
 import { priority } from "../../../model/consts/consts";
 import { TypePriorityTask, TypeTaskForm } from "../../../model/types/task";
 import { TaskPriorityIcon } from "../../tasks-icons/priority-icon";
-import { useActions } from "../../../model/slice/taskSlice";
+import { useActions } from "../../../model/slices/taskSlice";
 
 export const TaskPriorityField: TypeField<TypeTaskForm, "priority"> = ({
   ...props

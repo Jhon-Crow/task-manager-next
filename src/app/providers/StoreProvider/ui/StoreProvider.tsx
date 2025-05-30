@@ -1,7 +1,7 @@
 "use client";
 
 import { ReducersMapObject } from "@reduxjs/toolkit";
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import { Provider } from "react-redux";
 import { createReduxStore } from "../config/store";
 
@@ -16,10 +16,13 @@ export const StoreProvider = ({
   initialState,
   asyncReducers,
 }: StoreProviderProps) => {
-  const store = createReduxStore(
-    initialState as StateSchema,
-    asyncReducers as ReducersMapObject<StateSchema>
-  );
+  const storeRef = useRef<AppStore | null>(null);
+  if (!storeRef.current) {
+    storeRef.current = createReduxStore(
+      initialState as StateSchema,
+      asyncReducers as ReducersMapObject<StateSchema>
+    );
+  }
 
-  return <Provider store={store}>{children}</Provider>;
+  return <Provider store={storeRef.current}>{children}</Provider>;
 };

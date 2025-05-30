@@ -11,7 +11,6 @@ export const TaskFormBtn = ({
 }) => {
   const { isSubmitting, isSubmitted, isValid } = useFormState();
   const ref = useRef<HTMLButtonElement | null>(null);
-
   return (
     <Button
       ref={ref}

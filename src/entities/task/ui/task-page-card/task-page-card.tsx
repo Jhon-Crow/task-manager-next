@@ -1,5 +1,4 @@
-import { TypeUser } from "@/entities/user/types";
-import { TypeTask } from "../../model/types/task";
+import type { TypeTask } from "../../model/types/task";
 import {
   TaskCardDeadline,
   TaskCardCreatedAt,
@@ -19,27 +18,23 @@ import {
 
 export function TaskPageCard({
   task,
-  author,
   className,
-  users,
 }: {
   task: TypeTask;
-  author?: TypeUser;
   className?: string;
-  users?: Pick<TypeUser, "id" | "firstname" | "lastname" | "imageUrl">[];
 }) {
   return (
     <TaskCardWrapper className={className}>
       <TaskCardInfoWrapper>
         <TaskCardHeaderWrapper>
           <TaskCardTitle title={task.title} />
-          {author && <TaskPageAuthorField author={author} />}
+          <TaskPageAuthorField author={task.author} />
         </TaskCardHeaderWrapper>
         {task.description && (
           <TaskCardDescription description={task.description} />
         )}
         <TaskCardFooterWrapper>
-          <TaskCardWorkersList workers={users} />
+          <TaskCardWorkersList workers={task.workers} />
           <TaskCardIconsWrapper>
             <TaskCardPriority priority={task.priority} />
             <TaskCardDifficulty difficulty={task.difficulty} />

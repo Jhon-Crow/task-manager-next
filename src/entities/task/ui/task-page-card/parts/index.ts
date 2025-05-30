@@ -1,5 +1,5 @@
 export { TaskCardTitle } from "./task-card-title";
-export { TaskPageAuthorField } from "./task-card-author";
+export { TaskCardAuthor as TaskPageAuthorField } from "./task-card-author";
 export { TaskCardDescription } from "./task-card-description";
 export { TaskCardFooterWrapper } from "./task-card-footer-wrapper";
 export { TaskCardWorkersList } from "./task-card-workers-list";

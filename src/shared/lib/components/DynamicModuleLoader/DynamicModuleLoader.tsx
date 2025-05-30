@@ -2,7 +2,7 @@
 
 import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import { useAppStore } from "@/shared/hooks/useAppStore";
-import { FC, PropsWithChildren, useEffect } from "react";
+import { FC, PropsWithChildren, useLayoutEffect } from "react";
 
 interface DynamicModuleLoaderProps {
   reducers: ReducersList;
@@ -17,8 +17,10 @@ export const DynamicModuleLoader: FC<
   const store = useAppStore();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const mountedReducers = store.reducerManager.getReducerMap();
+    console.log(reducers, mountedReducers);
+
     Object.entries(reducers).forEach(([name, reducer]) => {
       if (!mountedReducers[name as StateSchemaKey]) {
         store.reducerManager.add(name as StateSchemaKey, reducer);

@@ -14,7 +14,7 @@ export async function TaskFormWidget({ type }: { type: "create" | "update" }) {
       </CardHeader>
       <CardContent>
         {type === "create" ? (
-          <CreateTaskForm authorId={session.user.id} />
+          <CreateTaskForm />
         ) : (
           <UpdateTaskForm authorId={session.user.id} />
         )}

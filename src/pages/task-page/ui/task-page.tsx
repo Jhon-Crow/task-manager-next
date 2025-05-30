@@ -1,6 +1,5 @@
 import { getTaskById, TaskPageCard } from "@/entities/task";
-import { getUserById, getUsersAssignedToTask } from "@/entities/user";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 import { Task } from "@/shared/lib/db/generated";
 import { redirect } from "next/navigation";
 
@@ -10,29 +9,17 @@ export default async function TaskPage({
   params: Promise<{ id: Task["id"] }>;
 }) {
   const id = (await params).id;
-  const data = await getTaskById(id);
-  if (!data.success) {
+  const taskData = await getTaskById(id);
+  if (!taskData.success) {
     //TODO
     return <div>Не успешно</div>;
   }
 
-  if (!data.data) {
+  if (!taskData.data) {
     redirect(Routes.TASK(id) + "/not-found");
   }
-  const workers = await getUsersAssignedToTask(id);
-  if (!workers.success) {
-    return;
-  }
-  const author = await getUserById(data.data.authorId);
+  const task = taskData.data;
   {
-    return (
-      <TaskPageCard
-        task={data.data}
-        author={
-          author.success ? (author.data ? author.data : undefined) : undefined
-        }
-        users={workers.success ? workers.data : undefined}
-      />
-    );
+    return <TaskPageCard task={task} />;
   }
 }

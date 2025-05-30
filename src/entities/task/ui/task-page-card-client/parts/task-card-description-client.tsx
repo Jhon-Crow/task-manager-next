@@ -13,7 +13,7 @@ export const TaskCardDescriptionClient = memo(
           description ? (
             description
           ) : (
-            <span className="opacity-30">Можеет ввести описание</span>
+            <span className="opacity-30">Можете ввести описание</span>
           )
         }
       />

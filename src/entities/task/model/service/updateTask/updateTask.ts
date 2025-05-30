@@ -4,6 +4,8 @@ import { prisma } from "@/shared/lib/db/prisma";
 import { taskFormSchema } from "../../validation/schema";
 import { getTaskById } from "../getTaskById/getTaskById";
 import { handleAction } from "@/shared/lib/actions";
+import { revalidatePath } from "next/cache";
+import { Routes } from "@/shared/routes/paths";
 
 const updateTaskImplementation = async (id: unknown, values: unknown) => {
   const validatedValues = taskFormSchema.safeParse(values);
@@ -16,8 +18,18 @@ const updateTaskImplementation = async (id: unknown, values: unknown) => {
   if (!oldTaskData.success || !oldTaskData.data) {
     throw new Error("TODO");
   }
-  const task = validatedValues.data;
+  const { workersId, ...task } = validatedValues.data;
   await prisma.task.update({ where: { id }, data: task });
+  await prisma.assignment.deleteMany({ where: { task: { id } } });
+  for (const workerId of workersId) {
+    await prisma.assignment.create({
+      data: {
+        task: { connect: { id } },
+        user: { connect: { id: workerId } },
+      },
+    });
+  }
+  revalidatePath(Routes.TASKS_LIST);
 };
 
 export const updateTask = async (id: unknown, values: unknown) =>

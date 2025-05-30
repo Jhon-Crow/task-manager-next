@@ -3,7 +3,7 @@
 import { TypeTask } from "@/entities/task/public-types";
 import { DynamicModuleLoader } from "@/shared/lib/components";
 import { ReactNode, useEffect } from "react";
-import { reducer, name, useActions } from "../model/slice/taskSlice";
+import { reducer, name, useActions } from "../model/slices/taskSlice";
 import { useCurrentPageActions } from "@/shared/lib/slices/currentPage";
 
 interface TaskProviderProps {
@@ -24,6 +24,8 @@ export const TaskProvider = ({ children, task }: TaskProviderProps) => {
     setTask(task ? task : null);
   }, [changePage, setTask, task]);
   return (
-    <DynamicModuleLoader reducers={reducers}>{children}</DynamicModuleLoader>
+    <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
+      {children}
+    </DynamicModuleLoader>
   );
 };

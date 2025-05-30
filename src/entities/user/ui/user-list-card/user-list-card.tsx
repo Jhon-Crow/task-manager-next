@@ -7,7 +7,7 @@ import {
 } from "@/shared/ui";
 import { TypeUser } from "../../types";
 import Link from "next/link";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 import { UserRoleIcon } from "@/entities/user/ui/users-icons/role-icon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui";
 import { ReactNode } from "react";

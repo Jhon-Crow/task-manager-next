@@ -1,21 +1,17 @@
-"use server";
-import { UserForm } from "@/entities/user";
-import { getUserById } from "@/entities/user";
-import { User } from "@/shared/lib/db/generated";
+"use client";
+
+import { UserForm, useSelectUser } from "@/entities/user";
 import { updateUser } from "@/entities/user";
-import { redirect } from "next/navigation";
 import { TypeUserUpdateForm } from "@/entities/user/types";
+import { redirect } from "next/navigation";
 
-export const UpdateUserForm = async ({ userId }: { userId: User["id"] }) => {
-  const defaultValues = await getUserById(userId);
-  if (!defaultValues.success || !defaultValues.data) {
-    redirect("../not-found");
-  }
-
+export const UpdateUserForm = () => {
+  const user = useSelectUser();
+  if (!user) redirect("/not-found");
   return (
     <UserForm
-      defaultValues={defaultValues.data as TypeUserUpdateForm}
-      userId={userId}
+      defaultValues={user as TypeUserUpdateForm}
+      userId={user.id}
       submit={updateUser}
     />
   );

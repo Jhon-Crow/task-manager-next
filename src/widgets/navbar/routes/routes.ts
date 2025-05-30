@@ -1,4 +1,4 @@
-import { Routes, staticPaths, dynamicPaths } from "@/shared/consts/paths";
+import { Routes, staticPaths, dynamicPaths } from "@/shared/routes/paths";
 import { TypeActionBreadcrumps, TypeBreadcrumps } from "../model/types/navbar";
 import { PagesForNavbar } from "@/shared/lib/slices/currentPage/model/types/CurrentPageSchema";
 

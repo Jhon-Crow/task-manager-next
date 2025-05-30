@@ -12,7 +12,7 @@ import {
   Dialog,
 } from "@/shared/ui";
 import { ReactNode, useTransition } from "react";
-import { DeleteTaskDialogTrigger } from "../delete-task-dialog/delete-task-dialog-trigger";
+import { DeleteTaskContextDialogTrigger } from "../delete-task-dialog/delete-task-dialog-context-trigger";
 import { DeleteTaskDialogContent } from "../delete-task-dialog/delete-task-dialog-content";
 import { OpenTaskLink } from "../links/open-task-link";
 import { UpdateTaskLink } from "../links/update-task-link";
@@ -27,7 +27,7 @@ export const TaskContextMenu = ({
 }: {
   children: ReactNode;
   id: TypeTask["id"];
-  authorId: TypeTask["authorId"];
+  authorId: TypeTask["author"]["id"];
   title: TypeTask["title"];
   session: Session;
 }) => {
@@ -57,7 +57,7 @@ export const TaskContextMenu = ({
             <>
               <UpdateTaskLink id={id} />
               <ContextMenuSeparator />
-              <DeleteTaskDialogTrigger />
+              <DeleteTaskContextDialogTrigger />
             </>
           )}
         </ContextMenuContent>

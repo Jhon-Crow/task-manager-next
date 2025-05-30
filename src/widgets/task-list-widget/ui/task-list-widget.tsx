@@ -16,7 +16,7 @@ export async function TaskListWidget({ tasks }: { tasks: TypeTask[] }) {
         <TimerProvider>
           {tasks.map((task) => (
             <TaskContextMenu
-              authorId={task.authorId}
+              authorId={task.author.id}
               session={session}
               key={task.id}
               id={task.id}
