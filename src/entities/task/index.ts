@@ -1,3 +1,5 @@
+export { getTaskCompletionPercentage } from "./utils/getTaskCompletionPercentage";
+
 export {
   useSelectTaskTitleInTaskListById,
   useSelectTaskPendingInTaskListById,

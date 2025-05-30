@@ -1,16 +1,51 @@
 "use client";
 
+import { getTaskCompletionPercentage } from "@/entities/task";
+import { TypeTask } from "@/entities/task/public-types";
 import { useTasksDataTableContext } from "@/features/task-data-table-features";
-import { DataTable } from "@/shared/ui";
+import { useTimerContext } from "@/shared/hooks/useTimerContext";
+import { cn } from "@/shared/lib/utils";
+import { DataTableV2, DefaultDataCell, TableRow } from "@/shared/ui";
+import { Row } from "@tanstack/react-table";
 
 export const DataTableForWidget = () => {
   const { table, observerRef, isLoading } = useTasksDataTableContext();
-  const { rows } = table.getRowModel();
 
   return (
     <>
-      <DataTable table={table} rows={rows} isLoading={isLoading} />
+      <DataTableV2 table={table} isLoading={isLoading} Row={DataTableRow} />
       <div ref={observerRef} />
     </>
+  );
+};
+
+const DataTableRow = ({ row }: { row: Row<TypeTask> }) => {
+  const now = useTimerContext();
+
+  const percent = getTaskCompletionPercentage(row.original, now);
+  return (
+    <TableRow
+      data-state={row.getIsSelected() && "selected"}
+      className={cn("relative", {
+        "bg-red-500/25 data-[state=selected]:bg-red-500/10 hover:bg-red-500/20":
+          row.original.completed === false,
+        "bg-green-500/25 data-[state=seleced]:bg-red-500/10 hover:bg-green-500/20":
+          row.original.completed === true,
+      })}
+    >
+      {row.getVisibleCells().map((cell) => (
+        <DefaultDataCell cell={cell} key={cell.id} />
+      ))}
+      {row.original.completed === null && <Progress percent={percent} />}
+    </TableRow>
+  );
+};
+
+const Progress = ({ percent }: { percent: number }) => {
+  return (
+    <td
+      className={`absolute left-0 top-0 bottom-0 bg-muted-foreground/10`}
+      style={{ width: `${percent >= 100 ? 100 : percent}%` }}
+    />
   );
 };
