@@ -28,12 +28,8 @@ export function TaskForm({
   submit: (values: TypeTaskForm) => Promise<ApiResult<void>>;
 }) {
   const { data } = useSession();
-  if (!data) {
-    redirect(Routes.ROOT);
-  }
-  const {
-    user: { id: authorId },
-  } = data;
+
+  const authorId = data?.user.id || "";
   const isCreate = defaultValues ? false : true;
   const now = new Date();
   const workersId = useSelectNewTaskWorkersId() || [];

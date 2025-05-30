@@ -15,14 +15,18 @@ export const [useSelectTask, selectTask] = buildSelectors(
   (state) => state.taskSlice?.task
 );
 
-export const [useSelectWorkers, selectWorkers] = buildSelectors(
+export const [useSelectTaskWorkers, selectTaskWorkers] = buildSelectors(
   (state) => state.taskSlice?.task?.workers
+);
+
+export const [useSelectWorkers, selectWorkers] = buildSelectors(
+  (state) => state.taskSlice?.workers
 );
 export const [useSelectTaskAuthor, selectTaskAuthor] = buildSelectors(
   (state) => state.taskSlice?.task?.author
 );
 export const [useSelectWorkersIdInTask, selectWorkersIdInTask] = buildSelectors(
-  createSelector([selectWorkers], (workers) =>
+  createSelector([selectTaskWorkers], (workers) =>
     workers?.map((worker) => worker.id)
   )
 );

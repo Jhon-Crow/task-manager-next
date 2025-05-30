@@ -1,3 +1,3 @@
-export { WorkersDataTableWithFeatures } from "./ui/user-data-table-with-features/user-data-table-with-features";
+export { WorkersDataTableWithFeatures } from "./ui/workers-data-table/workers-data-table";
 
 export { selectInUserDataTableColumn } from "./ui/user-data-table-selection-column/user-data-table-selection-column";

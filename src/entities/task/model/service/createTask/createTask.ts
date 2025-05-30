@@ -5,7 +5,7 @@ import { taskFormSchema } from "../../validation/schema";
 import { handleAction } from "@/shared/lib/actions";
 import { setMskTimeEnd } from "@/shared/lib/utils";
 import { revalidatePath } from "next/cache";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 
 const createTaskImplementation = async (values: unknown): Promise<void> => {
   const validatedValues = taskFormSchema.safeParse(values);

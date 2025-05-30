@@ -14,7 +14,9 @@ export function UsersDataTable({
   addColumns,
   shiftColumns,
   options,
+  className,
 }: {
+  className?: string;
   data: TypeUser[];
   addColumns?: Record<string, ColumnDef<TypeUser>>;
   shiftColumns?: Record<string, ColumnDef<TypeUser>>;
@@ -37,5 +39,5 @@ export function UsersDataTable({
     ...options,
   });
 
-  return <DataTableV2 table={table} />;
+  return <DataTableV2 className={className} table={table} />;
 }

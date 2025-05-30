@@ -6,7 +6,7 @@ import { useSelectNewTaskDeadline } from "../../../model/selectors/selectNewTask
 import { useSelectTaskCreatedAt } from "../../../model/selectors/selectTask";
 
 export const TaskCardDeadlineClient = memo(function TaskCardDeadlineClient() {
-  const deadline = useSelectNewTaskDeadline();
+  const deadline = useSelectNewTaskDeadline() || new Date();
   const createdAt = useSelectTaskCreatedAt();
   return (
     deadline && (

@@ -14,36 +14,47 @@ import {
   TableHeader,
   TableRow,
 } from "../Table/table";
-import { ReactNode } from "react";
+import { FC } from "react";
 import { cn } from "@/shared/lib/utils";
 
 type DataTableProps<TData> = {
   table: TypeTable<TData>;
-  headers?: ReactNode;
-  body?: ReactNode;
+  Headers?: FC<DefaultDataTableHeaderGroupsProps<TData>>;
+  Body?: FC<DefaultTableBodyProps<TData>>;
+  HeaderGroup?: FC<DefaultDataTableHeaderRow<TData>>;
+  Head?: FC<DefaultDataTableHeadProps<TData, unknown>>;
+  Row?: FC<DefaultTableRowProps<TData>>;
+  Cell?: FC<DefaultTableCell<TData, unknown>>;
+  NoResultContent?: FC<Pick<DefaultTableBodyProps<TData>, "columnsLength">>;
   className?: string;
 };
 
 export function DataTableV2<TData>({
   table,
-  headers,
-  body,
+  Headers = DefaultDataTableHeaderGroups,
+  Body = DefaultTableBody,
+  HeaderGroup,
+  Head,
+  Row,
+  Cell,
+  NoResultContent,
   className,
 }: DataTableProps<TData>) {
   return (
     <div className={cn("rounded-md border", className)}>
       <Table>
-        {headers || (
-          <DefaultDataTableHeaderGroups
-            headerGroups={table.getHeaderGroups()}
-          />
-        )}
-        {body || (
-          <DefaultTableBody
-            rows={table.getRowModel().rows}
-            columnsLength={table.getAllColumns().length}
-          />
-        )}
+        <Headers
+          Head={Head}
+          headerGroups={table.getHeaderGroups()}
+          HeaderGroup={HeaderGroup}
+        />
+        <Body
+          rows={table.getRowModel().rows}
+          columnsLength={table.getAllColumns().length}
+          Row={Row}
+          Cell={Cell}
+          NoResultContent={NoResultContent}
+        />
       </Table>
     </div>
   );
@@ -51,83 +62,99 @@ export function DataTableV2<TData>({
 
 type DefaultDataTableHeaderGroupsProps<TData> = {
   headerGroups: HeaderGroup<TData>[];
-  headerRow?: ReactNode;
+  HeaderGroup?: FC<DefaultDataTableHeaderRow<TData>>;
+  Head?: FC<DefaultDataTableHeadProps<TData, unknown>>;
 };
 export function DefaultDataTableHeaderGroups<TData>({
   headerGroups,
-  headerRow,
+  HeaderGroup = DefaultDataTableHeaderGroup,
+  Head,
 }: DefaultDataTableHeaderGroupsProps<TData>) {
   return (
     <TableHeader>
-      {headerRow ||
-        headerGroups.map((headerGroup) => (
-          <TableRow key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <DefaultTableHead key={header.id} header={header} />
-            ))}
-          </TableRow>
-        ))}
+      {headerGroups.map((headerGroup) => (
+        <HeaderGroup
+          headerGroup={headerGroup}
+          key={headerGroup.id}
+          Head={Head}
+        />
+      ))}
     </TableHeader>
+  );
+}
+
+type DefaultDataTableHeaderRow<TData> = {
+  headerGroup: HeaderGroup<TData>;
+  Head?: FC<DefaultDataTableHeadProps<TData, unknown>>;
+};
+
+export function DefaultDataTableHeaderGroup<TData>({
+  headerGroup,
+  Head = DefaultTableHead,
+}: DefaultDataTableHeaderRow<TData>) {
+  return (
+    <TableRow>
+      {headerGroup.headers.map((header) => (
+        <Head key={header.id} header={header} />
+      ))}
+    </TableRow>
   );
 }
 
 type DefaultDataTableHeadProps<TData, TValue> = {
   header: Header<TData, TValue>;
-  head?: ReactNode;
 };
 export function DefaultTableHead<TData, TValue>({
   header,
-  head,
 }: DefaultDataTableHeadProps<TData, TValue>) {
   return (
-    head || (
-      <TableHead>
-        {header.isPlaceholder
-          ? null
-          : flexRender(header.column.columnDef.header, header.getContext())}
-      </TableHead>
-    )
+    <TableHead>
+      {header.isPlaceholder
+        ? null
+        : flexRender(header.column.columnDef.header, header.getContext())}
+    </TableHead>
   );
 }
 
 type DefaultTableBodyProps<TData> = {
   rows: Row<TData>[];
   columnsLength: number;
-  rowsContent?: ReactNode;
-  noResultContent?: ReactNode;
+  Row?: FC<DefaultTableRowProps<TData>>;
+  NoResultContent?: FC<Pick<DefaultTableBodyProps<TData>, "columnsLength">>;
+  Cell?: FC<DefaultTableCell<TData, unknown>>;
 };
 export function DefaultTableBody<TData>({
   rows,
   columnsLength,
-  rowsContent,
-  noResultContent,
+  Row = DefaultTableRow,
+  NoResultContent = DefaultNoResultContent,
+  Cell,
 }: DefaultTableBodyProps<TData>) {
   return (
     <TableBody>
-      {rowsContent || rows.length
-        ? rows.map((row) => <DefaultTableRow row={row} key={row.id} />)
-        : noResultContent || (
-            <DefaultNoResultContent columnsLength={columnsLength} />
-          )}
+      {rows.length ? (
+        rows.map((row) => <Row row={row} key={row.id} Cell={Cell} />)
+      ) : (
+        <NoResultContent columnsLength={columnsLength} />
+      )}
     </TableBody>
   );
 }
 
 type DefaultTableRowProps<TData> = {
   row: Row<TData>;
-  cell?: ReactNode;
+  Cell?: FC<DefaultTableCell<TData, unknown>>;
 };
 export function DefaultTableRow<TData>({
   row,
-  cell,
+  Cell = DefaultDataCell,
 }: DefaultTableRowProps<TData>) {
   row.getVisibleCells();
   return (
     <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-      {cell ||
-        row
-          .getVisibleCells()
-          .map((cell) => <DefaultDataCell key={cell.id} cell={cell} />)}
+      {row.getVisibleCells().map((cell) => (
+        <Cell key={cell.id} cell={cell} />
+      ))}
     </TableRow>
   );
 }

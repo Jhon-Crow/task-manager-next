@@ -54,6 +54,7 @@ export async function getAllTasksRoute(req: NextApiRequest) {
                 firstname: true,
                 lastname: true,
                 imageUrl: true,
+                email: true,
               },
             },
           },

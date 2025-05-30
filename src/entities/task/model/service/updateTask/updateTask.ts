@@ -5,7 +5,7 @@ import { taskFormSchema } from "../../validation/schema";
 import { getTaskById } from "../getTaskById/getTaskById";
 import { handleAction } from "@/shared/lib/actions";
 import { revalidatePath } from "next/cache";
-import { Routes } from "@/shared/consts/paths";
+import { Routes } from "@/shared/routes/paths";
 
 const updateTaskImplementation = async (id: unknown, values: unknown) => {
   const validatedValues = taskFormSchema.safeParse(values);

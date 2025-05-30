@@ -21,9 +21,5 @@ export const userDataTableSortingColumn: Partial<
       <DataTableSortingHeader {...props} title="Почтовый адрес" />
     ),
     cell: userDataTableColumns.email?.cell,
-    // sortingFn: (a, b) =>
-    //   a.original.email
-    //     .toLocaleLowerCase()
-    //     .localeCompare(b.original.email.toLocaleLowerCase()),
   },
 };

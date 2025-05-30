@@ -3,6 +3,10 @@
 import { buildSelectors } from "@/shared/lib/store";
 import { createSelector } from "@reduxjs/toolkit";
 
+export const [useSelectUser, selectUser] = buildSelectors(
+  (state) => state.userSlice?.user
+);
+
 export const [useSelectUserFirstname, selectUserFirstname] = buildSelectors(
   (state) => state.userSlice?.user?.firstname
 );

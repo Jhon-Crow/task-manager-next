@@ -1,7 +1,7 @@
 import { TaskPageCardClient } from "@/entities/task";
 import { TypeTaskWorker } from "@/entities/task/public-types";
 import { getAllWorkers } from "@/entities/user";
-import { AddWorkersToForm } from "@/features/add-workers-to-form";
+import { WorkersDataTableWithFeatures } from "@/features/user-data-table-features";
 import { TaskFormWidget } from "@/widgets/task-form-widget";
 import { toast } from "sonner";
 
@@ -17,7 +17,7 @@ export default async function TaskUpdatePage() {
     <div className="flex gap-x-12 mx-auto max-w-[1200px] mt-6">
       <div className="flex flex-col flex-1 min-h-full justify-between">
         <TaskPageCardClient />
-        <AddWorkersToForm className="mb-12" workers={workers} />
+        <WorkersDataTableWithFeatures className="mb-12" workers={workers} />
       </div>
 
       <TaskFormWidget type="update" />

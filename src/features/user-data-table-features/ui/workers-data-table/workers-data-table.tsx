@@ -12,25 +12,49 @@ import { useEffect, useState } from "react";
 import { selectInUserDataTableColumn } from "../user-data-table-selection-column/user-data-table-selection-column";
 import { userDataTableSortingColumn } from "../user-data-table-sorting-columns/user-data-table-sorting-columns";
 import { TypeUser } from "@/entities/user/types";
+import { useTaskActions } from "@/entities/task";
+import { useSelectWorkersIdInTask } from "@/entities/task/model/selectors/selectTask";
 
 export const WorkersDataTableWithFeatures = ({
   workers,
+  className,
 }: {
   workers: TypeTaskWorker[];
+  className?: string;
 }) => {
-  const [rowSelection, setRowSelection] = useState({});
+  const [rowSelection, setRowSelection] = useState<Record<number, boolean>>({});
   const [sorting, onSortingChange] = useState<SortingState>([]);
+  const { setWorkers, setNewTaskWorkers } = useTaskActions();
+  const defaultWorkersId = useSelectWorkersIdInTask();
+  console.log(defaultWorkersId);
 
   useEffect(() => {
-    setRowSelection({});
-  }, [workers]);
+    setWorkers(workers);
+  }, [setWorkers, workers]);
 
   useEffect(() => {
-    const selectedUsers = Object.keys(rowSelection).map(
-      (k) => workers[Number(k)].id
+    setRowSelection(
+      workers.reduce(
+        (acc, worker, index) => ({
+          ...acc,
+          [index]: defaultWorkersId?.some((id) => worker.id === id),
+        }),
+        {}
+      )
     );
-    console.log(selectedUsers);
-  }, [rowSelection, workers]);
+  }, [defaultWorkersId, workers]);
+
+  useEffect(() => {
+    const selectedWorkers = Object.entries(rowSelection).reduce(
+      (acc, [k, v]) => {
+        if (v) return [...acc, workers[Number(k)].id];
+        return acc;
+      },
+      [] as string[]
+    );
+
+    setNewTaskWorkers(selectedWorkers);
+  }, [rowSelection, setNewTaskWorkers, workers]);
 
   const options = {
     onRowSelectionChange: setRowSelection,
@@ -44,6 +68,7 @@ export const WorkersDataTableWithFeatures = ({
 
   return (
     <UsersDataTable
+      className={className}
       data={workers as TypeUser[]}
       options={options}
       shiftColumns={{

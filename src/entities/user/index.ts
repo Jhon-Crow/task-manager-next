@@ -1,3 +1,5 @@
+export { useSelectUser } from "./model/selectors/selectUser";
+
 export { userDataTableColumns } from "./ui/users-data-table/columns/user-data-table-columns";
 export { UsersDataTable } from "./ui/users-data-table/users-data-table";
 
