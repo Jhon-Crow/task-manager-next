@@ -36,7 +36,7 @@ export function DataTableV2<TData>({
   table,
   Headers = DefaultDataTableHeaderGroups,
   Body = DefaultTableBody,
-  IsLoadingRow = DefaultDataTableIsLoading,
+  IsLoadingRow,
   HeaderGroup,
   Head,
   Row,

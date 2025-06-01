@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/shared/ui";
 import "../styles/globals.css";
-import { Navbar } from "@/widgets/navbar";
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 import { StoreProvider } from "../providers/StoreProvider";
@@ -22,7 +21,6 @@ export default async function RootLayout({
       <SessionProvider>
         <StoreProvider>
           <body className={`antialiased relative vsc-initialized`}>
-            <Navbar />
             {children}
             <Toaster />
           </body>

@@ -9,6 +9,7 @@ export async function logIn(prevState: unknown, formData: unknown) {
       message: "Invalid form data",
     };
   }
+  console.log(formData);
 
   try {
     await signIn("credentials", {

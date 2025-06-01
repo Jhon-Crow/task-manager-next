@@ -7,6 +7,8 @@ declare module "next-auth" {
     email: TypeUser["email"];
     role: TypeUser["role"];
     image?: TypeUser["imageUrl"];
+    firstname: TypeUser["firstname"];
+    lastname?: TypeUser["lastname"];
   }
   interface Session {
     user: User & {
@@ -21,5 +23,7 @@ declare module "@auth/core/jwt" {
     userId: TypeUser["id"];
     email: TypeUser["email"];
     role: TypeUser["role"];
+    firstname: TypeUser["firstname"];
+    lastname?: TypeUser["lastname"];
   }
 }

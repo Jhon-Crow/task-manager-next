@@ -19,21 +19,25 @@ model User {
   tasks        Assignment[]
   createdTasks Task[]       @relation("AuthoredTasks")
   createdAt    DateTime     @default(now())
+
+  Rewiew Review[]
 }
 
 model Task {
-  id          String       @id @default(cuid())
-  title       String
-  description String?
-  priority    Priority?
-  difficulty  Difficulty?
-  completed   Boolean?
-  author      User         @relation("AuthoredTasks", fields: [authorId], references: [id], onDelete: Cascade)
-  authorId    String
-  assignments Assignment[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  deadline    DateTime
+  id              String       @id @default(cuid())
+  title           String
+  description     String?
+  priority        Priority?
+  difficulty      Difficulty?
+  completeRequest Boolean?
+  completed       Boolean?
+  author          User         @relation("AuthoredTasks", fields: [authorId], references: [id], onDelete: Cascade)
+  authorId        String
+  assignments     Assignment[]
+  reviews         Review[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  deadline        DateTime
 }
 
 model Assignment {
@@ -43,6 +47,20 @@ model Assignment {
   taskId String
 
   @@id([userId, taskId])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  author    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId String
+  userId String
+
+  @@map("Rewiew")
 }
 
 enum Role {
