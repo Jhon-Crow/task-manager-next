@@ -29,7 +29,7 @@ model Task {
   description     String?
   priority        Priority?
   difficulty      Difficulty?
-  completeRequest Boolean?
+  completeRequest Boolean      @default(false)
   completed       Boolean?
   author          User         @relation("AuthoredTasks", fields: [authorId], references: [id], onDelete: Cascade)
   authorId        String

@@ -5,6 +5,7 @@ import {
   Role,
   Assignment,
 } from "@/shared/lib/db/generated";
+import {hash} from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -20,7 +21,7 @@ async function main() {
       firstname: "Admin",
       lastname: "User",
       email: "admin@example.com",
-      password: "hashed_password_1", // In real app, use bcrypt to hash
+      password: await hash("admin123", 10),
       role: Role.ADMIN,
       imageUrl: "https://example.com/admin.jpg",
     },
@@ -32,7 +33,7 @@ async function main() {
         firstname: "Manager",
         lastname: "One",
         email: "manager1@example.com",
-        password: "hashed_password_2",
+        password: await hash("manager123", 10),
         role: Role.MANAGER,
         imageUrl: "https://example.com/manager1.jpg",
       },
@@ -42,7 +43,7 @@ async function main() {
         firstname: "Manager",
         lastname: "Two",
         email: "manager2@example.com",
-        password: "hashed_password_3",
+        password: await hash("manager123", 10),
         role: Role.MANAGER,
         imageUrl: "https://example.com/manager2.jpg",
       },
@@ -55,7 +56,7 @@ async function main() {
         firstname: "Worker",
         lastname: "One",
         email: "worker1@example.com",
-        password: "hashed_password_4",
+        password: await hash("worker123", 10),
         role: Role.WORKER,
         imageUrl: "https://example.com/worker1.jpg",
       },
@@ -65,7 +66,7 @@ async function main() {
         firstname: "Worker",
         lastname: "Two",
         email: "worker2@example.com",
-        password: "hashed_password_5",
+        password: await hash("worker123", 10),
         role: Role.WORKER,
         imageUrl: "https://example.com/worker2.jpg",
       },
@@ -75,7 +76,7 @@ async function main() {
         firstname: "Worker",
         lastname: "Three",
         email: "worker3@example.com",
-        password: "hashed_password_6",
+        password: await hash("worker123", 10),
         role: Role.WORKER,
         imageUrl: "https://example.com/worker3.jpg",
       },
@@ -85,7 +86,7 @@ async function main() {
         firstname: "Worker",
         lastname: "Four",
         email: "worker4@example.com",
-        password: "hashed_password_7",
+        password: await hash("worker123", 10),
         role: Role.WORKER,
         imageUrl: "https://example.com/worker4.jpg",
       },
