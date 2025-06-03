@@ -4,6 +4,7 @@ import { Task } from "@/shared/lib/db/generated";
 import { redirect } from "next/navigation";
 import { checkAuth } from "@/entities/auth";
 import {TaskAdminReviewRequest, TaskWorkerReviewRequest} from "@/features/task-review-request";
+import {ReviewMessagesList} from "@/entities/review";
 
 
 export default async function TaskPage({
@@ -19,7 +20,7 @@ export default async function TaskPage({
   if (!taskData.data) redirect(Routes.TASK(params.id) + "/not-found");
 
   const task = taskData.data;
-
+    // console.log(task)
   const isAdminUpdatePermission =
       task.completeRequest &&
       (session.user.role === "ADMIN" ||
@@ -40,6 +41,11 @@ export default async function TaskPage({
         ) : (
             <TaskPageCard task={task} />
         )}
+          {task.reviews.length && <ReviewMessagesList
+              sessionUser={session.user}
+              task={task}
+              reviews={task.reviews}
+          />}
       </div>
   );
 }

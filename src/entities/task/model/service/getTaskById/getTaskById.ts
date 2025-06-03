@@ -20,6 +20,7 @@ const getTaskByIdImplementation = async (
       title: true,
       completed: true,
       completeRequest: true,
+      reviews: true,
       author: {
         select: {
           id: true,
