@@ -12,24 +12,21 @@ export async function ReviewMessagesList({
     task: TypeTask,
     sessionUser: TypeUser
 }){
-    // console.log(reviews)
-    // console.log(sessionUser)
     console.log(task)
     return (
-        <Card className='max-w-2xl flex-col'>
+        <Card className='max-w-165 flex-col'>
             {reviews.map(r => (
                 <Card key={r}
                     className={'text-white ' + (sessionUser.id === r.userId ? 'ml-auto bg-red-600' : 'mr-auto bg-blue-700') }
                 >
-                    {/*{task.author.id === r.userId && <CardHeader></CardHeader>}*/}
-{/*<h1>{task.author.id === r.userId ? 'authors review' : 'Not authors review'}</h1>*/}
-                    <CardHeader>{task.workers.find(w => w.id === r.userId).firstname}</CardHeader>
+                    <CardHeader>{task!.workers.find(w => w.id === r.userId)?.firstname
+                        ||
+                        (r.userId === task.author.id) && task.author.firstname}</CardHeader>
                     <CardContent>{r.text}</CardContent>
 
 
                     <CardFooter>{r.createdAt + ''}</CardFooter>
                 </Card>
-
             ))}
         </Card>
     );
