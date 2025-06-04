@@ -1,7 +1,8 @@
 import {TypeReview, TypeTask} from "@/entities/task/model/types/task";
 import {Card, CardContent, CardFooter, CardHeader} from "@/shared/ui";
-import {getUserById} from "@/entities/user";
 import {TypeUser} from "@/entities/user/model/types/user";
+import {generateColors} from "@/entities/review/function/generateColors";
+import {formatDateToRuShort} from "@/shared/lib/format/formatDayToRuShort";
 
 export async function ReviewMessagesList({
                                              reviews,
@@ -12,22 +13,32 @@ export async function ReviewMessagesList({
     task: TypeTask,
     sessionUser: TypeUser
 }){
-    console.log(task)
+    console.log('task', task)
+    console.log('reviews', reviews)
     return (
         <Card className='max-w-165 flex-col'>
-            {reviews.map(r => (
-                <Card key={r}
-                    className={'text-white ' + (sessionUser.id === r.userId ? 'ml-auto bg-red-600' : 'mr-auto bg-blue-700') }
-                >
-                    <CardHeader>{task!.workers.find(w => w.id === r.userId)?.firstname
-                        ||
-                        (r.userId === task.author.id) && task.author.firstname}</CardHeader>
-                    <CardContent>{r.text}</CardContent>
+            {reviews.map(r => {
+                const user = task!.workers.find(w => w.id === r.userId)
+                    || (r.userId === task.author.id) && task.author;
+                const {firstname, lastname, role} = user;
+                const color = generateColors(firstname, role, lastname);
+                    console.log(color)
+                return (
+                    <Card key={r}
+                          className={sessionUser.id === r.userId ? 'ml-auto' : 'mr-auto'}
+                          style={color}
+                    >
+                        <CardHeader>{firstname + ' ' + (lastname ? lastname : '') }</CardHeader>
+                        {/*todo add аватарки */}
+                        <CardContent>{r.text}</CardContent>
 
 
-                    <CardFooter>{r.createdAt + ''}</CardFooter>
-                </Card>
-            ))}
+                        <CardFooter>{formatDateToRuShort(r.createdAt)}</CardFooter>
+                        {/*    todo сделать нормальный формат даты*/}
+                    </Card>
+                )
+            }
+            )}
         </Card>
     );
 };

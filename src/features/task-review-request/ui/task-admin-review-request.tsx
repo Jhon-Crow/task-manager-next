@@ -36,6 +36,7 @@ const RejectDialogue = ({ taskId, userId }: { taskId: string, userId: string }) 
                         className="space-y-2 min-w-42 flex flex-col"
                         action={async (formData) => {
                             "use server";
+                            // todo добавить валидацию textarea
                             await prisma.review.create({
                                 data: {
                                     text: formData.get("review"),
