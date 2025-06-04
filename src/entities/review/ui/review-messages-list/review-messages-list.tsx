@@ -3,6 +3,7 @@ import {Card, CardContent, CardFooter, CardHeader} from "@/shared/ui";
 import {TypeUser} from "@/entities/user/model/types/user";
 import {generateColors} from "@/entities/review/function/generateColors";
 import {formatDateToRuShort} from "@/shared/lib/format/formatDayToRuShort";
+import {UserAvatar} from "@/entities/user";
 
 export async function ReviewMessagesList({
                                              reviews,
@@ -20,21 +21,20 @@ export async function ReviewMessagesList({
             {reviews.map(r => {
                 const user = task!.workers.find(w => w.id === r.userId)
                     || (r.userId === task.author.id) && task.author;
-                const {firstname, lastname, role} = user;
+                const {firstname, lastname, role, imageUrl} = user;
                 const color = generateColors(firstname, role, lastname);
-                    console.log(color)
+                const thisUser = sessionUser.id === r.userId;
                 return (
                     <Card key={r}
-                          className={sessionUser.id === r.userId ? 'ml-auto' : 'mr-auto'}
+                          className={thisUser ? 'ml-auto' : 'mr-auto'}
                           style={color}
                     >
-                        <CardHeader>{firstname + ' ' + (lastname ? lastname : '') }</CardHeader>
-                        {/*todo add аватарки */}
+                        <CardHeader className={'flex min-w-40 justify-' + (thisUser ? 'end' : 'start') + ' items-center'}>
+                            {imageUrl ? <UserAvatar user={user}/> : null}
+                            {firstname + ' ' + (lastname ? lastname : '') }
+                        </CardHeader>
                         <CardContent>{r.text}</CardContent>
-
-
-                        <CardFooter>{formatDateToRuShort(r.createdAt)}</CardFooter>
-                        {/*    todo сделать нормальный формат даты*/}
+                        <CardFooter>{formatDateToRuShort(r.createdAt) + ' ' + r.createdAt.getHours() + ':' + (r.createdAt.getMinutes() ? r.createdAt.getMinutes() : '00')}</CardFooter>
                     </Card>
                 )
             }
