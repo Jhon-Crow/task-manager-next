@@ -5,7 +5,7 @@ import { TypeTask } from "../../types/task";
 import { handleAction } from "@/shared/lib/actions";
 
 const getTaskByIdImplementation = async (
-  id: TypeTask["id"]
+    id: TypeTask["id"]
 ): Promise<TypeTask | null> => {
   const task = await prisma.task.findUnique({
     where: { id },
@@ -20,7 +20,24 @@ const getTaskByIdImplementation = async (
       title: true,
       completed: true,
       completeRequest: true,
-      reviews: true,
+      reviews: {
+        select: {
+          id: true,
+          text: true,
+          createdAt: true,
+          updatedAt: true,
+          author: {
+            select: {
+              id: true,
+              firstname: true,
+              lastname: true,
+              role: true,
+              imageUrl: true,
+              email: true,
+            }
+          }
+        }
+      },
       author: {
         select: {
           id: true,
@@ -38,6 +55,7 @@ const getTaskByIdImplementation = async (
               id: true,
               firstname: true,
               lastname: true,
+              role: true,
               imageUrl: true,
               email: true,
             },
@@ -46,11 +64,16 @@ const getTaskByIdImplementation = async (
       },
     },
   });
+
   if (!task) {
-    // TODO
-    throw new Error("Жопа нету таски");
+    throw new Error("getTaskById - Задача не найдена");
   }
-  return { ...task, workers: task.assignments.map(({ user }) => user) };
+
+  return {
+    ...task,
+    workers: task.assignments.map(({ user }) => user)
+  };
 };
+
 export const getTaskById = async (id: TypeTask["id"]) =>
-  handleAction<TypeTask | null, TypeTask["id"]>(getTaskByIdImplementation, id);
+    handleAction<TypeTask | null, TypeTask["id"]>(getTaskByIdImplementation, id);

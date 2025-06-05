@@ -3,11 +3,15 @@ import {getTaskById, setCompletedToTask, TaskPageCard} from "@/entities/task";
 import {Ban, Check} from "lucide-react";
 import {TypeTask} from "@/entities/task/public-types";
 import {prisma} from "@/shared/lib/db/prisma";
+import {TypeUser} from "@/entities/user/model/types/user";
 
-export const TaskAdminReviewRequest = ({ task }: { task: TypeTask }) => (
+
+export const TaskAdminReviewRequest = ({ task, userId }: { task: TypeTask, userId: TypeUser['id']}) => (
     <div className="space-y-8">
         <div className="flex -space-x-2 h-full max-w-[750px] justify-start">
-            <RejectButton taskId={task.id} userId={task.author.id} />
+            <RejectButton taskId={task.id}
+                          userId={userId}
+            />
             <TaskPageCard
                 task={task}
                 className="flex-1 peer-hover/left:translate-x-[35px] peer-hover/right:-translate-x-[45px] flex-grow z-10 transition-transform duration-300 order-2"
@@ -17,8 +21,7 @@ export const TaskAdminReviewRequest = ({ task }: { task: TypeTask }) => (
     </div>
 );
 
-const RejectDialogue = ({ taskId, userId }: { taskId: string, userId: string }) => {
-
+const RejectDialogue = ({ taskId, userId }: { taskId: string, userId: TypeUser['id'] }) => {
     return (
         <Dialog>
             <DropdownMenu>
@@ -45,7 +48,6 @@ const RejectDialogue = ({ taskId, userId }: { taskId: string, userId: string }) 
                                 },
                             });
                             await setCompletedToTask(taskId, undefined);
-                            console.log(await getTaskById(taskId));
                         }}
                     >
                         <Textarea className='min-h-30' name="review" placeholder="Добавить ревью" />

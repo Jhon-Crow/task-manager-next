@@ -4,7 +4,9 @@ interface UserColors {
 }
 
 export function generateColors(
-    firstname: string, role: 'ADMIN' | 'MANAGER' | 'WORKER', lastname?: string
+    firstname: string,
+    role: 'ADMIN' | 'MANAGER' | 'WORKER',
+    lastname: string | null
 ): UserColors {
     if (role === 'ADMIN') {
         return {

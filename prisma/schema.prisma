@@ -20,7 +20,7 @@ model User {
   createdTasks Task[]       @relation("AuthoredTasks")
   createdAt    DateTime     @default(now())
 
-  Rewiew Review[]
+  Review Review[]
 }
 
 model Task {
@@ -60,7 +60,7 @@ model Review {
   taskId String
   userId String
 
-  @@map("Rewiew")
+  @@map("Review")
 }
 
 enum Role {

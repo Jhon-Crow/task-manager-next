@@ -11,7 +11,7 @@ const createTaskImplementation = async (values: unknown): Promise<void> => {
   const validatedValues = taskFormSchema.safeParse(values);
   if (!validatedValues.success) {
     //TODO
-    throw new Error("createTaskValidation жопа");
+    throw new Error("createTaskValidation " + validatedValues.error);
   }
 
   const { workersId, ...task } = validatedValues.data;

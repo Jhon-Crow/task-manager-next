@@ -5,7 +5,7 @@ export const userFormSchemaBase = z.object({
   firstname: z.string().max(25).min(4),
   lastname: z.string().max(25).min(0).optional(),
   imageUrl: z.string().max(200).optional(),
-  email: z.string().max(25).min(4).email("Некорректный email"), //todo need better detalization
+  email: z.string().max(25).min(4).email("Некорректный email"),
   role: z.nativeEnum(Role),
 });
 

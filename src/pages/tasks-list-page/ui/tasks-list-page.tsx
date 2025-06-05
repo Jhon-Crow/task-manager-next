@@ -9,12 +9,6 @@ const reducers: ReducersList = {
 };
 
 export default async function TasksListPage() {
-  const data = await getAllTasks();
-  if (!data.success) {
-    //TODO
-    console.log(data.error.message)
-    return <div>{data.error.message}</div>;
-  }
   return (
     <DynamicModuleLoader reducers={reducers}>
       <TaskListDataTableWidget />

@@ -18,9 +18,8 @@ export default async function TaskPage({
 
   if (!taskData.success) return <div>Не успешно</div>;
   if (!taskData.data) redirect(Routes.TASK(params.id) + "/not-found");
-
   const task = taskData.data;
-    // console.log(task)
+
   const isAdminUpdatePermission =
       task.completeRequest &&
       (session.user.role === "ADMIN" ||
@@ -35,7 +34,7 @@ export default async function TaskPage({
   return (
       <div className="container mx-auto py-8 px-4 max-w-5xl">
         {isAdminUpdatePermission ? (
-            <TaskAdminReviewRequest task={task} />
+            <TaskAdminReviewRequest task={task} userId={session.user.id}/>
         ) : isWorkerTask ? (
             <TaskWorkerReviewRequest task={task} userId={session.user.id} />
         ) : (
@@ -43,11 +42,10 @@ export default async function TaskPage({
         )}
 
 
-          {task.reviews.length && <ReviewMessagesList
+        {task.reviews.length ? <ReviewMessagesList
               sessionUser={session.user}
-              task={task}
               reviews={task.reviews}
-          />}
+          /> : null}
       </div>
   );
 }

@@ -12,7 +12,7 @@ const updateTaskImplementation = async (id: unknown, values: unknown) => {
 
   if (!validatedValues.success || !id || !(typeof id === "string")) {
     // TODO
-    throw new Error("updateTask жопа");
+    throw new Error("updateTask " + (validatedValues.error || 'проблема с id'));
   }
   const oldTaskData = await getTaskById(id);
   if (!oldTaskData.success || !oldTaskData.data) {
