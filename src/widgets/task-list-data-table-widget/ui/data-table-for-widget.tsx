@@ -6,6 +6,7 @@ import { useTasksDataTableContext } from "@/features/task-data-table-features";
 import { cn } from "@/shared/lib/utils";
 import { DataTableV2, DefaultDataCell, TableRow } from "@/shared/ui";
 import { Row } from "@tanstack/react-table";
+import { useSession } from "next-auth/react";
 
 export const DataTableForWidget = () => {
   const { table, observerRef, isLoading } = useTasksDataTableContext();
@@ -21,7 +22,22 @@ export const DataTableForWidget = () => {
 const DataTableRow = ({ row }: { row: Row<TypeTask> }) => {
   const now = new Date();
 
+  const session = useSession().data; //todo не уверен что здесь надо
+
   const percent = getTaskCompletionPercentage(row.original, now.getTime());
+  console.log(row.original);
+  console.log(session?.user);
+  const isAdminUpdatePermission =
+    row.original.completeRequest &&
+    (session?.user.role === "ADMIN" ||
+      (session?.user.role === "MANAGER" &&
+        session?.user.id === row.original.author.id));
+
+  const isWorkerTask =
+    row.original.completeRequest &&
+    session?.user.role === "WORKER" &&
+    row.original.workers?.some((worker) => worker.id === session.user.id);
+
   return (
     <TableRow
       data-state={row.getIsSelected() && "selected"}
@@ -36,7 +52,8 @@ const DataTableRow = ({ row }: { row: Row<TypeTask> }) => {
         },
         {
           "bg-fuchsia-700 data-[state=seleced]:bg-red-500/10 hover:bg-fuchsia-700/20":
-            row.original.completeRequest,
+            (row.original.completeRequest && isAdminUpdatePermission) ||
+            isWorkerTask,
         }
       )}
     >
