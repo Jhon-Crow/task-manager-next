@@ -4,13 +4,14 @@ import {TypeUser} from "@/entities/user/model/types/user";
 import {generateColors} from "@/entities/review/function/generateColors";
 import {formatDateToRuShort} from "@/shared/lib/format/formatDayToRuShort";
 import {UserAvatar} from "@/entities/user";
+import {Session} from "next-auth";
 
 export async function ReviewMessagesList({
                                              reviews,
                                              sessionUser
 }: {
     reviews: TypeReview[],
-    sessionUser: TypeUser
+    sessionUser: Session['user']
 }){
     if (!reviews) return null;
     return (
