@@ -12,14 +12,13 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui";
 import Link from "next/link";
-import { NavbarBreadcrump } from "./navbar-breadcrump";
-import { useSelectCurrentPage } from "@/shared/lib/slices/currentPage";
-import { usePathname } from "next/navigation";
-import { getBreadcrumbs } from "../routes/routes";
-import { SignOutButton } from "@/entities/auth";
-import { Routes } from "@/shared/routes/paths";
-import { Session } from "next-auth";
-import { UserAvatar } from "@/entities/user";
+import {NavbarBreadcrump} from "./navbar-breadcrump";
+import {useSelectCurrentPage} from "@/shared/lib/slices/currentPage";
+import {usePathname} from "next/navigation";
+import {getBreadcrumbs} from "../routes/routes";
+import {Routes} from "@/shared/routes/paths";
+import {Session} from "next-auth";
+import {NavbarSessionUser} from "@/widgets/navbar/ui/navbar-session-user";
 
 export const NavbarBreadcrumps = ({ session }: { session: Session }) => {
   const pathname = usePathname();
@@ -72,21 +71,7 @@ export const NavbarBreadcrumps = ({ session }: { session: Session }) => {
       </Breadcrumb>
       {!pathname?.includes(Routes.LOGIN) && (
         <>
-          <div className="flex items-center">
-            <UserAvatar
-              user={{
-                ...session.user,
-                lastname: session.user.lastname || null,
-                imageUrl: session.user.image || null,
-              }}
-            />
-            <span className="ml-2 text-xs">
-              {session.user.lastname
-                ? session.user.lastname + " "
-                : "" + session.user.firstname}
-            </span>
-            <SignOutButton />
-          </div>
+          <NavbarSessionUser session={session}/>
         </>
       )}
     </>
