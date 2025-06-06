@@ -24,15 +24,18 @@ const DataTableRow = ({ row }: { row: Row<TypeTask> }) => {
   const percent = getTaskCompletionPercentage(row.original, now.getTime());
   return (
     <TableRow
-      //todo перекрашивать по reviewRequest
       data-state={row.getIsSelected() && "selected"}
       style={{ width: `${percent >= 100 ? 100 : percent}%` }}
-      className={cn("relative", {
-        "bg-red-500/25 data-[state=selected]:bg-red-500/10 hover:bg-red-500/20":
-          row.original.completed === false,
-        "bg-green-500/25 data-[state=seleced]:bg-red-500/10 hover:bg-green-500/20":
-          row.original.completed === true,
-      })}
+      className={cn(
+        "relative",
+        {
+          "bg-red-500/25 data-[state=selected]:bg-red-500/10 hover:bg-red-500/20":
+            row.original.completed === false,
+          "bg-green-500/25 data-[state=seleced]:bg-red-500/10 hover:bg-green-500/20":
+            row.original.completed === true,
+        },
+        { "bg-fuchsia-700": row.original.completeRequest }
+      )}
     >
       {row.getVisibleCells().map((cell) => (
         <DefaultDataCell cell={cell} key={cell.id} />
