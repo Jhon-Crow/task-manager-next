@@ -34,7 +34,10 @@ const DataTableRow = ({ row }: { row: Row<TypeTask> }) => {
           "bg-green-500/25 data-[state=seleced]:bg-red-500/10 hover:bg-green-500/20":
             row.original.completed === true,
         },
-        { "bg-fuchsia-700": row.original.completeRequest }
+        {
+          "bg-fuchsia-700 data-[state=seleced]:bg-red-500/10 hover:bg-fuchsia-700/20":
+            row.original.completeRequest,
+        }
       )}
     >
       {row.getVisibleCells().map((cell) => (
