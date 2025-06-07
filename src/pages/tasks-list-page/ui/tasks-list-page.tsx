@@ -8,15 +8,9 @@ const reducers: ReducersList = {
 };
 
 export default async function TasksListPage() {
-  const data = await getAllTasks();
-  if (!data.success) {
-    //TODO
-    return <div>{"Popa"}</div>;
-  }
   return (
     <DynamicModuleLoader reducers={reducers}>
       <TaskListDataTableWidget />
-      {/* <TaskListWidget tasks={data.data} /> */}
     </DynamicModuleLoader>
   );
 }
