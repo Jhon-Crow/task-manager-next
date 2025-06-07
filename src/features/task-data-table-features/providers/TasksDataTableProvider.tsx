@@ -16,7 +16,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { TasksFilters, TypeTaskColumns } from "@/entities/task/public-types";
+import {TasksFilters, TypeTask, TypeTaskColumns} from "@/entities/task/public-types";
 import { taskDataDefaultColumns, useInfinityTasks } from "@/entities/task";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useIsBottomVisible } from "@/shared/hooks/useIsBottomVisible";
@@ -60,15 +60,15 @@ export const TaskDataTableProvider = ({
     return Object.values(
         Object.assign(
             {},
-            shiftColumns, // Колонки для добавления в начало
+            shiftColumns,
             taskDataDefaultColumns,
             {
               actions: taskDataTableMenuInColumns,
             },
             taskDataTableSortingInColumns,
-            addColumns // Колонки для добавления в конец
+            addColumns
         )
-    );
+    ) as ColumnDef<TypeTask, any>[];
   }, [addColumns, shiftColumns]);
 
   const table = useReactTable({
@@ -80,7 +80,7 @@ export const TaskDataTableProvider = ({
     state: {
       sorting,
     },
-    ...options, // Добавляем переданные опции
+    ...options,
   });
 
   const { rows } = table.getRowModel();

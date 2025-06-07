@@ -19,7 +19,8 @@ export const TaskListDataTableWidget = () => {
       </CardHeader>
       <CardContent>
         <TimerProvider>
-          <TaskDataTableProvider shiftColumns={{completed: completedInTaskDataTableColumn as ColumnDef<TypeTaskColumns>}}>
+          <TaskDataTableProvider
+              shiftColumns={{completed: completedInTaskDataTableColumn as ColumnDef<TypeTaskColumns>}}>
             <DataTableForWidget />
           </TaskDataTableProvider>
         </TimerProvider>
