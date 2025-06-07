@@ -5,6 +5,8 @@ import {
   getSortedRowModel,
   SortingState,
   useReactTable,
+  ColumnDef,
+  TableOptions,
 } from "@tanstack/react-table";
 import {
   ReactNode,
@@ -14,18 +16,27 @@ import {
   useRef,
   useState,
 } from "react";
-import { TasksFilters } from "@/entities/task/public-types";
+import { TasksFilters, TypeTaskColumns } from "@/entities/task/public-types";
 import { taskDataDefaultColumns, useInfinityTasks } from "@/entities/task";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useIsBottomVisible } from "@/shared/hooks/useIsBottomVisible";
-import { taskDataTableMenuInColumns } from "../ui/task-data-table-menu/task-data-table-menu";
+import { taskDataTableMenuInColumns } from "../";
 import { TasksDataTableContext } from "../contexts/TasksDataTableContext";
-import { taskDataTableSortingInColumns } from "../ui/task-data-table-sortings/task-data-table-sorting";
+import { taskDataTableSortingInColumns } from "../";
 
 export const TaskDataTableProvider = ({
-  children,
-}: {
+                                        children,
+                                        addColumns,
+                                        shiftColumns,
+                                        options,
+                                      }: {
   children: ReactNode;
+  addColumns?: Record<string, ColumnDef<TypeTaskColumns>>;
+  shiftColumns?: Record<string, ColumnDef<TypeTaskColumns>>;
+  options?: Omit<
+      TableOptions<TypeTaskColumns>,
+      "data" | "columns" | "getCoreRowModel"
+  >;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filters, setFilters] = useState<TasksFilters>({});
@@ -33,10 +44,10 @@ export const TaskDataTableProvider = ({
   const isBottomVisible = useIsBottomVisible(observerRef);
 
   const { tasks, isFetching, isLoading, fetchNextPage, hasNextPage } =
-    useInfinityTasks({
-      initialFilters: filters,
-      pageSize: 10,
-    });
+      useInfinityTasks({
+        initialFilters: filters,
+        pageSize: 10,
+      });
 
   const fetchMoreOnButtomReacher = useCallback(() => {
     if (isBottomVisible) {
@@ -44,24 +55,32 @@ export const TaskDataTableProvider = ({
     }
   }, [fetchNextPage, isBottomVisible]);
 
+  // Объединяем колонки в правильном порядке
+  const columns = useMemo(() => {
+    return Object.values(
+        Object.assign(
+            {},
+            shiftColumns, // Колонки для добавления в начало
+            taskDataDefaultColumns,
+            {
+              actions: taskDataTableMenuInColumns,
+            },
+            taskDataTableSortingInColumns,
+            addColumns // Колонки для добавления в конец
+        )
+    );
+  }, [addColumns, shiftColumns]);
+
   const table = useReactTable({
     data: tasks,
-    columns: Object.values(
-      Object.assign(
-        {},
-        taskDataDefaultColumns,
-        {
-          actions: taskDataTableMenuInColumns,
-        },
-        taskDataTableSortingInColumns
-      )
-    ),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
     state: {
       sorting,
     },
+    ...options, // Добавляем переданные опции
   });
 
   const { rows } = table.getRowModel();
@@ -78,19 +97,19 @@ export const TaskDataTableProvider = ({
   }, [fetchMoreOnButtomReacher]);
 
   const value = useMemo(
-    () => ({
-      table,
-      setSorting,
-      setFilters,
-      observerRef,
-      rows,
-      rowVirtualizer,
-      isLoading: isFetching || isLoading,
-    }),
-    [isFetching, isLoading, rowVirtualizer, rows, table]
+      () => ({
+        table,
+        setSorting,
+        setFilters,
+        observerRef,
+        rows,
+        rowVirtualizer,
+        isLoading: isFetching || isLoading,
+      }),
+      [isFetching, isLoading, rowVirtualizer, rows, table]
   );
 
   return (
-    <TasksDataTableContext value={value}>{children}</TasksDataTableContext>
+      <TasksDataTableContext value={value}>{children}</TasksDataTableContext>
   );
 };

@@ -9,21 +9,21 @@ export const taskDataTableSortingInColumns: Partial<
   Record<keyof TypeTaskColumns, ColumnDef<TypeTaskColumns>>
 > = {
 
-  completed: {
-    accessorKey: "completed",
-    header: (props) => <DataTableSortingHeader {...props} title="Статус" />,
-    cell: ({ row }) => {
-      return (
-          <div className="flex justify-center">
-            <Checkbox
-                checked={row.getValue("completed")}
-                aria-label="Выполнено"
-                className="pointer-events-none"
-            />
-          </div>
-      );
-    },
-  },
+  // completed: {
+  //   accessorKey: "completed",
+  //   header: (props) => <DataTableSortingHeader {...props} title="Статус" />,
+  //   cell: ({ row }) => {
+  //     return (
+  //         <div className="flex justify-center">
+  //           <Checkbox
+  //               checked={row.getValue("completed")}
+  //               aria-label="Выполнено"
+  //               className="pointer-events-none"
+  //           />
+  //         </div>
+  //     );
+  //   },
+  // },
 
   title: {
     accessorKey: "title",
