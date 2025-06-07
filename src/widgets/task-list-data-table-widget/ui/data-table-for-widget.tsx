@@ -21,12 +21,9 @@ export const DataTableForWidget = () => {
 
 const DataTableRow = ({ row }: { row: Row<TypeTask> }) => {
   const now = new Date();
-
-  const session = useSession().data; //todo не уверен что здесь надо
-
+  const session = useSession().data;
   const percent = getTaskCompletionPercentage(row.original, now.getTime());
-  console.log(row.original);
-  console.log(session?.user);
+
   const isAdminUpdatePermission =
     row.original.completeRequest &&
     (session?.user.role === "ADMIN" ||
