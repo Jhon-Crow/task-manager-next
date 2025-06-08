@@ -2,29 +2,12 @@
 
 import { taskDataDefaultColumns } from "@/entities/task";
 import { TypeTaskColumns } from "@/entities/task/public-types";
-import {Checkbox, DataTableSortingHeader, TruncatedTextWithTooltip} from "@/shared/ui";
+import { DataTableSortingHeader, TruncatedTextWithTooltip } from "@/shared/ui";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const taskDataTableSortingInColumns: Partial<
   Record<keyof TypeTaskColumns, ColumnDef<TypeTaskColumns>>
 > = {
-
-  // completed: {
-  //   accessorKey: "completed",
-  //   header: (props) => <DataTableSortingHeader {...props} title="Статус" />,
-  //   cell: ({ row }) => {
-  //     return (
-  //         <div className="flex justify-center">
-  //           <Checkbox
-  //               checked={row.getValue("completed")}
-  //               aria-label="Выполнено"
-  //               className="pointer-events-none"
-  //           />
-  //         </div>
-  //     );
-  //   },
-  // },
-
   title: {
     accessorKey: "title",
     header: (props) => <DataTableSortingHeader {...props} title="Задача" />,

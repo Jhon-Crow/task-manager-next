@@ -1,11 +1,10 @@
 import { TypeTask } from "@/entities/task/public-types";
 import { prisma } from "@/shared/lib/db/prisma";
-import { NextResponse } from "next/server";
-import type { NextApiRequest } from "next/types";
+import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function getAllTasksRoute(req: NextApiRequest) {
+export async function getAllTasksRoute(req: NextRequest) {
   const { searchParams } = new URL(req.url || "");
   const cursor = searchParams.get("cursor");
   const pageSize = parseInt(searchParams.get("pageSize") || "0") || 20;
@@ -35,6 +34,7 @@ export async function getAllTasksRoute(req: NextApiRequest) {
         priority: true,
         updatedAt: true,
         createdAt: true,
+        completeRequest: true,
         author: {
           select: {
             id: true,
@@ -76,7 +76,7 @@ export async function getAllTasksRoute(req: NextApiRequest) {
             workers: task.assignments.map(({ user }) => user),
           });
           return acc;
-        }, [] as TypeTask[]),
+        }, [] as Omit<TypeTask, "reviews">[]),
         nextCursor,
       },
       {

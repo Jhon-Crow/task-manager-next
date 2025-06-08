@@ -34,6 +34,7 @@ const getAllTasksImplementation = async (): Promise<TypeTask[]> => {
           reviews: true,
         },
       },
+      reviews: { select: {} },
       assignments: {
         select: {
           user: {
