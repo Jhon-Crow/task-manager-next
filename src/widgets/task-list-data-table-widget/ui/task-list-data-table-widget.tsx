@@ -3,6 +3,11 @@ import { DataTableForWidget } from "./data-table-for-widget";
 import { TimerProvider } from "@/shared/providers";
 import { TaskDataTableProvider } from "@/features/task-data-table-features";
 import Count from "./count";
+import {
+    completedInTaskDataTableColumn
+} from "@/features/task-data-table-features/ui/task-completed-sorting-column/task-completed-sorting-column";
+import {TypeTaskColumns} from "@/entities/task/model/types/task";
+import {ColumnDef} from "@tanstack/react-table";
 
 export const TaskListDataTableWidget = () => {
   return (
@@ -14,7 +19,8 @@ export const TaskListDataTableWidget = () => {
       </CardHeader>
       <CardContent>
         <TimerProvider>
-          <TaskDataTableProvider>
+          <TaskDataTableProvider
+              shiftColumns={{completed: completedInTaskDataTableColumn as ColumnDef<TypeTaskColumns>}}>
             <DataTableForWidget />
           </TaskDataTableProvider>
         </TimerProvider>
