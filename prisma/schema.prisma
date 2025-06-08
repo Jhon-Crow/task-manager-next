@@ -20,7 +20,7 @@ model User {
   createdTasks Task[]       @relation("AuthoredTasks")
   createdAt    DateTime     @default(now())
 
-  Rewiew Review[]
+  Review Review[]
 }
 
 model Task {
@@ -29,7 +29,7 @@ model Task {
   description     String?
   priority        Priority?
   difficulty      Difficulty?
-  completeRequest Boolean?
+  completeRequest Boolean      @default(false)
   completed       Boolean?
   author          User         @relation("AuthoredTasks", fields: [authorId], references: [id], onDelete: Cascade)
   authorId        String
@@ -60,7 +60,7 @@ model Review {
   taskId String
   userId String
 
-  @@map("Rewiew")
+  @@map("Review")
 }
 
 enum Role {

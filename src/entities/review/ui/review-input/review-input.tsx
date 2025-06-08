@@ -1,5 +1,5 @@
 import { Textarea } from "@/shared/ui";
-
-export default function ReviewInput() {
+//todo empty - for refactoring
+export function ReviewInput() {
   return <Textarea />;
 }

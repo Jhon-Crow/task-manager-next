@@ -24,6 +24,7 @@ const DataTableRow = ({ row }: { row: Row<TypeTask> }) => {
   const percent = getTaskCompletionPercentage(row.original, now.getTime());
   return (
     <TableRow
+      //todo перекрашивать по reviewRequest
       data-state={row.getIsSelected() && "selected"}
       style={{ width: `${percent >= 100 ? 100 : percent}%` }}
       className={cn("relative", {

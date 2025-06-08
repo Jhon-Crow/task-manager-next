@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/shared/ui";
 import { TypeUser } from "../../model/types/user";
-import { formatDateToRuShort } from "@/shared/lib/format/formatDayToRuShort";
+import { formatTimeToRuShort } from "@/shared/lib/format/formatDayToRuShort";
 import { UserRoleIcon } from "@/entities/user/ui/users-icons/role-icon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/Avatar/avatar";
 import { TaskList } from "@/entities/task";
@@ -49,7 +49,7 @@ export function UserPageCard({
       <CardFooter className="pt-4 flex-col gap-4">
         {user.tasks.length && <TaskList tasks={user.tasks} />}
         <span className="opacity-40 self-end">
-          user created on {formatDateToRuShort(user.createdAt)}
+          user created on {formatTimeToRuShort(user.createdAt)}
         </span>
       </CardFooter>
     </Card>

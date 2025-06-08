@@ -2,6 +2,7 @@
 
 import { buildSlice } from "@/shared/lib/store";
 import {
+  ReviewsToSchema,
   TaskFormForSchema,
   TaskForSchema,
   TaskSchema,
@@ -25,12 +26,21 @@ const taskSlice = buildSlice({
       },
       prepare: (task: TypeTask | null) => {
         if (!task) return { payload: null };
+        const reviewsToSlice: ReviewsToSchema[] = task.reviews.map(
+          (review) => ({
+            ...review,
+            createdAt: review.createdAt.getTime(),
+            updatedAt: review.updatedAt.getTime(),
+          })
+        );
+
         return {
           payload: {
             ...task,
             deadline: task.deadline.getTime(),
             createdAt: task.createdAt.getTime(),
             updatedAt: task.updatedAt.getTime(),
+            reviews: reviewsToSlice,
           },
         };
       },

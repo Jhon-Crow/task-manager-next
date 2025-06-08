@@ -1,7 +1,7 @@
 "use client";
 
 import type { TypeTaskWorker } from "@/entities/task/public-types";
-import { formatDateToRuShort } from "@/shared/lib/format/formatDayToRuShort";
+import { formatTimeToRuShort } from "@/shared/lib/format/formatDayToRuShort";
 import { Timer, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui";
 import type { ColumnDef } from "@tanstack/react-table";
 import { UserAvatar } from "@/entities/user";
@@ -112,7 +112,7 @@ export const taskDataDefaultColumns: Partial<
     accessorKey: "createdAt",
     header: "Создана",
     cell: ({ row }) => {
-      return formatDateToRuShort(new Date(row.getValue("createdAt")));
+      return formatTimeToRuShort(new Date(row.getValue("createdAt")));
     },
   },
 };
