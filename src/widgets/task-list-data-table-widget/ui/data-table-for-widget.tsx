@@ -24,16 +24,13 @@ const DataTableRow = ({ row }: { row: Row<TypeTask> }) => {
   const session = useSession().data;
   const percent = getTaskCompletionPercentage(row.original, now.getTime());
 
-  const isAdminUpdatePermission =
-    row.original.completeRequest &&
-    (session?.user.role === "ADMIN" ||
-      (session?.user.role === "MANAGER" &&
-        session?.user.id === row.original.author.id));
-
-  const isWorkerTask =
-    row.original.completeRequest &&
-    session?.user.role === "WORKER" &&
-    row.original.workers?.some((worker) => worker.id === session.user.id);
+  const visualRequest =
+    session &&
+    ((row.original.completeRequest &&
+      (session.user.role === "ADMIN" ||
+        (session.user.role === "MANAGER" &&
+          session.user.id === row.original.author.id))) ||
+      row.original.workers?.some((worker) => worker.id === session.user.id));
 
   return (
     <TableRow
@@ -49,8 +46,7 @@ const DataTableRow = ({ row }: { row: Row<TypeTask> }) => {
         },
         {
           "bg-fuchsia-700 data-[state=seleced]:bg-red-500/10 hover:bg-fuchsia-700/20":
-            (row.original.completeRequest && isAdminUpdatePermission) ||
-            isWorkerTask,
+            visualRequest,
         }
       )}
     >
