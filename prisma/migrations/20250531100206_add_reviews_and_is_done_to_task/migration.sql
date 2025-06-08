@@ -1,0 +1,14 @@
+-- AlterTable
+ALTER TABLE "Task" ADD COLUMN "isDone" BOOLEAN;
+
+-- CreateTable
+CREATE TABLE "Rewiew" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "text" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    "Taskid" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    CONSTRAINT "Rewiew_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Rewiew_Taskid_fkey" FOREIGN KEY ("Taskid") REFERENCES "Task" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);

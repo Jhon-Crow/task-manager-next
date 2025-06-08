@@ -1,3 +1,9 @@
+export { setCompleteRequestToTask } from "./model/service/setCompleteRequestToTask/setCompleteRequestToTask";
+
+export { setCompletedToTask } from "./model/service/setCompletedToTask/setCompletedToTask";
+
+export { getTaskCompletionPercentage } from "./utils/getTaskCompletionPercentage";
+
 export {
   useSelectTaskTitleInTaskListById,
   useSelectTaskPendingInTaskListById,

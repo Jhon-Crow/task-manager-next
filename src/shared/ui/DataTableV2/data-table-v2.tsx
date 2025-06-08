@@ -16,6 +16,7 @@ import {
 } from "../Table/table";
 import { FC } from "react";
 import { cn } from "@/shared/lib/utils";
+import { Skeleton } from "../Skeleton/skeleton";
 
 type DataTableProps<TData> = {
   table: TypeTable<TData>;
@@ -26,19 +27,23 @@ type DataTableProps<TData> = {
   Row?: FC<DefaultTableRowProps<TData>>;
   Cell?: FC<DefaultTableCell<TData, unknown>>;
   NoResultContent?: FC<Pick<DefaultTableBodyProps<TData>, "columnsLength">>;
+  IsLoadingRow?: FC<DefaultDataTableIsLoadingProps>;
   className?: string;
+  isLoading?: boolean;
 };
 
 export function DataTableV2<TData>({
   table,
   Headers = DefaultDataTableHeaderGroups,
   Body = DefaultTableBody,
+  IsLoadingRow,
   HeaderGroup,
   Head,
   Row,
   Cell,
   NoResultContent,
   className,
+  isLoading,
 }: DataTableProps<TData>) {
   return (
     <div className={cn("rounded-md border", className)}>
@@ -53,7 +58,9 @@ export function DataTableV2<TData>({
           columnsLength={table.getAllColumns().length}
           Row={Row}
           Cell={Cell}
+          isLoading={isLoading}
           NoResultContent={NoResultContent}
+          IsLoadingRow={IsLoadingRow}
         />
       </Table>
     </div>
@@ -122,6 +129,8 @@ type DefaultTableBodyProps<TData> = {
   Row?: FC<DefaultTableRowProps<TData>>;
   NoResultContent?: FC<Pick<DefaultTableBodyProps<TData>, "columnsLength">>;
   Cell?: FC<DefaultTableCell<TData, unknown>>;
+  isLoading?: boolean;
+  IsLoadingRow?: FC<DefaultDataTableIsLoadingProps>;
 };
 export function DefaultTableBody<TData>({
   rows,
@@ -129,11 +138,15 @@ export function DefaultTableBody<TData>({
   Row = DefaultTableRow,
   NoResultContent = DefaultNoResultContent,
   Cell,
+  isLoading,
+  IsLoadingRow = DefaultDataTableIsLoading,
 }: DefaultTableBodyProps<TData>) {
   return (
     <TableBody>
       {rows.length ? (
         rows.map((row) => <Row row={row} key={row.id} Cell={Cell} />)
+      ) : isLoading ? (
+        <IsLoadingRow columnsLength={columnsLength} />
       ) : (
         <NoResultContent columnsLength={columnsLength} />
       )}
@@ -149,9 +162,8 @@ export function DefaultTableRow<TData>({
   row,
   Cell = DefaultDataCell,
 }: DefaultTableRowProps<TData>) {
-  row.getVisibleCells();
   return (
-    <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+    <TableRow data-state={row.getIsSelected() && "selected"}>
       {row.getVisibleCells().map((cell) => (
         <Cell key={cell.id} cell={cell} />
       ))}
@@ -179,6 +191,21 @@ export function DefaultNoResultContent<TData>({
     <TableRow>
       <TableCell colSpan={columnsLength} className="h-24 text-center">
         Нет данных.
+      </TableCell>
+    </TableRow>
+  );
+}
+
+type DefaultDataTableIsLoadingProps = {
+  columnsLength: number;
+};
+export function DefaultDataTableIsLoading({
+  columnsLength,
+}: DefaultDataTableIsLoadingProps) {
+  return (
+    <TableRow className="p-0">
+      <TableCell className="p-0" colSpan={columnsLength}>
+        <Skeleton className="w-full h-24 rounded-none" />
       </TableCell>
     </TableRow>
   );
