@@ -11,6 +11,7 @@ const prisma = new PrismaClient();
 async function main() {
   // Очищаем базу данных в правильном порядке
   await prisma.assignment.deleteMany();
+  await prisma.review.deleteMany();
   await prisma.task.deleteMany();
   await prisma.user.deleteMany();
   //

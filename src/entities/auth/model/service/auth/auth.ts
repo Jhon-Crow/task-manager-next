@@ -23,8 +23,9 @@ const config = {
         const { password: hashedPassword } = user.data;
         const passwordMatch = await bcrypt.compare(password, hashedPassword);
         if (!passwordMatch) return null;
-        const { id, imageUrl, role } = user.data;
-        return { id, email, role, image: imageUrl };
+        const { id, imageUrl, role, firstname, lastname } = user.data;
+
+        return { id, email, role, image: imageUrl, firstname, lastname };
       },
     }),
   ],
@@ -42,6 +43,8 @@ const config = {
         token.userId = user.id;
         token.email = user.email;
         token.role = user.role;
+        token.firstname = user.firstname;
+        token.lastname = user.lastname;
       }
 
       return token;
@@ -52,6 +55,8 @@ const config = {
         email: token.email,
         id: token.userId,
         role: token.role,
+        firstname: token.firstname,
+        lastname: token.lastname,
       };
       return session;
     },

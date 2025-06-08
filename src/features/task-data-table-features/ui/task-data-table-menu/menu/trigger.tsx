@@ -12,7 +12,11 @@ export const Trigger = memo(function TaskDataTableMenuTrigger({
   const pending = useSelectTaskPendingInTaskListById(id);
   return (
     <DropdownMenuTrigger asChild>
-      <Button variant={"ghost"} className="size-8 p-0" disabled={pending}>
+      <Button
+        variant={"ghost"}
+        className="size-8 relative p-0 z-20"
+        disabled={pending}
+      >
         <MoreHorizontal />
       </Button>
     </DropdownMenuTrigger>

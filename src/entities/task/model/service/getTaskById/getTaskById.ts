@@ -19,6 +19,7 @@ const getTaskByIdImplementation = async (
       updatedAt: true,
       title: true,
       completed: true,
+      completeRequest: true,
       author: {
         select: {
           id: true,
@@ -37,6 +38,7 @@ const getTaskByIdImplementation = async (
               firstname: true,
               lastname: true,
               imageUrl: true,
+              email: true,
             },
           },
         },

@@ -11,12 +11,12 @@ import Link from "next/link";
 import { Routes } from "@/shared/routes/paths";
 import { TaskPriorityIcon } from "../tasks-icons/priority-icon";
 import { TaskDifficultyIcon } from "../tasks-icons/difficulty-icon";
+import { useTimerContext } from "@/shared/hooks/useTimerContext";
+import { getTaskCompletionPercentage } from "../../utils/getTaskCompletionPercentage";
 
 export const TaskListCard = ({ task }: { task: TypeTask }) => {
-  const now = new Date();
-  const left = task.deadline.getTime() - now.getTime();
-  const fullTime = task.deadline.getTime() - task.createdAt.getTime();
-  const percent = ((fullTime - left) / fullTime) * 100;
+  const now = useTimerContext();
+  const percent = getTaskCompletionPercentage(task, now);
 
   return (
     <Link href={Routes.TASK(task.id)} className="block">

@@ -19,7 +19,10 @@ const updateTaskImplementation = async (id: unknown, values: unknown) => {
     throw new Error("TODO");
   }
   const { workersId, ...task } = validatedValues.data;
-  await prisma.task.update({ where: { id }, data: task });
+  await prisma.task.update({
+    where: { id },
+    data: { ...task, completed: null },
+  });
   await prisma.assignment.deleteMany({ where: { task: { id } } });
   for (const workerId of workersId) {
     await prisma.assignment.create({

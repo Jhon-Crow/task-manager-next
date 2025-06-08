@@ -17,6 +17,7 @@ const getAllTasksImplementation = async (): Promise<TypeTask[]> => {
       priority: true,
       updatedAt: true,
       createdAt: true,
+      completeRequest: true,
       author: {
         select: {
           id: true,
@@ -26,6 +27,11 @@ const getAllTasksImplementation = async (): Promise<TypeTask[]> => {
           imageUrl: true,
           email: true,
           createdAt: false,
+        },
+      },
+      _count: {
+        select: {
+          reviews: true,
         },
       },
       assignments: {
@@ -47,7 +53,6 @@ const getAllTasksImplementation = async (): Promise<TypeTask[]> => {
   return tasks.reduce((acc, task) => {
     const isOverdue = task.deadline < currentDate && !task.completed;
 
-    // Обновляем задачу в базе данных, если она просрочена
     if (isOverdue) {
       prisma.task
         .update({
