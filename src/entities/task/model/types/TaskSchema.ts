@@ -1,10 +1,21 @@
-import type { TypeTask, TypeTaskForm, TypeTaskWorker } from "./task";
+import type {
+  TypeReview,
+  TypeTask,
+  TypeTaskForm,
+  TypeTaskWorker,
+} from "./task";
+
+export type ReviewsToSchema = Omit<TypeReview, "createdAt" | "updatedAt"> & {
+  createdAt: number;
+  updatedAt: number;
+};
 
 export type TaskForSchema =
-  | (Omit<TypeTask, "deadline" | "createdAt" | "updatedAt"> & {
+  | (Omit<TypeTask, "deadline" | "createdAt" | "updatedAt" | "reviews"> & {
       deadline: number;
       createdAt: number;
       updatedAt?: number;
+      reviews: ReviewsToSchema[];
     })
   | null;
 

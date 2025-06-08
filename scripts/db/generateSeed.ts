@@ -5,7 +5,7 @@ import {
   Role,
   Assignment,
 } from "@/shared/lib/db/generated";
-import {hash} from "bcryptjs";
+import { hash } from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -147,7 +147,12 @@ async function main() {
           description: `This is a detailed description for ${title}. It explains what needs to be done and any special considerations.`,
           priority,
           difficulty,
-          completed: Math.random() > 0.8, // 20% chance of being completed
+          completed:
+            Math.random() > 0.8
+              ? true
+              : Math.random() > 0.9
+              ? false
+              : undefined, // 20% chance of being completed
           authorId,
           deadline,
         },
