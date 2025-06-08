@@ -30,6 +30,7 @@ export async function getAllTasksRoute(req: NextApiRequest) {
         title: true,
         description: true,
         completed: true,
+        completeRequest: true,
         deadline: true,
         difficulty: true,
         priority: true,
