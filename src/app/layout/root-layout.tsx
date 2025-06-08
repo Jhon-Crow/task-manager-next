@@ -4,7 +4,7 @@ import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 import { StoreProvider } from "../providers/StoreProvider";
-import {ThemeProvider} from "../providers/ThemeProvider";
+import { ThemeProvider } from "../providers/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "ТАСК МАНАГЕР",
@@ -23,15 +23,10 @@ export default async function RootLayout({
       <SessionProvider>
         <StoreProvider>
           <body className={`antialiased relative vsc-initialized`}>
-          <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-          >
-            {children}
-            <Toaster />
-          </ThemeProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+              <Toaster />
+            </ThemeProvider>
           </body>
         </StoreProvider>
       </SessionProvider>
