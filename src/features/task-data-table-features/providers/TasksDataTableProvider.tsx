@@ -38,6 +38,7 @@ export const TaskDataTableProvider = ({
       "data" | "columns" | "getCoreRowModel"
   >;
 }) => {
+  // const [rowSelection, setRowSelection] = useState<Record<number, boolean>>({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filters, setFilters] = useState<TasksFilters>({});
   const observerRef = useRef<HTMLDivElement>(null);
