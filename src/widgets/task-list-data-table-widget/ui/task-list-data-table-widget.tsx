@@ -24,7 +24,7 @@ export const TaskListDataTableWidget = () => {
         <TimerProvider>
           <TaskDataTableProvider
               shiftColumns={{
-                  select: selectInTaskDataTableColumn as ColumnDef<TypeTaskColumns>,
+                  // select: selectInTaskDataTableColumn as ColumnDef<TypeTaskColumns>,
                   completed: completedInTaskDataTableColumn as ColumnDef<TypeTaskColumns>
               }}>
             <DataTableForWidget />

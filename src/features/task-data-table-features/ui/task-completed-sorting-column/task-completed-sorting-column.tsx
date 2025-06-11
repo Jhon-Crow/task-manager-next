@@ -19,7 +19,7 @@ export const completedInTaskDataTableColumn: ColumnDef<TypeTaskColumns> = {
     const completed = row.getValue("completed");
     return (
       <div className="flex justify-center">
-        {completed === true ? <Check /> : completed === false ? <X /> : null}
+        {completed === true ? <Check /> : completed === false ? <X /> : <div></div>}
       </div>
     );
   },
