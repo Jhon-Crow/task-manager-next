@@ -1,29 +1,21 @@
 "use client";
 
 import {
+    ColumnDef,
     getCoreRowModel,
     getSortedRowModel,
-    SortingState,
-    useReactTable,
-    ColumnDef,
-    TableOptions,
     RowSelectionState,
+    SortingState,
+    TableOptions,
+    useReactTable,
 } from "@tanstack/react-table";
-import {
-    ReactNode,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
-import { TasksFilters, TypeTask, TypeTaskColumns } from "@/entities/task/public-types";
-import { taskDataDefaultColumns, useInfinityTasks } from "@/entities/task";
-import { useVirtualizer } from "@tanstack/react-virtual";
-import { useIsBottomVisible } from "@/shared/hooks/useIsBottomVisible";
-import { taskDataTableMenuInColumns } from "../";
-import { TasksDataTableContext } from "../contexts/TasksDataTableContext";
-import { taskDataTableSortingInColumns } from "../";
+import {ReactNode, useCallback, useEffect, useMemo, useRef, useState,} from "react";
+import {TasksFilters, TypeTask, TypeTaskColumns} from "@/entities/task/public-types";
+import {taskDataDefaultColumns, useInfinityTasks, useTasksListActions} from "@/entities/task";
+import {useVirtualizer} from "@tanstack/react-virtual";
+import {useIsBottomVisible} from "@/shared/hooks/useIsBottomVisible";
+import {taskDataTableMenuInColumns, taskDataTableSortingInColumns} from "../";
+import {TasksDataTableContext} from "../contexts/TasksDataTableContext";
 
 export const TaskDataTableProvider = ({
                                           children,
@@ -42,6 +34,8 @@ export const TaskDataTableProvider = ({
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [sorting, setSorting] = useState<SortingState>([]);
     const [filters, setFilters] = useState<TasksFilters>({});
+    const { setSelectedTasks } = useTasksListActions();
+
 
     const observerRef = useRef<HTMLDivElement>(null);
     const isBottomVisible = useIsBottomVisible(observerRef);
@@ -51,6 +45,8 @@ export const TaskDataTableProvider = ({
             initialFilters: filters,
             pageSize: 10,
         });
+
+
 
     const fetchMoreOnButtomReacher = useCallback(() => {
         if (isBottomVisible) {
@@ -92,6 +88,11 @@ export const TaskDataTableProvider = ({
     const selectedTasks = useMemo(() => {
         return table.getSelectedRowModel().flatRows.map(row => row.original);
     }, [rowSelection, tasks]);
+
+    useEffect(() => {
+        const selectedIds = Object.keys(rowSelection);
+        setSelectedTasks(selectedIds);
+    }, [rowSelection, setSelectedTasks]);
 
     const { rows } = table.getRowModel();
 

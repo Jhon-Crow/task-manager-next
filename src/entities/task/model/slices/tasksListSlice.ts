@@ -15,7 +15,9 @@ export const tasksListAdapter = createEntityAdapter<
 
 const tasksListSlice = buildSlice({
   name: "tasksListSlice",
-  initialState: tasksListAdapter.getInitialState(),
+  initialState: tasksListAdapter.getInitialState({
+    selectedTasksToRemove: [] as TypeTask['id'][],
+  }),
   reducers: {
     addTasks: {
       reducer: tasksListAdapter.addMany,
@@ -34,7 +36,26 @@ const tasksListSlice = buildSlice({
         changes: { pending: payload.pending },
       });
     },
-    removeTaskById: tasksListAdapter.removeOne,
+    setSelectedTasks: (state, action: PayloadAction<TypeTask['id'][]>) => {
+      state.selectedTasksToRemove = action.payload;
+      console.log(state.selectedTasksToRemove)
+    },
+    clearSelectedForRemove: (state) => {
+      state.selectedTasksToRemove = [];
+    },
+    removeSelectedTasks: (state) => {
+      console.log(state, state.selectedTasksToRemove);
+      //todo добавить удаление из призмы
+      // tasksListAdapter.removeMany(state, state.selectedTasksToRemove);
+      // state.selectedTasksToRemove = [];
+    },
+    removeTaskById: (state, action: PayloadAction<string>) => {
+      tasksListAdapter.removeOne(state, action.payload);
+      const index = state.selectedTasksToRemove.indexOf(action.payload);
+      if (index !== -1) {
+        state.selectedTasksToRemove.splice(index, 1);
+      }
+    },
     removeAllTasks: tasksListAdapter.removeAll,
   },
 });
@@ -43,5 +64,13 @@ export const {
   name: tasksListReducerName,
   reducer: tasksListReducer,
   useActions: useTasksListActions,
-  actions: { addTasks, setPendingTaskById, removeTaskById, removeAllTasks },
+  actions: {
+    addTasks,
+    setPendingTaskById,
+    removeTaskById,
+    removeAllTasks,
+    setSelectedTasks,
+    clearSelectedForRemove,
+    removeSelectedTasks
+  },
 } = tasksListSlice;
