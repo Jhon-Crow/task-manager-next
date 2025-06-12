@@ -1,7 +1,9 @@
-import { buttonVariants, DialogTrigger, DropdownMenuItem } from "@/shared/ui";
-import { memo } from "react";
+import {buttonVariants, DialogTrigger, DropdownMenuItem} from "@/shared/ui";
+import {memo, ReactNode} from "react";
 
-export const DeleteTaskItem = memo(function DeleteTaskActionsMenuItem() {
+export const DeleteTaskItem = memo(function DeleteTaskActionsMenuItem(
+    {children}: {children?: ReactNode}
+) {
   return (
     <DropdownMenuItem asChild>
       <DialogTrigger
@@ -10,7 +12,7 @@ export const DeleteTaskItem = memo(function DeleteTaskActionsMenuItem() {
           className: "w-full",
         })}
       >
-        Удалить
+          {children}
       </DialogTrigger>
     </DropdownMenuItem>
   );
