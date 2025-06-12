@@ -13,11 +13,13 @@ export const tasksListAdapter = createEntityAdapter<
   sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
+const initialState = tasksListAdapter.getInitialState({
+  selectedTasksToRemove: [] as TypeTask['id'][],
+});
+
 const tasksListSlice = buildSlice({
   name: "tasksListSlice",
-  initialState: tasksListAdapter.getInitialState({
-    selectedTasksToRemove: [] as TypeTask['id'][],
-  }),
+  initialState,
   reducers: {
     addTasks: {
       reducer: tasksListAdapter.addMany,

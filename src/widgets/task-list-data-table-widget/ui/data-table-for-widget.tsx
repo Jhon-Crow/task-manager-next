@@ -16,12 +16,7 @@ export const DataTableForWidget = () => {
 
   return (
     <>
-
-
-        <TaskDeleteManyDialog/>
-
-        {/*todo сделать кнопку, вызывающую дел диалог, прокидывающую id[] из редакса
-        добавить диалог для дел селектед*/}
+      <TaskDeleteManyDialog/>
       <DataTableV2 table={table} isLoading={isLoading} Row={DataTableRow} />
       <div ref={observerRef} />
     </>
