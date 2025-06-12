@@ -15,7 +15,7 @@ type DeleteTaskDialogContentProps = {
   title: TypeTask["title"];
 };
 
-export const DeleteTaskDialogContent = memo(function DeleteTaskDialogContent({
+export const DeleteTaskDialogContent = memo(async function DeleteTaskDialogContent({
   deleteHandler,
   title,
 }: DeleteTaskDialogContentProps) {
@@ -25,6 +25,7 @@ export const DeleteTaskDialogContent = memo(function DeleteTaskDialogContent({
         <DialogTitle>
           Вы действительно хотите удалить задачу <br />
           <span className="font-extrabold text-foreground/70">{title}</span>?
+        {/*    todo НАДО УДАЛИТЬ ВИДИМО Это где? у нас точная копия этого компонента в ui/data-table-menu*/}
         </DialogTitle>
       </DialogHeader>
       <DialogDescription>Действие нельзя будет отменить</DialogDescription>
