@@ -1,18 +1,24 @@
 "use client";
 
-import { getTaskCompletionPercentage } from "@/entities/task";
-import { TypeTask } from "@/entities/task/public-types";
-import { useTasksDataTableContext } from "@/features/task-data-table-features";
-import { cn } from "@/shared/lib/utils";
-import { DataTableV2, DefaultDataCell, TableRow } from "@/shared/ui";
-import { Row } from "@tanstack/react-table";
-import { useSession } from "next-auth/react";
+import {getTaskCompletionPercentage} from "@/entities/task";
+import {TypeTask} from "@/entities/task/public-types";
+import {useTasksDataTableContext} from "@/features/task-data-table-features";
+import {cn} from "@/shared/lib/utils";
+import {Button, DataTableV2, DefaultDataCell, TableRow} from "@/shared/ui";
+import {Row} from "@tanstack/react-table";
+import {useSession} from "next-auth/react";
+import {Trash2} from "lucide-react";
 
 export const DataTableForWidget = () => {
   const { table, observerRef, isLoading } = useTasksDataTableContext();
 
   return (
     <>
+        <Button
+            variant="destructive">
+            <Trash2/>
+        </Button>
+        {/*todo добавить диалог для дел селектед*/}
       <DataTableV2 table={table} isLoading={isLoading} Row={DataTableRow} />
       <div ref={observerRef} />
     </>

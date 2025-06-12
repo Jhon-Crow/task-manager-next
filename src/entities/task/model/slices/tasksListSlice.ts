@@ -38,16 +38,13 @@ const tasksListSlice = buildSlice({
     },
     setSelectedTasks: (state, action: PayloadAction<TypeTask['id'][]>) => {
       state.selectedTasksToRemove = action.payload;
-      console.log(state.selectedTasksToRemove)
     },
     clearSelectedForRemove: (state) => {
       state.selectedTasksToRemove = [];
     },
     removeSelectedTasks: (state) => {
-      console.log(state, state.selectedTasksToRemove);
-      //todo добавить удаление из призмы
-      // tasksListAdapter.removeMany(state, state.selectedTasksToRemove);
-      // state.selectedTasksToRemove = [];
+      tasksListAdapter.removeMany(state, state.selectedTasksToRemove);
+      state.selectedTasksToRemove = [];
     },
     removeTaskById: (state, action: PayloadAction<string>) => {
       tasksListAdapter.removeOne(state, action.payload);

@@ -34,7 +34,7 @@ export const TaskDataTableProvider = ({
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [sorting, setSorting] = useState<SortingState>([]);
     const [filters, setFilters] = useState<TasksFilters>({});
-    const { setSelectedTasks } = useTasksListActions();
+    const { setSelectedTasks, removeSelectedTasks } = useTasksListActions();
 
 
     const observerRef = useRef<HTMLDivElement>(null);
@@ -45,7 +45,11 @@ export const TaskDataTableProvider = ({
             initialFilters: filters,
             pageSize: 10,
         });
-
+    // todo вынести делит куда надо
+    // useEffect(() => {
+    //     console.log('ljlj')
+    //         setTimeout(() => removeSelectedTasks(), 10000);
+    //     }, [rowSelection]);
 
 
     const fetchMoreOnButtomReacher = useCallback(() => {

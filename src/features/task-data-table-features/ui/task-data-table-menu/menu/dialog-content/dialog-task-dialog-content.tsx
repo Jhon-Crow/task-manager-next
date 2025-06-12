@@ -1,9 +1,5 @@
-import {
-  useTasksListActions,
-  deleteTaskById,
-  useSelectTaskTitleInTaskListById,
-} from "@/entities/task";
-import { TypeTask } from "@/entities/task/public-types";
+import {deleteTaskById, useSelectTaskTitleInTaskListById, useTasksListActions,} from "@/entities/task";
+import {TypeTask} from "@/entities/task/public-types";
 import {
   Button,
   DialogClose,
@@ -13,16 +9,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui";
-import { title } from "process";
-import { memo, useCallback } from "react";
-import { toast } from "sonner";
+import {memo, useCallback} from "react";
+import {toast} from "sonner";
 
 type DeleteTaskDialogContentProps = {
   id: TypeTask["id"];
+  title: TypeTask["title"];
 };
 
 export const DeleteTaskDialogContent = memo(function DeleteTaskDialogContent({
   id,
+  title
 }: DeleteTaskDialogContentProps) {
   return (
     <DialogContent>
