@@ -8,6 +8,7 @@ export const TaskDeleteManyDialog = () => {
     return (
         <Dialog>
             <DeleteTasksDialogContent/>
+            {/*todo скрыть если нет селектнутых тасок*/}
             <DialogTrigger
                 className={buttonVariants({
                     variant: "destructive",

@@ -1,5 +1,3 @@
-// 'use client'
-
 import {useTasksListActions} from "@/entities/task";
 import {
   Button,
@@ -35,12 +33,13 @@ export const DeleteTasksDialogContent = memo(function DeleteTaskDialogContent() 
                 ? `Вы действительно хотите удалить ${titles.length} задач?`
                 : "Вы действительно хотите удалить задачу?"}
             <br />
-            {titles.length > 0 && (
-                <span className="font-extrabold text-foreground/70 block truncate max-w-md">
-              {/*    todo сделать стиль для списка*/}
-              {titles.join(', ')}
+            {titles.length > 0 && titles.map((title: string, index: number) => (
+                <span className="font-extrabold text-foreground/70 block max-w-md text-sm">
+                    {1 + index + '. ' + title}
             </span>
-            )}
+            )
+            )
+            }
           </DialogTitle>
         </DialogHeader>
         <DialogDescription>Действие нельзя будет отменить</DialogDescription>
@@ -69,7 +68,7 @@ const DeleteBtn = memo(function DeleteBtnInTaskActionsMenu() {
         toast.error(
             <ErrorMessage
                 count={selectedIds.length}
-                errorMessage={response.error?.message || "Неизвестная ошибка"}
+                errorMessage={response.error?.message || "Неизвестная ошибка при удалении"}
             />
         );
         return;
