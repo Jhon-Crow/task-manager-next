@@ -15,7 +15,7 @@ export const CanUpdateTaskItems = memo(function CanUpdateTaskMenuItems({
     <>
       <UpdateLinkItem id={id} />
       <DropdownMenuSeparator />
-      <DeleteTaskItem />
+        <DeleteTaskItem >Удалить</DeleteTaskItem>
     </>
   );
 });

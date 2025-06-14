@@ -1,12 +1,12 @@
 "use client";
 
-import { getTaskCompletionPercentage } from "@/entities/task";
-import { TypeTask } from "@/entities/task/public-types";
-import { useTasksDataTableContext } from "@/features/task-data-table-features";
-import { cn } from "@/shared/lib/utils";
-import { DataTableV2, DefaultDataCell, TableRow } from "@/shared/ui";
-import { Row } from "@tanstack/react-table";
-import { useSession } from "next-auth/react";
+import {getTaskCompletionPercentage} from "@/entities/task";
+import {TypeTask} from "@/entities/task/public-types";
+import {useTasksDataTableContext} from "@/features/task-data-table-features";
+import {cn} from "@/shared/lib/utils";
+import {DataTableV2, DefaultDataCell, TableRow} from "@/shared/ui";
+import {Row} from "@tanstack/react-table";
+import {useSession} from "next-auth/react";
 
 export const DataTableForWidget = () => {
   const { table, observerRef, isLoading } = useTasksDataTableContext();
@@ -61,7 +61,7 @@ const DataTableRow = ({ row }: { row: Row<TypeTask> }) => {
 const Progress = ({ percent }: { percent: number }) => {
   return (
     <td
-      className={`absolute left-0 top-0 bottom-0 bg-muted-foreground/10 `}
+      className={`absolute left-0 top-0 bottom-0 bg-muted-foreground/10 pointer-events-none `}
       style={{ width: `${percent >= 100 ? 100 : percent}%` }}
     />
   );

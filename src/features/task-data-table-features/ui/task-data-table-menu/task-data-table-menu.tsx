@@ -13,7 +13,6 @@ export const taskDataTableMenuInColumns: ColumnDef<TypeTaskColumns> = {
   id: "actions",
   cell: ({ row }) => {
     const task = row.original;
-
     return <ActionsDropdownMenu task={task} />;
   },
 };
@@ -30,7 +29,7 @@ function ActionsDropdownMenu({ task }: { task: TypeTask }) {
         <Trigger id={task.id} />
         <Content isCanUpdate={isCanUpdate} id={task.id} />
       </DropdownMenu>
-      <DeleteTaskDialogContent id={task.id} />
+      <DeleteTaskDialogContent title={task.title} id={task.id} />
     </Dialog>
   );
 }
