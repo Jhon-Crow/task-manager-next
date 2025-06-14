@@ -6,7 +6,7 @@ import { NavbarSignout } from "./navbar-signout";
 export async function Navbar() {
   const session = await checkAuth();
   return (
-    <div className="w-full fixed top-2 flex justify-between px-12">
+    <div className="w-full fixed top-2 flex justify-between px-12 backdrop-blur-sm z-99">
       <NavbarBreadcrumps />
       <div className="flex items-center gap-x-4">
         <NavbarSignout session={session} />
