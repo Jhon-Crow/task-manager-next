@@ -7,16 +7,12 @@ import {cn} from "@/shared/lib/utils";
 import {DataTableV2, DefaultDataCell, TableRow} from "@/shared/ui";
 import {Row} from "@tanstack/react-table";
 import {useSession} from "next-auth/react";
-import {
-    TaskDeleteManyDialog
-} from "@/features/task-data-table-features/ui/task-delete-many-selected/task-delete-many-dialog";
 
 export const DataTableForWidget = () => {
   const { table, observerRef, isLoading } = useTasksDataTableContext();
 
   return (
     <>
-      <TaskDeleteManyDialog/>
       <DataTableV2 table={table} isLoading={isLoading} Row={DataTableRow} />
       <div ref={observerRef} />
     </>

@@ -1,3 +1,4 @@
+'use client'
 import {buttonVariants, Dialog, DialogTrigger} from "@/shared/ui";
 import {
     DeleteTasksDialogContent
@@ -9,7 +10,6 @@ export const TaskDeleteManyDialog = () => {
     const selectedIds = useSelector(
         (state: RootState) => state.tasksListSlice.selectedTasksToRemove
     );
-    // todo переместить в card actions
     return (
         <Dialog>
             <DeleteTasksDialogContent/>
