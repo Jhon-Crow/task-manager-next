@@ -9,6 +9,7 @@ export const TaskDeleteManyDialog = () => {
     const selectedIds = useSelector(
         (state: RootState) => state.tasksListSlice.selectedTasksToRemove
     );
+    // todo переместить в card actions
     return (
         <Dialog>
             <DeleteTasksDialogContent/>

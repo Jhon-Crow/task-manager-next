@@ -65,7 +65,7 @@ const DataTableRow = ({ row }: { row: Row<TypeTask> }) => {
 const Progress = ({ percent }: { percent: number }) => {
   return (
     <td
-      className={`absolute left-0 top-0 bottom-0 bg-muted-foreground/10 `}
+      className={`absolute left-0 top-0 bottom-0 bg-muted-foreground/10 pointer-events-none `}
       style={{ width: `${percent >= 100 ? 100 : percent}%` }}
     />
   );
