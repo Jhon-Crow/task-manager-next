@@ -112,7 +112,13 @@ export const taskDataDefaultColumns: Partial<
                   </TooltipTrigger>
                   <TooltipContent>
                     <ol>
-                      {workersItTooltip.map((worker, index) => <li key={index}>{index + 4}. {worker.firstname} {worker.lastname}</li>)}
+                      {workersItTooltip.map((worker, index) => <li key={index}>
+                        <Link
+                            className='hover:underline'
+                            href={Routes.USER(worker.id)}>
+                          {index + 4}. {worker.firstname} {worker.lastname}
+                        </Link>
+                      </li>)}
                     </ol>
                   </TooltipContent>
                 </Tooltip>
