@@ -26,7 +26,6 @@ export const WorkersDataTableWithFeatures = ({
   const [sorting, onSortingChange] = useState<SortingState>([]);
   const { setWorkers, setNewTaskWorkers } = useTaskActions();
   const defaultWorkersId = useSelectWorkersIdInTask();
-  console.log(defaultWorkersId);
 
   useEffect(() => {
     setWorkers(workers);

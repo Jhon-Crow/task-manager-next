@@ -33,7 +33,6 @@ export const [useSelectNewTaskWorkers, selectNewTaskWorkers] = buildSelectors(
   createSelector(
     [selectNewTaskWorkersId, selectWorkers],
     (workersId, workers) => {
-      console.log(workers, workersId);
 
       return workers?.filter((worker) =>
         workersId?.some((id) => worker.id === id)

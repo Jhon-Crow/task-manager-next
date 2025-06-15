@@ -9,7 +9,7 @@ import Link from "next/link";
 import { Routes } from "@/shared/routes/paths";
 import { TypeUser } from "@/entities/user/types";
 import { cn } from "@/shared/lib/utils";
-import { Crown } from "lucide-react";
+import {CircleEllipsis, Crown, Ellipsis, RectangleEllipsis} from "lucide-react";
 import { TypeTaskColumns } from "@/entities/task/model/types/task";
 
 export const taskDataDefaultColumns: Partial<
@@ -77,7 +77,13 @@ export const taskDataDefaultColumns: Partial<
     accessorKey: "workers",
     header: "Выполняют",
     cell: ({ row }) => {
-      const workers = row.getValue("workers") as TypeTaskWorker[];
+      let workers = row.getValue("workers") as TypeTaskWorker[];
+      let workersItTooltip: TypeTaskWorker[] | undefined;
+
+      if (workers.length > 3) {
+        workersItTooltip = workers.slice(3, workers.length);
+        workers = workers.slice(0, 3);
+      }
 
       return (
         <div className="flex -space-x-2">
@@ -97,6 +103,21 @@ export const taskDataDefaultColumns: Partial<
               </TooltipContent>
             </Tooltip>
           ))}
+          {workersItTooltip
+              ? <Tooltip>
+                  <TooltipTrigger asChild>
+                    <CircleEllipsis
+                      size='32'
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <ol>
+                      {workersItTooltip.map((worker, index) => <li key={index}>{index + 4}. {worker.firstname} {worker.lastname}</li>)}
+                    </ol>
+                  </TooltipContent>
+                </Tooltip>
+              : null
+          }
         </div>
       );
     },
