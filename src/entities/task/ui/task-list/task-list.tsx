@@ -16,6 +16,7 @@ export function TaskList({
         {tasks.map((task) => (
           <TaskListCard task={task} key={task.id} />
         ))}
+      {/*    todo разобраться откуда прилетает 0 при пустом списке?*/}
       </TimerProvider>
     </div>
   );

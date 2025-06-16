@@ -11,13 +11,9 @@ import Link from "next/link";
 import { Routes } from "@/shared/routes/paths";
 import { TaskPriorityIcon } from "../tasks-icons/priority-icon";
 import { TaskDifficultyIcon } from "../tasks-icons/difficulty-icon";
-import { useTimerContext } from "@/shared/hooks/useTimerContext";
-import { getTaskCompletionPercentage } from "../../utils/getTaskCompletionPercentage";
+import {TaskListCardProgress} from "./task-list-card-progress";
 
 export const TaskListCard = ({ task }: { task: TypeTask }) => {
-  const now = useTimerContext();
-  const percent = getTaskCompletionPercentage(task, now);
-
   return (
     <Link href={Routes.TASK(task.id)} className="block">
       <Card className="relative overflow-hidden group flex-row justify-between items-center hover:scale-101 transition-transform shadow-lg delay-100 duration-200 ease-in">
@@ -66,17 +62,8 @@ export const TaskListCard = ({ task }: { task: TypeTask }) => {
             </div>
           )}
         </CardContent>
-        <Progress percent={`${percent >= 100 ? 100 : percent}%`} />
+        <TaskListCardProgress task={task}/>
       </Card>
     </Link>
-  );
-};
-
-const Progress = ({ percent }: { percent: string }) => {
-  return (
-    <div
-      className={`absolute left-0 top-0 bottom-0 bg-muted-foreground/10`}
-      style={{ width: percent }}
-    />
   );
 };
