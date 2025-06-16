@@ -44,7 +44,7 @@ export function UserPageCard({
       gap-4 items-center"
       >
         <UserRoleIcon role={user.role} className="size-10" />
-        {user.role}
+        {'Роль: ' + user.role}
       </CardContent>
       <CardFooter className="pt-4 flex-col gap-4">
         {user.tasks.length && <TaskList tasks={user.tasks} />}
