@@ -1,3 +1,5 @@
+export { withServer } from "./component/withSession";
+
 export { logIn } from "./model/service/logIn/logIn";
 
 export { SignOutButton } from "./ui/sign-out-btn/sign-out-btn";
