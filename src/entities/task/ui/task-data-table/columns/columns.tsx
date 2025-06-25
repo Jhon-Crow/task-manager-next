@@ -9,8 +9,9 @@ import Link from "next/link";
 import { Routes } from "@/shared/routes/paths";
 import { TypeUser } from "@/entities/user/types";
 import { cn } from "@/shared/lib/utils";
-import {CircleEllipsis, Crown, Ellipsis, RectangleEllipsis} from "lucide-react";
+import { Crown } from "lucide-react";
 import { TypeTaskColumns } from "@/entities/task/model/types/task";
+import { TaskWorkersTooltip } from "../../task-page-card/parts/task-workers-tooltip";
 
 export const taskDataDefaultColumns: Partial<
   Record<keyof TypeTaskColumns, ColumnDef<TypeTaskColumns>>
@@ -77,13 +78,8 @@ export const taskDataDefaultColumns: Partial<
     accessorKey: "workers",
     header: "Выполняют",
     cell: ({ row }) => {
-      let workers = row.getValue("workers") as TypeTaskWorker[];
-      let workersItTooltip: TypeTaskWorker[] | undefined;
-
-      if (workers.length > 3) {
-        workersItTooltip = workers.slice(3, workers.length);
-        workers = workers.slice(0, 3);
-      }
+      const workers = row.getValue("workers") as TypeTaskWorker[];
+      const workersInTooltip = workers.slice(3, workers.length);
 
       return (
         <div className="flex -space-x-2">
@@ -103,27 +99,7 @@ export const taskDataDefaultColumns: Partial<
               </TooltipContent>
             </Tooltip>
           ))}
-          {workersItTooltip
-              ? <Tooltip>
-                  <TooltipTrigger asChild>
-                    <CircleEllipsis
-                      size='32'
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <ol>
-                      {workersItTooltip.map((worker, index) => <li key={index}>
-                        <Link
-                            className='hover:underline'
-                            href={Routes.USER(worker.id)}>
-                          {index + 4}. {worker.firstname} {worker.lastname}
-                        </Link>
-                      </li>)}
-                    </ol>
-                  </TooltipContent>
-                </Tooltip>
-              : null
-          }
+          <TaskWorkersTooltip workers={workersInTooltip} />
         </div>
       );
     },

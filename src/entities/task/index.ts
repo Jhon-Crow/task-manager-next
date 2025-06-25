@@ -1,3 +1,5 @@
+export { TaskWorkersTooltip } from "./ui/task-page-card/parts/task-workers-tooltip";
+
 export { setCompleteRequestToTask } from "./model/service/setCompleteRequestToTask/setCompleteRequestToTask";
 
 export { setCompletedToTask } from "./model/service/setCompletedToTask/setCompletedToTask";
