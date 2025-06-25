@@ -9,6 +9,7 @@
     "lint": "next lint",
     "generate:db:mock:v1": "npx tsx ./scripts/db/generateMocks.ts",
     "generate:db:mock:v2": "npx tsx ./scripts/db/generateSeed.ts",
+    "generate:db:mock:thousand": "npx tsx ./scripts/db/generatThousandMockTasks.ts",
     "prisma:studio": "npx prisma studio"
   },
   "dependencies": {
