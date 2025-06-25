@@ -1,5 +1,5 @@
-import { TypeTaskWorker } from "@/entities/task/model/types/task";
-import { UserAvatar } from "@/entities/user";
+import { TypeTaskWorker } from "../../../model/types/task";
+import { UserAvatar } from "../../../../user";
 import { Routes } from "@/shared/routes/paths";
 import { cn } from "@/shared/lib/utils";
 import Link from "next/link";
@@ -24,7 +24,8 @@ export const TaskCardWorker = ({
   >
     <UserAvatar
       user={worker}
-      className="size-10 border-accent-foreground border-2 group-hover:scale-110 transition-transform"
+      key={worker.id}
+      className="border-accent-foreground border-1 shadow-2xs"
     />
     <span className="flex-1 text-nowrap hidden group-hover:block transition-all">
       {worker.firstname} {worker.lastname}
