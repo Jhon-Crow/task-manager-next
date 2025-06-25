@@ -11,6 +11,7 @@ import { TypeUser } from "@/entities/user/types";
 import { cn } from "@/shared/lib/utils";
 import { Crown } from "lucide-react";
 import { TypeTaskColumns } from "@/entities/task/model/types/task";
+import { TaskWorkersTooltip } from "../../task-page-card/parts/task-workers-tooltip";
 
 export const taskDataDefaultColumns: Partial<
   Record<keyof TypeTaskColumns, ColumnDef<TypeTaskColumns>>
@@ -78,6 +79,7 @@ export const taskDataDefaultColumns: Partial<
     header: "Выполняют",
     cell: ({ row }) => {
       const workers = row.getValue("workers") as TypeTaskWorker[];
+      const workersInTooltip = workers.slice(3, workers.length);
 
       return (
         <div className="flex -space-x-2">
@@ -97,6 +99,7 @@ export const taskDataDefaultColumns: Partial<
               </TooltipContent>
             </Tooltip>
           ))}
+          <TaskWorkersTooltip workers={workersInTooltip} />
         </div>
       );
     },
