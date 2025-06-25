@@ -1,17 +1,4 @@
-import { checkAuth } from "@/entities/auth";
-import { NavbarBreadcrumps } from "./navbar-breadcrumps";
-import { ToggleTheme } from "@/features/theme-toggle";
-import { NavbarSignout } from "./navbar-signout";
+import { withServer } from "@/entities/auth";
+import { NavbarClient } from "./navbar-client";
 
-export async function Navbar() {
-  const session = await checkAuth();
-  return (
-    <div className="w-full fixed top-2 flex justify-between px-12 backdrop-blur-sm z-99">
-      <NavbarBreadcrumps />
-      <div className="flex items-center gap-x-4">
-        <NavbarSignout session={session} />
-        <ToggleTheme className="" />
-      </div>
-    </div>
-  );
-}
+export const Navbar = withServer(NavbarClient);
