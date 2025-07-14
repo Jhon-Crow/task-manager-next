@@ -14,7 +14,7 @@ export const DataTableForWidget = () => {
   return (
     <>
       <DataTableV2 table={table} isLoading={isLoading} Row={DataTableRow} />
-      <div ref={observerRef} />
+      {/*<div ref={observerRef} />*/}
     </>
   );
 };

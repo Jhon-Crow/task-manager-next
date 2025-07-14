@@ -17,6 +17,7 @@ import {
 import { FC } from "react";
 import { cn } from "@/shared/lib/utils";
 import { Skeleton } from "../Skeleton/skeleton";
+import {Button} from "@/shared/ui";
 
 type DataTableProps<TData> = {
   table: TypeTable<TData>;
@@ -45,6 +46,8 @@ export function DataTableV2<TData>({
   className,
   isLoading,
 }: DataTableProps<TData>) {
+  // const nextPageHandler = table.fetchNextPage();
+  // const nextPageHandler = () => console.log('ldjfd');
   return (
     <div className={cn("rounded-md border", className)}>
       <Table>
@@ -63,6 +66,26 @@ export function DataTableV2<TData>({
           IsLoadingRow={IsLoadingRow}
         />
       </Table>
+      <div className="space-x-2">
+        <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+            variant="outline"
+            size="sm"
+            // onClick={() => nextPageHandler()}
+            // onClick={table.consLog}
+            onClick={() => table.nextPage()}
+            // disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 }

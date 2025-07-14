@@ -1,7 +1,7 @@
 "use client";
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { TasksFilters, TasksResponse } from "../model/types/api";
+import { TasksFilters, TasksResponse, PaginatedTasksResponse } from "../model/types/api";
 import { TypeTask } from "../public-types";
 
 const tasksApi = createApi({
@@ -9,14 +9,13 @@ const tasksApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/api/v1/" }),
   endpoints: (builder) => ({
     getInfinityTask: builder.query<
-      TasksResponse,
-      { cursor?: TypeTask["id"]; pageSize?: number; filters: TasksFilters }
+        TasksResponse,
+        { cursor?: TypeTask["id"]; pageSize?: number; filters: TasksFilters }
     >({
       query: ({ cursor, pageSize = 10, filters = {} }) => {
         const params = new URLSearchParams();
 
         if (cursor) params.append("cursor", cursor);
-
         params.append("pageSize", pageSize.toString());
 
         if (filters.title) params.append("title", filters.title);
@@ -30,6 +29,8 @@ const tasksApi = createApi({
         requestParams: arg,
       }),
     }),
+
+
   }),
 });
 

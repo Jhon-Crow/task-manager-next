@@ -21,6 +21,8 @@ export { taskDataDefaultColumns } from "./ui/task-data-table/columns/columns";
 
 export { useInfinityTasks } from "./hooks/useInfinityTasks";
 
+export {usePaginatedTasks} from "./hooks/usePaginatedTasks";
+
 export {
   useGetInfinityTaskQuery,
   tasksMiddleware,
