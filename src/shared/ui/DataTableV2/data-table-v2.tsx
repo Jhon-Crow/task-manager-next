@@ -46,8 +46,6 @@ export function DataTableV2<TData>({
   className,
   isLoading,
 }: DataTableProps<TData>) {
-  // const nextPageHandler = table.fetchNextPage();
-  // const nextPageHandler = () => console.log('ldjfd');
   return (
     <div className={cn("rounded-md border", className)}>
       <Table>
@@ -78,10 +76,8 @@ export function DataTableV2<TData>({
         <Button
             variant="outline"
             size="sm"
-            // onClick={() => nextPageHandler()}
-            // onClick={table.consLog}
             onClick={() => table.nextPage()}
-            // disabled={!table.getCanNextPage()}
+            disabled={!table.getCanNextPage()}
         >
           Next
         </Button>

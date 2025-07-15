@@ -12,8 +12,6 @@ import {
 import {ReactNode, useCallback, useEffect, useMemo, useRef, useState,} from "react";
 import {TasksFilters, TypeTask, TypeTaskColumns} from "@/entities/task/public-types";
 import {taskDataDefaultColumns, useInfinityTasks, usePaginatedTasks, useTasksListActions} from "@/entities/task";
-import {useVirtualizer} from "@tanstack/react-virtual";
-import {useIsBottomVisible} from "@/shared/hooks/useIsBottomVisible";
 import {taskDataTableMenuInColumns, taskDataTableSortingInColumns} from "../";
 import {TasksDataTableContext} from "../contexts/TasksDataTableContext";
 
@@ -34,43 +32,23 @@ export const TaskDataTableProvider = ({
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [sorting, setSorting] = useState<SortingState>([]);
     const [filters, setFilters] = useState<TasksFilters>({});
+    // const [totalTasksCount, setTotalTasksCount] = useState(undefined);
     const { setSelectedTasks} = useTasksListActions();
     const [pagination, setPagination] = useState({
         pageIndex: 0, //initial page index
         pageSize: 10, //default page size
     });
-    const observerRef = useRef<HTMLDivElement>(null);
-    const isBottomVisible = useIsBottomVisible(observerRef);
 
-    const { tasks, isFetching, isLoading, fetchNextPage, hasNextPage } =
+    const { tasks, isFetching, isLoading, fetchNextPage, totalTasks } =
         usePaginatedTasks({
-        // useInfinityTasks({
-            page: pagination.pageIndex,
+            // page: pagination.pageIndex,
             initialFilters: filters,
             pageSize: 10,
         });
-    // todo переписать пот fetch если не подгружена и переключение если подгружена
-    const fetchMoreOnButtomReacher = useCallback(() => {
-        if (isBottomVisible) { //todo это надо на нажатие кнопки + добавить обратную
-            fetchNextPage();
-        }
-    }, [fetchNextPage, isBottomVisible]);
-    // const nextPageButtonHandler = useCallback(() => {
-    //     if (!isLoading){
-    //         fetchNextPage();
-    //     }
-    // },[fetchNextPage, isLoading])
+
     const nextPageButtonHandler = useCallback(() => {
-        if (hasNextPage) {
-            //todo проверить что за hasNextPage
             fetchNextPage();
-            console.log('ldfdf')
-        }else {
-            console.log('!hasNextPage')
-        }
-        // console.log(hasNextPage)
-    },[fetchNextPage, hasNextPage])
-    // const nextPageButtonHandler = () => fetchNextPage();
+    },[fetchNextPage])
     const columns = useMemo(() => {
         return Object.values(
             Object.assign(
@@ -86,15 +64,9 @@ export const TaskDataTableProvider = ({
         ) as ColumnDef<TypeTask, any>[];
     }, [addColumns, shiftColumns]);
 
+
     const table = useReactTable({
-        // onPaginationChange(
-        //     console.log('dlfjdlf');
-        // ),
-        // nextPage: nextPageButtonHandler(),
-        // fetchNextPage: fetchNextPage(),
-        // fetchNextPage: console.log('ldjfldjf'),//works
-        // consLog: () => console.log(),
-        //todo pageCount: тут количество общее страниц
+        rowCount: totalTasks,
         onPaginationChange: setPagination,
         getPaginationRowModel: getPaginationRowModel(),
         data: tasks,
@@ -104,6 +76,12 @@ export const TaskDataTableProvider = ({
         onSortingChange: setSorting,
         onRowSelectionChange: setRowSelection,
         getRowId: (row) => row.id,
+        // initialState: {
+        //     pagination: {
+        //         pageIndex: 0,
+        //         pageSize: 10
+        //     }
+        // },
         state: {
             pagination,
             sorting,
@@ -124,39 +102,25 @@ export const TaskDataTableProvider = ({
 
     const { rows } = table.getRowModel();
 
-    const rowVirtualizer = useVirtualizer({
-        count: hasNextPage ? rows.length + 1 : rows.length,
-        getScrollElement: () => observerRef.current,
-        estimateSize: () => 60,
-        overscan: 5,
-    });
-
     // useEffect(() => {
-    //     fetchMoreOnButtomReacher();
-    // }, [fetchMoreOnButtomReacher]);
-    useEffect(() => {
-            nextPageButtonHandler();
-        },
-        [nextPageButtonHandler]
-    );
+    //         nextPageButtonHandler();
+    //     },
+    //     [pagination.pageIndex]
+    // );
+
     const value = useMemo(
         () => ({
             table,
             setSorting,
             setFilters,
-            //todo здесь нужно передовать
-            // previousPage()
-    // getCanPreviousPage()
-    //         getCanNextPage()
-            // observerRef,
-            // nextPageButtonHandler,
+            setPagination,
+            pagination,
             rows,
-            rowVirtualizer,
             isLoading: isFetching || isLoading,
             selectedTasks,
             setRowSelection,
         }),
-        [isFetching, isLoading, rowVirtualizer, rows, table, selectedTasks]
+        [isFetching, isLoading, rows, table, selectedTasks]
     );
 
     return (

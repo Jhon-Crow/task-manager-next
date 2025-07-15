@@ -1,6 +1,10 @@
 import { TypeTask } from "./task";
 
-export type TasksResponse = { tasks: TypeTask[]; nextCursor: TypeTask["id"] };
+export type TasksResponse = {
+  tasks: TypeTask[];
+  nextCursor: TypeTask["id"];
+  totalTasks: number;
+};
 
 export type TasksFilters = {
   title?: string;

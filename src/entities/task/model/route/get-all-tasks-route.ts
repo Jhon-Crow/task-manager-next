@@ -16,6 +16,7 @@ export async function getAllTasksRoute(req: NextRequest) {
       ...(title && { title: { contains: title } }),
       ...(completed && { completed: completed === "true" }),
     };
+    const totalTasks = await prisma.task.count({where});
     const tasks = await prisma.task.findMany({
       where,
       take: pageSize + 1, // Берем на 1 больше для проверки наличия следующей страницы
@@ -79,6 +80,7 @@ export async function getAllTasksRoute(req: NextRequest) {
           return acc;
         }, [] as Omit<TypeTask, "reviews">[]),
         nextCursor,
+        totalTasks,//todo добавил в общий запрос подсчёт, возможно стоит вынести в отдельный
       },
       {
         status: 200,
