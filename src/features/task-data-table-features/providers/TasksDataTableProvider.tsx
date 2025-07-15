@@ -69,6 +69,7 @@ export const TaskDataTableProvider = ({
         rowCount: totalTasks,
         onPaginationChange: setPagination,
         getPaginationRowModel: getPaginationRowModel(),
+        autoResetPageIndex: false,
         data: tasks,
         columns,
         getCoreRowModel: getCoreRowModel(),
@@ -102,11 +103,11 @@ export const TaskDataTableProvider = ({
 
     const { rows } = table.getRowModel();
 
-    // useEffect(() => {
-    //         nextPageButtonHandler();
-    //     },
-    //     [pagination.pageIndex]
-    // );
+    useEffect(() => {
+            nextPageButtonHandler();
+        },
+        [pagination.pageIndex]
+    );
 
     const value = useMemo(
         () => ({
