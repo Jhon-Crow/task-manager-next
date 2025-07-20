@@ -10,7 +10,8 @@
     "generate:db:mock:v1": "npx tsx ./scripts/db/generateMocks.ts",
     "generate:db:mock:v2": "npx tsx ./scripts/db/generateSeed.ts",
     "generate:db:mock:thousand": "npx tsx ./scripts/db/generatThousandMockTasks.ts",
-    "prisma:studio": "npx prisma studio"
+    "prisma:studio": "npx prisma studio",
+    "generate:component": "npx tsx ./scripts/fsd/generateComponent.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
