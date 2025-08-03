@@ -2,7 +2,8 @@ import { TypeTask } from "./task";
 
 export type TasksResponse = {
   tasks: TypeTask[];
-  nextCursor: TypeTask["id"];
+  currentPage: number;
+  totalPages: number;
   totalTasks: number;
 };
 
@@ -11,10 +12,10 @@ export type TasksFilters = {
   completed?: boolean;
 };
 
-// Добавьте этот тип для пагинированного ответа
 export interface PaginatedTasksResponse {
   tasks: TypeTask[];
   totalPages: number;
   currentPage: number;
   totalItems: number;
 }
+

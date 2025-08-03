@@ -16,15 +16,14 @@ export {
 } from "./model/slices/tasksListSlice";
 
 export { getAllTasksRoute } from "./model/route/get-all-tasks-route";
+export { getAllTasksOffset } from "./model/route/get-all-tasks-offset";
 
 export { taskDataDefaultColumns } from "./ui/task-data-table/columns/columns";
-
-export { useInfinityTasks } from "./hooks/useInfinityTasks";
 
 export {usePaginatedTasks} from "./hooks/usePaginatedTasks";
 
 export {
-  useGetInfinityTaskQuery,
+  useGetTasksQuery,
   tasksMiddleware,
   tasksReducer,
   tasksApiReducerName,

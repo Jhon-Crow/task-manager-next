@@ -1,13 +1,12 @@
 import { prisma } from "@/shared/lib/db/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import {SearchParamsSchema} from "@/entities/task/model/validation/searchParamsSchema";
 
 export const dynamic = "force-dynamic";
 
 export async function getAllTasksOffset(req: NextRequest) {
     const { searchParams } = new URL(req.url || "");
-    console.log(searchParams, req)
     const page = parseInt(searchParams.get("page") || "1") || 1;
-    // const pageSize = parseInt(searchParams.get("pageSize") || "10") || 10;
     const pageSize = 10;
     const title = searchParams.get("query");
     const sortMap = {
@@ -18,8 +17,8 @@ export async function getAllTasksOffset(req: NextRequest) {
         'createdAt': { sortBy: 'createdAt', sortOrder: 'asc' } as const,
         '-createdAt': { sortBy: 'createdAt', sortOrder: 'desc' } as const
     } as const;
-    const sorting = searchParams.get("sorting") as ( keyof typeof sortMap | null );
-    const {sortBy, sortOrder} = sorting ? sortMap[sorting] : {
+    const sorting = searchParams.get("sorting") as ( keyof typeof sortMap);
+    const {sortBy, sortOrder} = sortMap[sorting] ? sortMap[sorting] : {
         sortBy: 'createdAt',
         sortOrder: 'asc'
     };
