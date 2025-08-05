@@ -1,8 +1,6 @@
+import {searchParamsType} from "@/entities/task/model/validation/searchParamsSchema";
 
-import {SearchParams} from "next/dist/server/request/search-params";
-import {SearchParamsType} from "@/entities/task/model/validation/searchParamsSchema";
-
-export const makeReqForRoute = ({page='1', sorting='createdAt', query=''}:SearchParamsType) => {
+export const makeReqForRoute = ({page=1, sorting='createdAt', query=''}:searchParamsType) => {
     const baseUrl = 'http://localhost:3000/api/v1/tasks?'
    const params = new URLSearchParams();
     params.append("page", page.toString());

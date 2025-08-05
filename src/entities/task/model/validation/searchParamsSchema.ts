@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const SearchParamsSchema = z.object({
+export const searchParamsSchema = z.object({
     page: z.coerce
         .number()
         .int()
@@ -24,4 +24,4 @@ export const SearchParamsSchema = z.object({
     query: z.string().default("").optional()
 });
 
-export type SearchParamsType = z.infer<typeof SearchParamsSchema>;
+export type searchParamsType = z.infer<typeof searchParamsSchema>;

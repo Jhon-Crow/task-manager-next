@@ -41,6 +41,9 @@ export { useSelectTaskTitle } from "./model/selectors/selectTask";
 
 export { useSelectTask } from "./model/selectors/selectTask";
 
+export {searchParamsSchema} from "./model/validation/searchParamsSchema";
+export type {TypeTask} from "./model/types/task";
+
 export { TaskPageCardClient } from "./ui/task-page-card-client/task-page-card-client";
 export { createTask } from "./model/service/createTask/createTask";
 export { getTaskById } from "./model/service/getTaskById/getTaskById";
@@ -55,3 +58,5 @@ export {
   setTask,
   useActions as useTaskActions,
 } from "./model/slices/taskSlice";
+
+export {makeReqForRoute} from "./utils/makeReqForRoute";

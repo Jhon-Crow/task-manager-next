@@ -1,6 +1,5 @@
-import { prisma } from "@/shared/lib/db/prisma";
-import { NextRequest, NextResponse } from "next/server";
-import {SearchParamsSchema} from "@/entities/task/model/validation/searchParamsSchema";
+import {prisma} from "@/shared/lib/db/prisma";
+import {NextRequest, NextResponse} from "next/server";
 
 export const dynamic = "force-dynamic";
 
